@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">expenses</string>
+    <string name="choose_main_currency">Choose main currency:</string>
+    <string name="search">Search</string>
+
+    <string name="manage_categories_underlined"><u>Manage categories</u></string>
+</resources>

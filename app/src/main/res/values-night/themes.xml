@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Expenses" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@color/milky_white</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="colorPrimary">@color/blue</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="colorSecondary">@color/blue</item>
+        <item name="colorOnSurface">@color/blue</item>
+    </style>
+</resources>

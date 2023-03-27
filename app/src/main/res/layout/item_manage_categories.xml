@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        android:id="@+id/textViewManageCategories"
+        android:gravity="center_horizontal"
+        android:text="@string/manage_categories_underlined"
+        android:layout_height="wrap_content"/>
+
+</FrameLayout>

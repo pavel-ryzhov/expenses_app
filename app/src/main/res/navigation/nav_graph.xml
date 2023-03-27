@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/chooseMainCurrencyFragment">
+    <fragment
+        android:id="@+id/chooseMainCurrencyFragment"
+        android:name="com.example.expenses.presentation.choose_main_currency.ChooseMainCurrencyFragment"
+        android:label="ChooseMainCurrencyFragment">
+        <action
+            android:id="@+id/action_chooseMainCurrencyFragment_to_chooseSecondaryCurrenciesFragment"
+            app:destination="@id/chooseSecondaryCurrenciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/generalFragment"
+        android:name="com.example.expenses.presentation.general.GeneralFragment"
+        android:label="GeneralFragment" >
+        <action
+            android:id="@+id/action_generalFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_generalFragment_to_currencyCalculatorFragment"
+            app:destination="@id/currencyCalculatorFragment" />
+        <action
+            android:id="@+id/action_generalFragment_to_monthlyStatisticsFragment"
+            app:destination="@id/monthlyStatisticsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseSecondaryCurrenciesFragment"
+        android:name="com.example.expenses.presentation.choose_secondary_currencies.ChooseSecondaryCurrenciesFragment"
+        android:label="ChooseSecondaryCurrenciesFragment">
+        <action
+            app:enterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"
+            android:id="@+id/action_chooseSecondaryCurrenciesFragment_to_generalFragment"
+            app:destination="@id/generalFragment"
+            app:popUpTo="@id/chooseMainCurrencyFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.expenses.presentation.add_expense.AddExpenseFragment"
+        android:label="AddExpenseFragment" />
+    <fragment
+        android:id="@+id/currencyCalculatorFragment"
+        android:name="com.example.expenses.presentation.currency_calculator.CurrencyCalculatorFragment"
+        android:label="CurrencyCalculatorFragment" />
+    <fragment
+        android:id="@+id/monthlyStatisticsFragment"
+        android:name="com.example.expenses.presentation.statistics.monthly.MonthlyStatisticsFragment"
+        android:label="MonthlyStatisticsFragment" />
+</navigation>

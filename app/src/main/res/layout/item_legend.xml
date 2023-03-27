@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewLabelColor"
+        android:layout_width="16sp"
+        android:layout_height="16sp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@id/textViewLabel"
+        app:layout_constraintBottom_toBottomOf="@id/textViewLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:background="@android:color/holo_red_dark" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_marginVertical="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/textViewLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/dropdownButtonView"
+        app:layout_constraintStart_toEndOf="@id/imageViewLabelColor"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="uirhnfrne" />
+
+    <com.example.expenses.presentation.views.DropdownButtonView
+        android:id="@+id/dropdownButtonView"
+        android:layout_width="32sp"
+        android:layout_height="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:alpha="0.6"
+        android:background="@color/milky_white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

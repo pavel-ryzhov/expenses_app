@@ -1,9 +1,12 @@
 package com.example.expenses.extensions
 
 import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Color
 import android.view.View
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -84,8 +87,4 @@ fun Double.roundAndFormat(decimalNumbers: Int = 2) = this.round(decimalNumbers).
 
 fun Random.randomColor() = Color.rgb(nextInt(256), nextInt(256), nextInt(256))
 
-//fun Int.toHexColor(): String{
-//    var str = Integer.toHexString(this)
-//    while (str.length < 6) str = "0$str"
-//    return "#$str"
-//}
+fun Context.toActivity() = (if (this is ContextWrapper) this.baseContext else this) as AppCompatActivity

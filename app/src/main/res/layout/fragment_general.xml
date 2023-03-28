@@ -23,7 +23,7 @@
             android:text="Today:"
             android:textSize="20sp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <com.example.expenses.presentation.views.ConvertibleAmountView
             android:id="@+id/textViewToday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:text="This month:"
             android:textSize="20sp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <com.example.expenses.presentation.views.ConvertibleAmountView
             android:id="@+id/textViewThisMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

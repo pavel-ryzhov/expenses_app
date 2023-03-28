@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/foreground.xml" value="0.22" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/inner_shadow.xml" value="0.232" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/inner_shadow_vertical.xml" value="0.22" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/on_background_disabled.xml" value="0.22" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/rounded_background.xml" value="0.272" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/scrollbar_thumb.xml" value="0.2015" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/shadow_bottom.xml" value="0.2425" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/shadow_top.xml" value="0.239" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/snackbar_background.xml" value="0.272" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/strange_entity.xml" value="0.2195" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/font-v26/antipasto.xml" value="0.4276923076923077" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/font/antipasto.xml" value="0.4266666666666667" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/activity_main.xml" value="0.21354166666666666" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/amount_in_secondary_currencies_recycler_view_item.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/category_item.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/currencies_recycler_view_item.xml" value="0.3317657118426678" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/date_recycler_view_item.xml" value="0.3309106455750321" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_amount_in_secondary_currencies.xml" value="0.3317657118426678" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_choose_category.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_no_network_connection.xml" value="0.4" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_add_expense.xml" value="0.4" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_choose_category_in_dialog.xml" value="0.3309106455750321" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_choose_main_currency.xml" value="0.39844509232264336" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_choose_secondary_currencies.xml" value="0.3317657118426678" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_currency_calculator.xml" value="0.3309106455750321" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_daily_statistics.xml" value="0.3309106455750321" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_general.xml" value="0.4" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_monthly_statistics.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_legend.xml" value="0.4" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_manage_categories.xml" value="0.4" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/secondary_currencies_recycler_view_item.xml" value="0.3317657118426678" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/strange_entity.xml" value="0.17528858486532706" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/symbols_recycler_adapter_item.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/Amigo/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.17528858486532706" />
+        <entry key="..\:/Users/Amigo/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.17528858486532706" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

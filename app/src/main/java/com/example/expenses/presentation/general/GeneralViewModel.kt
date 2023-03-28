@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepository
-import com.example.expenses.data.services.currency_converter.CurrenciesConverterService
 import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
 import com.example.expenses.extensions.roundAndFormat
-import com.example.expenses.presentation.dialogs.amount_in_secondary_currencies.DataWrapper
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +21,6 @@ class GeneralViewModel @Inject constructor(
     private val exchangeRatesRepository: ExchangeRatesRepository,
     private val appPreferences: AppPreferences,
     private val expensesStatisticsService: ExpensesStatisticsService,
-    private val currenciesConverterService: CurrenciesConverterService
 ) : ViewModel() {
 
     val totalTodayLiveData = MutableLiveData<String>()
@@ -37,8 +34,6 @@ class GeneralViewModel @Inject constructor(
         fetchTotalThisMonth()
         fetchMonthStatistics()
     }
-
-    fun getDataWrapper(): DataWrapper = DataWrapper(currenciesConverterService, appPreferences, viewModelScope)
 
     private fun fetchExchangeRates() {
         viewModelScope.launch(Dispatchers.IO) {

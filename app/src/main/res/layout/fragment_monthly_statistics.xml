@@ -97,7 +97,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recyclerViewLegend" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.example.expenses.presentation.views.ConvertibleAmountView
                 android:id="@+id/textViewTotal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.example.expenses.presentation.views.ConvertibleAmountView
                 android:id="@+id/textViewMax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewMaxLabel" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.example.expenses.presentation.views.ConvertibleAmountView
                 android:id="@+id/textViewMin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

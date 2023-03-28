@@ -44,21 +44,13 @@ class GeneralFragment : Fragment() {
                 text = "This month statistics"
                 textColor = ContextCompat.getColor(requireContext(), R.color.blue)
             }
-            textViewToday.setOnClickListener {
-                showAmountDialog(textViewToday.text.toString().substring(0, textViewToday.text.indexOf(' ')).toDouble())
-            }
-            textViewThisMonth.setOnClickListener {
-                showAmountDialog(textViewThisMonth.text.toString().substring(0, textViewThisMonth.text.indexOf(' ')).toDouble())
-            }
             expensesChartView.animateXY(600, 1000)
         }
         subscribeOnLiveData()
 
         viewModel.fetchData()
     }
-    private fun showAmountDialog(amount: Double){
-        AmountInSecondaryCurrenciesDialog(viewModel.getDataWrapper(), this).show(amount)
-    }
+
     private fun subscribeOnLiveData(){
         viewModel.apply {
             totalTodayLiveData.observe(viewLifecycleOwner){

@@ -54,15 +54,6 @@ class MonthlyStatisticsFragment : Fragment() {
                     }
                 }
             })
-            textViewTotal.setOnClickListener {
-                showAmountDialog(textViewTotal.text.split(" ")[0].toDouble())
-            }
-            textViewMin.setOnClickListener {
-                showAmountDialog(textViewMin.text.split(" ")[0].toDouble())
-            }
-            textViewMax.setOnClickListener {
-                showAmountDialog(textViewMax.text.split(" ")[0].toDouble())
-            }
             arrowLeft.setOnClickListener {
                 recyclerViewDate.smoothScrollToPosition(recyclerViewDate.getCenterXChildPosition() - 1)
             }
@@ -91,10 +82,6 @@ class MonthlyStatisticsFragment : Fragment() {
 
         subscribeOnLiveData()
 
-    }
-
-    private fun showAmountDialog(amount: Double){
-        AmountInSecondaryCurrenciesDialog(viewModel.getDataWrapper(), this).show(amount)
     }
 
     private fun subscribeOnLiveData() {

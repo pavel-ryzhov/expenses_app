@@ -103,7 +103,7 @@ class ChooseCategoryDialog(
 
     private fun onChooseCategoryRecyclerViewItemClick(category: Category) {
         selectedCategory = category
-        categorySelectedLiveData.postValue(selectedCategory)
+        categorySelectedLiveData.postValue(selectedCategory!!)
         chooseCategoryDialog.cancel()
     }
 }

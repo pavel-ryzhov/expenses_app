@@ -11,7 +11,6 @@ import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.services.currency_converter.CurrenciesConverterService
 import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
 import com.example.expenses.entities.category.Category
-import com.example.expenses.presentation.dialogs.amount_in_secondary_currencies.DataWrapper
 import com.example.expenses.presentation.value_formatters.PercentageCurrencyValueFormatter
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -145,6 +144,4 @@ class MonthlyStatisticsViewModel @Inject constructor(
             })
         }
     }
-
-    fun getDataWrapper(): DataWrapper = DataWrapper(currenciesConverterService, appPreferences, viewModelScope)
 }

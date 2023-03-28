@@ -5,10 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.expenses.data.data_sources.local.dao.CategoriesDao
 import com.example.expenses.entities.category.Category
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CategoriesDaoWrapper(private val categoriesDao: CategoriesDao, private val viewModel: ViewModel) {
+@HiltViewModel
+class ChooseCategoryViewModel @Inject constructor(
+    private val categoriesDao: CategoriesDao
+) : ViewModel() {
 
     val chooseCategoriesDialogLiveData = MutableLiveData<MutableList<Category>>()
     val provideCategoriesLiveData = MutableLiveData<MutableList<Category>>()
@@ -17,7 +22,7 @@ class CategoriesDaoWrapper(private val categoriesDao: CategoriesDao, private val
     private lateinit var currentCategory: Category
 
     fun provideCategories(category: Category? = null) {
-        viewModel.viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             if (category == null) {
                 rootCategory = categoriesDao.getRootCategory()
                 currentCategory = rootCategory
@@ -30,12 +35,11 @@ class CategoriesDaoWrapper(private val categoriesDao: CategoriesDao, private val
     }
 
     fun provideParentCategories() {
-        viewModel.viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             provideCategoriesLiveData.postValue(if (rootCategory == currentCategory) mutableListOf() else currentCategory.parent!!.subCategories)
             if (currentCategory != rootCategory){
                 currentCategory = currentCategory.parent!!
             }
         }
     }
-
 }

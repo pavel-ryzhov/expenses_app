@@ -3,14 +3,12 @@ package com.example.expenses.presentation.add_expense
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.expenses.data.data_sources.local.dao.CategoriesDao
 import com.example.expenses.data.data_sources.local.dao.ExpensesDao
 import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.services.currency_converter.CurrenciesConverterService
 import com.example.expenses.entities.category.Category
 import com.example.expenses.entities.expense.Expense
 import com.example.expenses.entities.symbols.Symbol
-import com.example.expenses.presentation.dialogs.choose_category_dialog.CategoriesDaoWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AddExpenseViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
-    private val categoriesDao: CategoriesDao,
     private val expensesDao: ExpensesDao,
     private val currenciesConverterService: CurrenciesConverterService
 ) : ViewModel() {
@@ -64,9 +61,5 @@ class AddExpenseViewModel @Inject constructor(
                 expenseAddedSuccessfullyLiveData.postValue(Unit)
             }
         }
-    }
-
-    fun getCategoriesWrapper(): CategoriesDaoWrapper {
-        return CategoriesDaoWrapper(categoriesDao, this)
     }
 }

@@ -2,7 +2,10 @@ package com.example.expenses.presentation.add_expense
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -38,10 +41,16 @@ class AddExpenseFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dateRecyclerAdapter = DateRecyclerAdapter(SimpleDateFormat("MMMM d"), Calendar.DAY_OF_MONTH, fragmentManager = requireActivity().supportFragmentManager)
-        autoCompleteTextViewCurrenciesAdapter = object : ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item){
+        dateRecyclerAdapter = DateRecyclerAdapter(
+            SimpleDateFormat("MMMM d"),
+            Calendar.DAY_OF_MONTH,
+            fragmentManager = requireActivity().supportFragmentManager
+        )
+        autoCompleteTextViewCurrenciesAdapter = object :
+            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                return super.getView(position, convertView, parent).apply { textAlignment = View.TEXT_ALIGNMENT_CENTER }
+                return super.getView(position, convertView, parent)
+                    .apply { textAlignment = View.TEXT_ALIGNMENT_CENTER }
             }
         }
         binding.apply {
@@ -59,7 +68,7 @@ class AddExpenseFragment : Fragment() {
                 showChooseCategoryDialog()
             }
             autoCompleteTextViewCategory.setOnTouchListener { _, motionEvent ->
-                if (motionEvent.action == MotionEvent.ACTION_UP){
+                if (motionEvent.action == MotionEvent.ACTION_UP) {
                     showChooseCategoryDialog()
                 }
                 true
@@ -91,17 +100,18 @@ class AddExpenseFragment : Fragment() {
                 layoutParams.height = binding.editTextAmount.height
                 binding.autoCompleteTextViewCurrency.layoutParams = layoutParams
             }
-            expenseAddedSuccessfullyLiveData.observe(viewLifecycleOwner){
+            expenseAddedSuccessfullyLiveData.observe(viewLifecycleOwner) {
                 requireActivity().onBackPressed()
-                Toast.makeText(requireContext(), "Expense added successfully.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Expense added successfully.", Toast.LENGTH_SHORT)
+                    .show()
             }
-            amountFieldIsEmptyLiveData.observe(viewLifecycleOwner){
+            amountFieldIsEmptyLiveData.observe(viewLifecycleOwner) {
                 binding.textInputLayoutAmount.apply {
                     error = "Enter amount!"
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
                 }
             }
-            categoryFieldIsEmptyLiveData.observe(viewLifecycleOwner){
+            categoryFieldIsEmptyLiveData.observe(viewLifecycleOwner) {
                 binding.textInputLayoutCategory.apply {
                     error = "Choose category!"
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
@@ -109,13 +119,11 @@ class AddExpenseFragment : Fragment() {
             }
         }
     }
-    private fun showChooseCategoryDialog(){
-        ChooseCategoryDialog(viewModel.getCategoriesWrapper(), this).apply {
-            categorySelectedLiveData.observe(viewLifecycleOwner){
-                selectedCategory = it
-                binding.autoCompleteTextViewCategory.setText(it.name)
-            }
-            show()
-        }
+
+    private fun showChooseCategoryDialog() {
+        ChooseCategoryDialog {
+            selectedCategory = it
+            binding.autoCompleteTextViewCategory.setText(it.name)
+        }.show(requireActivity().supportFragmentManager, null)
     }
 }

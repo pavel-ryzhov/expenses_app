@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expenses.databinding.DateRecyclerViewItemBinding
 import com.example.expenses.extensions.getCenterXChildPosition
+import com.example.expenses.extensions.toActivity
 import com.example.expenses.presentation.dialogs.DatePickerDialog
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,7 +17,6 @@ class DateRecyclerAdapter(
     private val itemType: Int,
     private val itemCount: Int = 20,
     private val additionalItemCount: Int = 5,
-    private val fragmentManager: FragmentManager? = null
 ) : RecyclerView.Adapter<DateRecyclerAdapter.Holder>() {
     private var calendar: Calendar = GregorianCalendar()
     private var status = 0
@@ -111,7 +111,7 @@ class DateRecyclerAdapter(
         fun setDate(string: String) {
             binding.textViewDate.text = string
             binding.textViewDate.setOnClickListener {
-                fragmentManager?.let {
+                recyclerView.context.toActivity().supportFragmentManager?.let {
                     DatePickerDialog { calendar ->
                         setDate(calendar)
                     }.show(it, "")

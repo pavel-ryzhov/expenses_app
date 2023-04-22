@@ -1,6 +1,7 @@
 package com.example.expenses.presentation.statistics.monthly
 
 import android.animation.LayoutTransition
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,13 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expenses.R
 import com.example.expenses.databinding.FragmentMonthlyStatisticsBinding
 import com.example.expenses.extensions.getCenterXChildPosition
+import com.example.expenses.extensions.navigateWithDefaultAnimation
 import com.example.expenses.presentation.DateRecyclerAdapter
 import com.example.expenses.presentation.dialogs.amount_in_secondary_currencies.AmountInSecondaryCurrenciesDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +28,7 @@ class MonthlyStatisticsFragment : Fragment() {
     private lateinit var binding: FragmentMonthlyStatisticsBinding
     private val viewModel by viewModels<MonthlyStatisticsViewModel>()
     private lateinit var legendRecyclerAdapter: LegendRecyclerAdapter
+    @SuppressLint("SimpleDateFormat")
     private val dateRecyclerAdapter =
         DateRecyclerAdapter(SimpleDateFormat("MMMM yyyy"), Calendar.MONTH)
     private var dateRecyclerViewPosition = -1
@@ -63,6 +67,9 @@ class MonthlyStatisticsFragment : Fragment() {
             }
             buttonBack.setOnClickListener {
                 requireActivity().onBackPressed()
+            }
+            buttonDaily.setOnClickListener {
+                findNavController().navigate(R.id.action_monthlyStatisticsFragment_to_dailyStatisticsFragment)
             }
             expensesChartView.description.text = ""
             textViewNoExpenses.visibility = View.GONE

@@ -27,7 +27,6 @@ import javax.inject.Inject
 class MonthlyStatisticsViewModel @Inject constructor(
     private val expensesStatisticsService: ExpensesStatisticsService,
     private val appPreferences: AppPreferences,
-    private val currenciesConverterService: CurrenciesConverterService,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -107,9 +106,8 @@ class MonthlyStatisticsViewModel @Inject constructor(
                 ).apply {
                     setDrawValues(false)
                     (getDataSetByLabel("All", true) as? LineDataSet)?.let {
-                        val color = ContextCompat.getColor(getApplication(), R.color.blue)
-                        it.color = color
-                        it.setCircleColor(color)
+                        it.color = ContextCompat.getColor(getApplication(), R.color.blue)
+                        it.setDrawCircles(false)
                     }
                 }
             )

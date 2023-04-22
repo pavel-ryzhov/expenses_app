@@ -15,6 +15,7 @@ import androidx.navigation.NavOptions
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expenses.R
 import kotlin.math.pow
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 private val DEFAULT_NAV_OPTIONS = NavOptions.Builder()
@@ -49,7 +50,6 @@ fun RecyclerView.getCenterXChildPosition(): Int {
 }
 
 private fun RecyclerView.isChildInCenterX(child: View): Boolean {
-    val childCount = childCount
     val lvLocationOnScreen = IntArray(2)
     val vLocationOnScreen = IntArray(2)
     this.getLocationOnScreen(lvLocationOnScreen)
@@ -83,8 +83,11 @@ fun Double.format(decimalNumbers: Int = 2): String{
     }
     return str
 }
+
 fun Double.roundAndFormat(decimalNumbers: Int = 2) = this.round(decimalNumbers).format(decimalNumbers)
 
 fun Random.randomColor() = Color.rgb(nextInt(256), nextInt(256), nextInt(256))
 
 fun Context.toActivity() = (if (this is ContextWrapper) this.baseContext else this) as AppCompatActivity
+
+fun Double.roundWithAccuracy(accuracy: Int): Int = (this / accuracy).roundToInt() * accuracy

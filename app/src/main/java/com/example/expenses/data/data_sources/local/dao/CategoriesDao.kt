@@ -22,6 +22,9 @@ abstract class CategoriesDao {
     @Query("SELECT EXISTS (SELECT 1 FROM categoryDBEntity WHERE name = :categoryDBEntityName)")
     abstract fun hasCategoryDBEntity(categoryDBEntityName: String): Boolean
 
+    @Query("SELECT * FROM categoryDBEntity WHERE name = :categoryDBEntityName")
+    abstract fun getCategoryDBEntityByName(categoryDBEntityName: String): CategoryDBEntity
+
     @Query("SELECT * FROM categoryDBEntity WHERE ((parentName IS :categoryDBEntityParentName) OR (parentName = :categoryDBEntityParentName))")
     abstract fun getCategoryDBEntityChildren(categoryDBEntityParentName: String?): MutableList<CategoryDBEntity>
 

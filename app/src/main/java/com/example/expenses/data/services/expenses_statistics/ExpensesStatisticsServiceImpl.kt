@@ -4,6 +4,7 @@ import com.example.expenses.data.data_sources.local.dao.CategoriesDao
 import com.example.expenses.data.data_sources.local.dao.ExpensesDao
 import com.example.expenses.entities.category.Category
 import com.example.expenses.entities.category.CategoryDBEntity
+import com.example.expenses.extensions.roundWithAccuracy
 import com.github.mikephil.charting.data.*
 import java.util.*
 import javax.inject.Inject
@@ -104,10 +105,33 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
                     category.name
                 ).apply {
                     color = category.color
-                    setCircleColor(category.color)
+                    setDrawCircles(false)
                 }
             }.filter { it.yMax != 0f })
         return LineData(dataSets.toList())
+    }
+
+    override fun getLineChartStatisticsOfDay(
+        year: Int,
+        month: Int,
+        day: Int,
+        filter: Set<String>
+    ): LineData {
+        val expenses1 = expensesDao.getExpensesByDay(year, month, day)
+        val categories = expenses1.map { it.category }.toMutableSet().apply { add("All") }.filter { it !in filter }.toSet()
+        val dataSets = categories.map { category ->
+            val list = MutableList(24 * 60 / 5){0.0}
+            expenses1.filter { category == "All" || it.category == category }.forEach {
+                list[it.hour * 60 / 5 + it.minute.toDouble().roundWithAccuracy(5) / 5] = it.amount
+            }
+            LineDataSet(list.mapIndexed { index, d -> Entry(index.toFloat(), d.toFloat()) }, "").apply {
+                if (category != "All") {
+                    color = categoriesDao.getCategoryDBEntityByName(category).color
+                } else label = "All"
+                setDrawCircles(false)
+            }
+        }.filter { it.yMax != 0f }
+        return LineData(dataSets)
     }
 
     override fun getTotalByMonthAndCategory(
@@ -135,23 +159,46 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
 
     override fun getNonZeroCategoryOfMonth(year: Int, month: Int): Category {
         return categoriesDao.getRootCategory().apply {
-            removeZeroCategories(year, month, this)
+            removeZeroCategoriesOfMonth(year, month, this)
         }
     }
 
-    private fun removeZeroCategories(year: Int, month: Int, category: Category) {
+    override fun getNonZeroCategoryOfDay(year: Int, month: Int, day: Int): Category {
+        return categoriesDao.getRootCategory().apply {
+            removeZeroCategoriesOfDay(year, month, day, this)
+        }
+    }
+
+    private fun removeZeroCategoriesOfMonth(year: Int, month: Int, category: Category) {
         if (category.hasSubCategories()) {
             for (i in category.subCategories.indices.reversed())
-                if (expensesDao.countExpensesOfCategoryAndSubCategories(
+                if (expensesDao.countExpensesOfCategoryAndSubCategoriesByMonth(
                         year,
                         month,
                         category.subCategories[i].fullName
                     ) == 0
                 )
                     category.subCategories.removeAt(i)
-                else removeZeroCategories(year, month, category.subCategories[i])
+                else removeZeroCategoriesOfMonth(year, month, category.subCategories[i])
+        }
+    }
+
+    private fun removeZeroCategoriesOfDay(year: Int, month: Int, day: Int, category: Category) {
+        if (category.hasSubCategories()) {
+            for (i in category.subCategories.indices.reversed())
+                if (expensesDao.countExpensesOfCategoryAndSubCategoriesByDay(
+                        year,
+                        month,
+                        day,
+                        category.subCategories[i].fullName
+                    ) == 0
+                )
+                    category.subCategories.removeAt(i)
+                else removeZeroCategoriesOfDay(year, month, day, category.subCategories[i])
         }
     }
 
     override fun hasExpensesInMonth(year: Int, month: Int) = expensesDao.countExpensesInMonth(year, month) > 0
+
+    override fun hasExpensesInDay(year: Int, month: Int, day: Int) = expensesDao.countExpensesInDay(year, month, day) > 0
 }

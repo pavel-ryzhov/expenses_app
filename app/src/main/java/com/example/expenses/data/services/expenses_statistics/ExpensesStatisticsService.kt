@@ -20,5 +20,8 @@ interface ExpensesStatisticsService {
     fun getLineChartStatisticsOfMonth(year: Int, month: Int, filter: Set<String> = setOf()): LineData
     fun getPieChartStatisticsOfMonth(year: Int, month: Int, filter: Set<String> = setOf()): PieData
     fun getNonZeroCategoryOfMonth(year: Int, month: Int): Category
+    fun getNonZeroCategoryOfDay(year: Int, month: Int, day: Int): Category
     fun hasExpensesInMonth(year: Int, month: Int): Boolean
+    fun hasExpensesInDay(year: Int, month: Int, day: Int): Boolean
+    fun getLineChartStatisticsOfDay(year: Int, month: Int, day: Int, filter: Set<String> = setOf()): LineData
 }

@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/generalFragment"
         android:name="com.example.expenses.presentation.general.GeneralFragment"
-        android:label="GeneralFragment" >
+        android:label="GeneralFragment">
         <action
             android:id="@+id/action_generalFragment_to_addExpenseFragment"
             app:destination="@id/addExpenseFragment" />
@@ -30,10 +30,10 @@
         android:name="com.example.expenses.presentation.choose_secondary_currencies.ChooseSecondaryCurrenciesFragment"
         android:label="ChooseSecondaryCurrenciesFragment">
         <action
-            app:enterAnim="@anim/fragment_slide_in"
-            app:popExitAnim="@anim/fragment_slide_out"
             android:id="@+id/action_chooseSecondaryCurrenciesFragment_to_generalFragment"
             app:destination="@id/generalFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"
             app:popUpTo="@id/chooseMainCurrencyFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -48,5 +48,27 @@
     <fragment
         android:id="@+id/monthlyStatisticsFragment"
         android:name="com.example.expenses.presentation.statistics.monthly.MonthlyStatisticsFragment"
-        android:label="MonthlyStatisticsFragment" />
+        android:label="MonthlyStatisticsFragment">
+        <action
+            android:id="@+id/action_monthlyStatisticsFragment_to_dailyStatisticsFragment"
+            app:destination="@id/dailyStatisticsFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_fade_out"
+            app:popEnterAnim="@anim/fragment_fade_in"
+            app:popExitAnim="@anim/fragment_slide_out"
+            app:popUpTo="@id/generalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dailyStatisticsFragment"
+        android:name="com.example.expenses.presentation.statistics.daily.DailyStatisticsFragment"
+        android:label="DailyStatisticsFragment">
+        <action
+            android:id="@+id/action_dailyStatisticsFragment_to_monthlyStatisticsFragment"
+            app:destination="@id/monthlyStatisticsFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_fade_out"
+            app:popEnterAnim="@anim/fragment_fade_in"
+            app:popExitAnim="@anim/fragment_slide_out"
+            app:popUpTo="@id/generalFragment" />
+    </fragment>
 </navigation>

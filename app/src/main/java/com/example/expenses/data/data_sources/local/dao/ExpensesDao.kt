@@ -50,12 +50,16 @@ interface ExpensesDao {
     @Query("SELECT * FROM expense WHERE year = :year AND month = :month AND category = :categoryName")
     fun getExpensesByMonthAndCategory(year: Int, month: Int, categoryName: String): MutableList<Expense>
 
-    @Query("SELECT COUNT() FROM expense WHERE year = :year AND month = :month AND category = :categoryName")
-    fun countExpensesOfCategory(year: Int, month: Int, categoryName: String): Int
-
     @Query("SELECT COUNT() FROM expense WHERE year = :year AND month = :month AND category LIKE :categoryName || '%'")
-    fun countExpensesOfCategoryAndSubCategories(year: Int, month: Int, categoryName: String): Int
+    fun countExpensesOfCategoryAndSubCategoriesByMonth(year: Int, month: Int, categoryName: String): Int
+
+    @Query("SELECT COUNT() FROM expense WHERE year = :year AND month = :month AND day = :day AND category LIKE :categoryName || '%'")
+    fun countExpensesOfCategoryAndSubCategoriesByDay(year: Int, month: Int, day: Int, categoryName: String): Int
 
     @Query("SELECT COUNT() FROM expense WHERE year = :year AND month = :month")
     fun countExpensesInMonth(year: Int, month: Int): Int
+
+    @Query("SELECT COUNT() FROM expense WHERE year = :year AND month = :month AND day = :day")
+    fun countExpensesInDay(year: Int, month: Int, day: Int): Int
+
 }

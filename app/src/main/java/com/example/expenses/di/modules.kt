@@ -14,40 +14,28 @@ import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.preferences.AppPreferencesImpl
 import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepository
 import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepositoryImpl
-import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
-import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsServiceImpl
 import com.example.expenses.data.repository.symbols.SymbolsRepository
 import com.example.expenses.data.repository.symbols.SymbolsRepositoryImpl
 import com.example.expenses.data.services.currency_converter.CurrenciesConverterService
 import com.example.expenses.data.services.currency_converter.CurrenciesConverterServiceImpl
+import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
+import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 @Module
-@InstallIn(ViewModelComponent::class)
-class ProvidesModule {
+@InstallIn(SingletonComponent::class)
+class SingletonComponentProvidesModule {
     @Provides
-    fun providesSymbolsDataSource(retrofit: Retrofit): RemoteSymbolsDataSource {
-        return retrofit.create(RemoteSymbolsDataSource::class.java)
-    }
-
-    @Provides
-    fun providesExchangeRatesDataSource(retrofit: Retrofit): RemoteExchangeRatesDataSource {
-        return retrofit.create(RemoteExchangeRatesDataSource::class.java)
-    }
-
-    @Provides
-    fun providesRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.API_URL)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
+    fun providesAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "AppDatabase").build()
     }
 
     @Provides
@@ -71,14 +59,42 @@ class ProvidesModule {
     }
 
     @Provides
-    fun providesAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, "AppDatabase").build()
+    fun providesSymbolsDataSource(retrofit: Retrofit): RemoteSymbolsDataSource {
+        return retrofit.create(RemoteSymbolsDataSource::class.java)
+    }
+
+    @Provides
+    fun providesExchangeRatesDataSource(retrofit: Retrofit): RemoteExchangeRatesDataSource {
+        return retrofit.create(RemoteExchangeRatesDataSource::class.java)
+    }
+
+    @Provides
+    fun providesRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.API_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
     }
 }
 
 @Module
-@InstallIn(ViewModelComponent::class)
-abstract class BindsModule {
+@InstallIn(SingletonComponent::class)
+abstract class SingletonComponentBindsModule {
+    @Binds
+    abstract fun bindsAppPreferences(
+        appPreferencesImpl: AppPreferencesImpl
+    ): AppPreferences
+
+    @Binds
+    abstract fun bindsExpensesStatisticsService(
+        expensesStatisticsServiceImpl: ExpensesStatisticsServiceImpl
+    ): ExpensesStatisticsService
+
+    @Binds
+    abstract fun bindsCurrenciesConverterService(
+        currenciesConverterServiceImpl: CurrenciesConverterServiceImpl
+    ): CurrenciesConverterService
+
     @Binds
     abstract fun bindsSymbolsRepository(
         symbolsRepositoryImpl: SymbolsRepositoryImpl
@@ -88,19 +104,5 @@ abstract class BindsModule {
     abstract fun bindsExchangeRatesRepository(
         exchangeRatesRepositoryImpl: ExchangeRatesRepositoryImpl
     ): ExchangeRatesRepository
-
-    @Binds
-    abstract fun bindsAppPreferences(
-        appPreferencesImpl: AppPreferencesImpl
-    ): AppPreferences
-
-    @Binds
-    abstract fun bindsCurrenciesConverterService(
-        currenciesConverterServiceImpl: CurrenciesConverterServiceImpl
-    ): CurrenciesConverterService
-
-    @Binds
-    abstract fun bindsExpensesStatisticsService(
-        expensesStatisticsServiceImpl: ExpensesStatisticsServiceImpl
-    ): ExpensesStatisticsService
 }
+

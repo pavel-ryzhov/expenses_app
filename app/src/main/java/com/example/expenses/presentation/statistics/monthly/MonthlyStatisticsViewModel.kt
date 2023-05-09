@@ -5,13 +5,13 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.expenses.ColorUtils
 import com.example.expenses.R
 import com.example.expenses.data.preferences.AppPreferences
-import com.example.expenses.data.services.currency_converter.CurrenciesConverterService
 import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
 import com.example.expenses.entities.category.Category
+import com.example.expenses.extensions.roundAndFormat
 import com.example.expenses.presentation.value_formatters.PercentageCurrencyValueFormatter
+import com.example.expenses.utils.chooseLessSimilarColor
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.PieData
@@ -88,11 +88,11 @@ class MonthlyStatisticsViewModel @Inject constructor(
                     expensesStatisticsService.getTotalByMonth(
                         year,
                         month
-                    )
+                    ).roundAndFormat()
                 } $mainCurrency"
             )
-            maxLiveData.postValue("${expensesStatisticsService.getMaxOfMonth(year, month)} $mainCurrency")
-            minLiveData.postValue("${expensesStatisticsService.getMinOfMonth(year, month)} $mainCurrency")
+            maxLiveData.postValue("${expensesStatisticsService.getMaxOfMonth(year, month).roundAndFormat()} $mainCurrency")
+            minLiveData.postValue("${expensesStatisticsService.getMinOfMonth(year, month).roundAndFormat()} $mainCurrency")
         }
     }
 
@@ -130,7 +130,7 @@ class MonthlyStatisticsViewModel @Inject constructor(
                     )
                     val color1 = ContextCompat.getColor(getApplication(), R.color.blue)
                     val color2 = ContextCompat.getColor(getApplication(), R.color.milky_white)
-                    setValueTextColors(colors.map { ColorUtils.chooseLessSimilarColor(it, color1, color2) })
+                    setValueTextColors(colors.map { chooseLessSimilarColor(it, color1, color2) })
                 })
         }
     }

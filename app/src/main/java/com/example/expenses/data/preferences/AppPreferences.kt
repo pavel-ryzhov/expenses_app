@@ -1,7 +1,9 @@
 package com.example.expenses.data.preferences
 
 import com.example.expenses.entities.symbols.Symbol
+import javax.inject.Singleton
 
+@Singleton
 interface AppPreferences {
     fun saveMainCurrency(symbol: Symbol)
     fun getMainCurrency(): Symbol

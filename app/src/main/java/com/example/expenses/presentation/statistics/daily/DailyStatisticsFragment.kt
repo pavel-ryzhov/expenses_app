@@ -1,6 +1,7 @@
 package com.example.expenses.presentation.statistics.daily
 
 import android.animation.LayoutTransition
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,8 +24,10 @@ class DailyStatisticsFragment : Fragment() {
 
     private lateinit var binding: FragmentDailyStatisticsBinding
     private val viewModel: DailyStatisticsViewModel by viewModels()
+    @SuppressLint("SimpleDateFormat")
     private val dateRecyclerAdapter = DateRecyclerAdapter(SimpleDateFormat("MMMM d"), Calendar.DAY_OF_MONTH)
     private lateinit var legendRecyclerAdapter: LegendRecyclerAdapter
+    private val expensesRecyclerAdapter = ExpensesRecyclerAdapter()
     private var dateRecyclerViewPosition = -1
 
     override fun onCreateView(
@@ -69,7 +72,11 @@ class DailyStatisticsFragment : Fragment() {
             expensesChartView.description.text = ""
             constraintLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
             recyclerViewLegend.adapter = legendRecyclerAdapter
+            recyclerViewExpenses.adapter = expensesRecyclerAdapter
             recyclerViewLegend.layoutManager = object : LinearLayoutManager(requireContext(), VERTICAL, false){
+                override fun canScrollVertically() = false
+            }
+            recyclerViewExpenses.layoutManager = object : LinearLayoutManager(requireContext(), VERTICAL, false){
                 override fun canScrollVertically() = false
             }
         }
@@ -90,6 +97,19 @@ class DailyStatisticsFragment : Fragment() {
             }
             legendLiveData.observe(viewLifecycleOwner){
                 legendRecyclerAdapter.setRootCategory(it)
+            }
+            hasExpensesLiveData.observe(viewLifecycleOwner){
+                binding.textViewNoExpenses.visibility = if (!it) View.VISIBLE else View.GONE
+                binding.scrollView.visibility = if (it) View.VISIBLE else View.INVISIBLE
+            }
+            totalLiveData.observe(viewLifecycleOwner) {
+                binding.textViewTotal.text = it
+            }
+            maxLiveData.observe(viewLifecycleOwner) {
+                binding.textViewMax.text = it
+            }
+            expensesLiveData.observe(viewLifecycleOwner){
+                expensesRecyclerAdapter.setExpenses(it)
             }
         }
     }

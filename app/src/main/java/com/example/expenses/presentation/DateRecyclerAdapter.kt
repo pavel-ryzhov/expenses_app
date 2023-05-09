@@ -111,7 +111,7 @@ class DateRecyclerAdapter(
         fun setDate(string: String) {
             binding.textViewDate.text = string
             binding.textViewDate.setOnClickListener {
-                recyclerView.context.toActivity().supportFragmentManager?.let {
+                recyclerView.context.toActivity().supportFragmentManager.let {
                     DatePickerDialog { calendar ->
                         setDate(calendar)
                     }.show(it, "")

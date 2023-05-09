@@ -13,7 +13,7 @@ data class Category(
     fun hasSubCategories() = subCategories.isNotEmpty()
     fun hasParent() = parent != null
     fun toCategoryDBEntity() = CategoryDBEntity(fullName, parent?.fullName, color)
-    fun getFriendlyName() = fullName.removePrefix("Root#").replace("#", " → ")
+    fun getFriendlyName() = CategoryDBEntity.getFriendlyName(name)
 
     companion object {
         fun getDefaultRootCategory() = Category("Root", "Root", subCategories = mutableListOf(

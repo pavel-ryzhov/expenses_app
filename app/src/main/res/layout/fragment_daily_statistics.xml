@@ -36,6 +36,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/recyclerViewDate" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewNoExpenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No expenses yet."
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutNavigationButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewDate"
+        app:layout_constraintVertical_bias="0.2" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -117,30 +129,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textViewMaxLabel"
                 app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel"
-                tools:text="873.34" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textViewMinLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Min:"
-                android:textSize="20sp"
-                android:paddingBottom="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewMaxLabel" />
-
-            <com.example.expenses.presentation.views.ConvertibleAmountView
-                android:id="@+id/textViewMin"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="8dp"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/textViewMinLabel"
-                app:layout_constraintTop_toBottomOf="@id/textViewMaxLabel"
                 tools:text="873.34" />
 
 

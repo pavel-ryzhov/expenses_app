@@ -86,6 +86,8 @@ fun Double.format(decimalNumbers: Int = 2): String{
 
 fun Double.roundAndFormat(decimalNumbers: Int = 2) = this.round(decimalNumbers).format(decimalNumbers)
 
+fun Float.roundAndFormat(decimalNumbers: Int = 2) = this.toDouble().roundAndFormat(decimalNumbers)
+
 fun Random.randomColor() = Color.rgb(nextInt(256), nextInt(256), nextInt(256))
 
 fun Context.toActivity() = (if (this is ContextWrapper) this.baseContext else this) as AppCompatActivity

@@ -10,6 +10,7 @@ import com.example.expenses.entities.category.CategoryDBEntity
 import com.example.expenses.entities.exchange_rates.ExchangeRate
 import com.example.expenses.entities.expense.Expense
 import com.example.expenses.entities.symbols.Symbol
+import javax.inject.Singleton
 
 @Database(
     entities = [
@@ -21,6 +22,7 @@ import com.example.expenses.entities.symbols.Symbol
     version = 1,
     exportSchema = false
 )
+@Singleton
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getSymbolsDao(): SymbolsDao
     abstract fun getExchangeRatesDao(): ExchangeRatesDao

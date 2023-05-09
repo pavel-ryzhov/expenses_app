@@ -201,4 +201,8 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
     override fun hasExpensesInMonth(year: Int, month: Int) = expensesDao.countExpensesInMonth(year, month) > 0
 
     override fun hasExpensesInDay(year: Int, month: Int, day: Int) = expensesDao.countExpensesInDay(year, month, day) > 0
+
+    override fun getMaxOfDay(year: Int, month: Int, day: Int): Double {
+        return expensesDao.getExpensesByDay(year, month, day).maxOf { it.amount }
+    }
 }

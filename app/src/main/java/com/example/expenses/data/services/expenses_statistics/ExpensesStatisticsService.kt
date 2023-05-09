@@ -4,7 +4,9 @@ import com.example.expenses.entities.category.Category
 import com.example.expenses.entities.category.CategoryDBEntity
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.PieData
+import javax.inject.Singleton
 
+@Singleton
 interface ExpensesStatisticsService {
     fun getTotalByDay(year: Int, month: Int, day: Int): Double
     fun getTotalByMonth(year: Int, month: Int): Double
@@ -24,4 +26,5 @@ interface ExpensesStatisticsService {
     fun hasExpensesInMonth(year: Int, month: Int): Boolean
     fun hasExpensesInDay(year: Int, month: Int, day: Int): Boolean
     fun getLineChartStatisticsOfDay(year: Int, month: Int, day: Int, filter: Set<String> = setOf()): LineData
+    fun getMaxOfDay(year: Int, month: Int, day: Int): Double
 }

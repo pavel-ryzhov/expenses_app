@@ -6,8 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.expenses.R
+import com.example.expenses.data.data_sources.local.dao.ExpensesDao
+import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
 import com.example.expenses.entities.category.Category
+import com.example.expenses.entities.expense.Expense
+import com.example.expenses.extensions.roundAndFormat
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,11 +23,17 @@ import javax.inject.Inject
 @HiltViewModel
 class DailyStatisticsViewModel @Inject constructor(
     private val expensesStatisticsService: ExpensesStatisticsService,
+    private val appPreferences: AppPreferences,
+    private val expensesDao: ExpensesDao,
     application: Application
 ) : AndroidViewModel(application) {
 
     val lineChartStatisticsLiveData = MutableLiveData<LineData>()
     val legendLiveData = MutableLiveData<Category>()
+    val expensesLiveData = MutableLiveData<MutableList<Expense>>()
+    val hasExpensesLiveData = MutableLiveData<Boolean>()
+    val totalLiveData = MutableLiveData<String>()
+    val maxLiveData = MutableLiveData<String>()
 
     private val categoriesFilters = mutableSetOf<String>()
     private lateinit var calendar: Calendar
@@ -33,9 +43,16 @@ class DailyStatisticsViewModel @Inject constructor(
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        fetchLineChartStatistics(year, month, day)
-        fetchLegendData(year, month, day)
+        viewModelScope.launch(Dispatchers.IO) {
+            val hasExpenses = expensesStatisticsService.hasExpensesInDay(year, month, day)
+            hasExpensesLiveData.postValue(hasExpenses)
+            if (hasExpenses){
+                fetchLineChartStatistics(year, month, day)
+                fetchLegendData(year, month, day)
+                fetchExpenses(year, month, day)
+                fetchTotalMax(year, month, day)
+            }
+        }
     }
 
     private fun fetchLineChartStatistics(year: Int, month: Int, day: Int){
@@ -49,6 +66,22 @@ class DailyStatisticsViewModel @Inject constructor(
                     setDrawValues(false)
                 }
             )
+        }
+    }
+
+    private fun fetchTotalMax(year: Int, month: Int, day: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            val mainCurrency = appPreferences.getMainCurrency().code
+            totalLiveData.postValue(
+                "${
+                    expensesStatisticsService.getTotalByDay(
+                        year,
+                        month,
+                        day
+                    ).roundAndFormat()
+                } $mainCurrency"
+            )
+            maxLiveData.postValue("${expensesStatisticsService.getMaxOfDay(year, month, day).roundAndFormat()} $mainCurrency")
         }
     }
 
@@ -82,5 +115,11 @@ class DailyStatisticsViewModel @Inject constructor(
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         fetchLineChartStatistics(year, month, day)
+    }
+
+    private fun fetchExpenses(year: Int, month: Int, day: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            expensesLiveData.postValue(expensesDao.getExpensesByDay(year, month, day))
+        }
     }
 }

@@ -25,6 +25,7 @@ class AddExpenseViewModel @Inject constructor(
 
     val expenseAddedSuccessfullyLiveData = MutableLiveData<Unit>()
     val amountFieldIsEmptyLiveData = MutableLiveData<Unit>()
+    val amountIsZeroLiveData = MutableLiveData<Unit>()
     val categoryFieldIsEmptyLiveData = MutableLiveData<Unit>()
 
     fun fetchCurrencies() {
@@ -43,6 +44,9 @@ class AddExpenseViewModel @Inject constructor(
             var success = true
             if (amount.isBlank()) {
                 amountFieldIsEmptyLiveData.postValue(Unit)
+                success = false
+            } else if (amount.toDouble() == 0.0) {
+                amountIsZeroLiveData.postValue(Unit)
                 success = false
             }
             if (category == null) {

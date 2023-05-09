@@ -39,12 +39,11 @@ class AddExpenseFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dateRecyclerAdapter = DateRecyclerAdapter(
             SimpleDateFormat("MMMM d"),
-            Calendar.DAY_OF_MONTH,
-            fragmentManager = requireActivity().supportFragmentManager
+            Calendar.DAY_OF_MONTH
         )
         autoCompleteTextViewCurrenciesAdapter = object :
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item) {
@@ -114,6 +113,12 @@ class AddExpenseFragment : Fragment() {
             categoryFieldIsEmptyLiveData.observe(viewLifecycleOwner) {
                 binding.textInputLayoutCategory.apply {
                     error = "Choose category!"
+                    startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
+                }
+            }
+            amountIsZeroLiveData.observe(viewLifecycleOwner){
+                binding.textInputLayoutAmount.apply {
+                    error = "Amount cannot be zero!"
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
                 }
             }

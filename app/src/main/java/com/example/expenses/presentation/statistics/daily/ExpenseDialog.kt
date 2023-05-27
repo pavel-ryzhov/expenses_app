@@ -52,7 +52,12 @@ class ExpenseDialog(
             }.time)
             textViewTime.text = formatTime(expense.hour, expense.minute)
             textViewCategory.text = CategoryDBEntity.getFriendlyName(expense.category)
-            textViewDescription.text = expense.description
+            if (expense.description.isNotBlank())
+                textViewDescription.text = expense.description
+            else {
+                textViewDescriptionLabel.height = 0
+                textViewDescription.visibility = View.GONE
+            }
         }.root
     }
 

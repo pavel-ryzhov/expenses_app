@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.expenses.R
 import com.example.expenses.databinding.FragmentMonthlyStatisticsBinding
 import com.example.expenses.extensions.getCenterXChildPosition
-import com.example.expenses.extensions.navigateWithDefaultAnimation
 import com.example.expenses.presentation.DateRecyclerAdapter
-import com.example.expenses.presentation.dialogs.amount_in_secondary_currencies.AmountInSecondaryCurrenciesDialog
+import com.example.expenses.presentation.statistics.LegendRecyclerAdapter
+import com.example.expenses.presentation.statistics.monthly.expenses_dialog.ExpensesDialog
+import com.example.expenses.presentation.views.PieChartView
+import com.github.mikephil.charting.data.PieEntry
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,6 +43,7 @@ class MonthlyStatisticsFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         legendRecyclerAdapter = LegendRecyclerAdapter(
             viewModel::addCategoryFilter,
@@ -71,14 +73,16 @@ class MonthlyStatisticsFragment : Fragment() {
             buttonDaily.setOnClickListener {
                 findNavController().navigate(R.id.action_monthlyStatisticsFragment_to_dailyStatisticsFragment)
             }
+            buttonTotal.setOnClickListener {
+                findNavController().navigate(R.id.action_monthlyStatisticsFragment_to_totalStatisticsFragment)
+            }
             expensesChartView.description.text = ""
+            pieChart.setOnEntryClickListener(object : PieChartView.OnEntryClickListener {
+                override fun onEntryClick(entry: PieEntry) {
+                    ExpensesDialog(entry.label, viewModel.calendar).show(requireActivity().supportFragmentManager, null)
+                }
+            })
             textViewNoExpenses.visibility = View.GONE
-            pieChart.legend.isEnabled = false
-            pieChart.setHoleColor(ContextCompat.getColor(requireContext(), R.color.milky_white))
-            pieChart.description.text = ""
-            pieChart.description.textSize *= 1.5f
-            pieChart.setDrawEntryLabels(false)
-            pieChart.isDrawHoleEnabled = false
             recyclerViewLegend.layoutManager = object : LinearLayoutManager(requireContext(), VERTICAL, false){
                 override fun canScrollVertically() = false
             }
@@ -96,18 +100,12 @@ class MonthlyStatisticsFragment : Fragment() {
             totalLiveData.observe(viewLifecycleOwner) {
                 binding.textViewTotal.text = it
             }
-            maxLiveData.observe(viewLifecycleOwner) {
-                binding.textViewMax.text = it
-            }
-            minLiveData.observe(viewLifecycleOwner) {
-                binding.textViewMin.text = it
-            }
             lineChartStatisticsLiveData.observe(viewLifecycleOwner) {
                 binding.expensesChartView.apply {
                     lineData = it
                     notifyDataSetChanged()
                     invalidate()
-                    animateXY(600, 1000)
+                    animateXY(300, 500)
                 }
             }
             pieChartStatisticsLiveData.observe(viewLifecycleOwner) {

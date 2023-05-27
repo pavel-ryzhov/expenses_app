@@ -44,7 +44,7 @@ class GeneralFragment : Fragment() {
                 text = "This month statistics"
                 textColor = ContextCompat.getColor(requireContext(), R.color.blue)
             }
-            expensesChartView.animateXY(600, 1000)
+            expensesChartView.animateXY(300, 500)
         }
         subscribeOnLiveData()
 

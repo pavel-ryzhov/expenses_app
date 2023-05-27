@@ -5,38 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewDate"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:foreground="@drawable/inner_shadow_horizontal"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toStartOf="@id/arrowRight"
-        app:layout_constraintStart_toEndOf="@id/arrowLeft"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="UnusedAttribute" />
-
-    <com.example.expenses.presentation.views.ArrowView
-        android:id="@+id/arrowLeft"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/recyclerViewDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/recyclerViewDate" />
-
-    <com.example.expenses.presentation.views.ArrowView
-        android:id="@+id/arrowRight"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/recyclerViewDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/recyclerViewDate" />
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewNoExpenses"
         android:layout_width="wrap_content"
@@ -46,8 +14,8 @@
         app:layout_constraintBottom_toTopOf="@id/linearLayoutNavigationButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewDate"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -56,7 +24,7 @@
         android:padding="8dp"
         android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
         app:layout_constraintBottom_toTopOf="@id/linearLayoutNavigationButtons"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewDate">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -64,12 +32,65 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true">
 
-            <com.example.expenses.presentation.views.ExpensesChartView
-                android:id="@+id/expensesChartView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1:0.8"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewTotalLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Total amount:"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.example.expenses.presentation.views.ConvertibleAmountView
+                android:id="@+id/textViewTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textViewTotalLabel"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="873.34" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewNumberOfExpensesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Number of expenses:"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewNumberOfExpenses"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textViewNumberOfExpensesLabel"
+                app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel"
+                tools:text="873.34" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewExpensesByCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Expenses by categories:"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewNumberOfExpensesLabel" />
+
 
             <com.example.expenses.presentation.views.PieChartView
                 android:id="@+id/pieChart"
@@ -77,7 +98,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintTop_toBottomOf="@id/expensesChartView" />
+                app:layout_constraintTop_toBottomOf="@id/textViewExpensesByCategories" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewLegend"
@@ -86,33 +107,9 @@
                 android:layout_marginVertical="8dp"
                 app:layout_constraintTop_toBottomOf="@id/pieChart" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textViewTotalLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Total:"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerViewLegend" />
-
-            <com.example.expenses.presentation.views.ConvertibleAmountView
-                android:id="@+id/textViewTotal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/textViewTotalLabel"
-                app:layout_constraintTop_toBottomOf="@id/recyclerViewLegend"
-                tools:text="873.34" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
 
     <View
         android:layout_width="0dp"
@@ -131,7 +128,6 @@
         app:layout_constraintBottom_toBottomOf="@id/scrollView"
         app:layout_constraintEnd_toEndOf="@id/scrollView"
         app:layout_constraintStart_toStartOf="@id/scrollView" />
-
 
     <LinearLayout
         android:id="@+id/linearLayoutNavigationButtons"
@@ -164,15 +160,14 @@
             android:textSize="14sp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonTotal"
+            android:id="@+id/buttonMonthly"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:text="total"
+            android:text="monthly"
             android:textColor="@color/milky_white"
             android:textSize="14sp" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

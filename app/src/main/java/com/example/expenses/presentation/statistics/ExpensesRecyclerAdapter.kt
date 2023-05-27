@@ -1,4 +1,4 @@
-package com.example.expenses.presentation.statistics.daily
+package com.example.expenses.presentation.statistics
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -9,15 +9,19 @@ import com.example.expenses.databinding.ItemExpenseBinding
 import com.example.expenses.entities.expense.Expense
 import com.example.expenses.extensions.roundAndFormat
 import com.example.expenses.extensions.toActivity
+import com.example.expenses.presentation.statistics.daily.ExpenseDialog
+import com.example.expenses.utils.formatDate
 import com.example.expenses.utils.formatTime
 
-class ExpensesRecyclerAdapter : RecyclerView.Adapter<ExpensesRecyclerAdapter.Holder>() {
+class ExpensesRecyclerAdapter(private val typeDate: Boolean = false) : RecyclerView.Adapter<ExpensesRecyclerAdapter.Holder>() {
 
     private val expenses = mutableListOf<Expense>()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setExpenses(expenses: List<Expense>){
+        this.expenses.clear()
         this.expenses.addAll(expenses)
-        notifyItemRangeInserted(0, expenses.size)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -35,7 +39,7 @@ class ExpensesRecyclerAdapter : RecyclerView.Adapter<ExpensesRecyclerAdapter.Hol
         fun setExpense(expense: Expense){
             binding.apply {
                 textViewAmount.text = "${expense.amount.roundAndFormat()} ${AppPreferencesImpl(binding.root.context).getMainCurrency().code}"
-                textViewTime.text = formatTime(expense.hour, expense.minute)
+                textViewTimeOrDate.text = if (typeDate) formatDate(expense.month, expense.day) else formatTime(expense.hour, expense.minute)
                 root.setOnClickListener {
                     ExpenseDialog(expense).show(root.context.toActivity().supportFragmentManager, null)
                 }

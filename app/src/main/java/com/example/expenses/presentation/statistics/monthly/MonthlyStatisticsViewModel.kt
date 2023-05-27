@@ -31,15 +31,13 @@ class MonthlyStatisticsViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     val totalLiveData = MutableLiveData<String>()
-    val maxLiveData = MutableLiveData<String>()
-    val minLiveData = MutableLiveData<String>()
     val lineChartStatisticsLiveData = MutableLiveData<LineData>()
     val pieChartStatisticsLiveData = MutableLiveData<PieData>()
     val legendLiveData = MutableLiveData<Category>()
     val hasExpensesLiveData = MutableLiveData<Boolean>()
 
     private val categoriesFilters = mutableSetOf<String>()
-    private lateinit var calendar: Calendar
+    lateinit var calendar: Calendar
 
     fun fetchData(calendar: Calendar = GregorianCalendar()) {
         this.calendar = calendar
@@ -51,7 +49,7 @@ class MonthlyStatisticsViewModel @Inject constructor(
             if (hasExpenses) {
                 fetchFilterableData(calendar)
                 fetchLegendData(year, month)
-                fetchTotalMaxMin(year, month)
+                fetchTotal(year, month)
             }
         }
     }
@@ -61,6 +59,7 @@ class MonthlyStatisticsViewModel @Inject constructor(
         val month = calendar.get(MONTH)
         fetchLineChartStatistics(year, month)
         fetchPieChartStatistics(year, month)
+        fetchTotal(year, month)
     }
 
     fun addCategoryFilter(category: Category){
@@ -80,19 +79,18 @@ class MonthlyStatisticsViewModel @Inject constructor(
                 addCategoryFilterRecursively(subCategory)
     }
 
-    private fun fetchTotalMaxMin(year: Int, month: Int) {
+    private fun fetchTotal(year: Int, month: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val mainCurrency = appPreferences.getMainCurrency().code
             totalLiveData.postValue(
                 "${
                     expensesStatisticsService.getTotalByMonth(
                         year,
-                        month
+                        month,
+                        categoriesFilters
                     ).roundAndFormat()
                 } $mainCurrency"
             )
-            maxLiveData.postValue("${expensesStatisticsService.getMaxOfMonth(year, month).roundAndFormat()} $mainCurrency")
-            minLiveData.postValue("${expensesStatisticsService.getMinOfMonth(year, month).roundAndFormat()} $mainCurrency")
         }
     }
 

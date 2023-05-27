@@ -57,6 +57,14 @@
             app:popEnterAnim="@anim/fragment_fade_in"
             app:popExitAnim="@anim/fragment_slide_out"
             app:popUpTo="@id/generalFragment" />
+        <action
+            android:id="@+id/action_monthlyStatisticsFragment_to_totalStatisticsFragment"
+            app:destination="@id/totalStatisticsFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_fade_out"
+            app:popEnterAnim="@anim/fragment_fade_in"
+            app:popExitAnim="@anim/fragment_slide_out"
+            app:popUpTo="@id/generalFragment"/>
     </fragment>
     <fragment
         android:id="@+id/dailyStatisticsFragment"
@@ -70,5 +78,34 @@
             app:popEnterAnim="@anim/fragment_fade_in"
             app:popExitAnim="@anim/fragment_slide_out"
             app:popUpTo="@id/generalFragment" />
+        <action
+            android:id="@+id/action_dailyStatisticsFragment_to_totalStatisticsFragment"
+            app:destination="@id/totalStatisticsFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_fade_out"
+            app:popEnterAnim="@anim/fragment_fade_in"
+            app:popExitAnim="@anim/fragment_slide_out"
+            app:popUpTo="@id/generalFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/totalStatisticsFragment"
+        android:name="com.example.expenses.presentation.statistics.total.TotalStatisticsFragment"
+        android:label="TotalStatisticsFragment" >
+        <action
+            android:id="@+id/action_totalStatisticsFragment_to_monthlyStatisticsFragment"
+            app:destination="@id/monthlyStatisticsFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_fade_out"
+            app:popEnterAnim="@anim/fragment_fade_in"
+            app:popExitAnim="@anim/fragment_slide_out"
+            app:popUpTo="@id/generalFragment"/>
+        <action
+            android:id="@+id/action_totalStatisticsFragment_to_dailyStatisticsFragment"
+            app:destination="@id/dailyStatisticsFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_fade_out"
+            app:popEnterAnim="@anim/fragment_fade_in"
+            app:popExitAnim="@anim/fragment_slide_out"
+            app:popUpTo="@id/generalFragment"/>
     </fragment>
 </navigation>

@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.expenses.R
 import com.example.expenses.databinding.FragmentDailyStatisticsBinding
 import com.example.expenses.extensions.getCenterXChildPosition
 import com.example.expenses.presentation.DateRecyclerAdapter
-import com.example.expenses.presentation.statistics.monthly.LegendRecyclerAdapter
+import com.example.expenses.presentation.statistics.ExpensesRecyclerAdapter
+import com.example.expenses.presentation.statistics.LegendRecyclerAdapter
 import com.example.expenses.presentation.value_formatters.TimeValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -59,6 +62,12 @@ class DailyStatisticsFragment : Fragment() {
             buttonBack.setOnClickListener {
                 requireActivity().onBackPressed()
             }
+            buttonMonthly.setOnClickListener {
+                findNavController().navigate(R.id.action_dailyStatisticsFragment_to_monthlyStatisticsFragment)
+            }
+            buttonTotal.setOnClickListener {
+                findNavController().navigate(R.id.action_dailyStatisticsFragment_to_totalStatisticsFragment)
+            }
             arrowLeft.setOnClickListener {
                 recyclerViewDate.smoothScrollToPosition(recyclerViewDate.getCenterXChildPosition() - 1)
             }
@@ -92,7 +101,7 @@ class DailyStatisticsFragment : Fragment() {
                     lineData = it
                     notifyDataSetChanged()
                     invalidate()
-                    animateXY(600, 1000)
+                    animateXY(300, 500)
                 }
             }
             legendLiveData.observe(viewLifecycleOwner){
@@ -104,9 +113,6 @@ class DailyStatisticsFragment : Fragment() {
             }
             totalLiveData.observe(viewLifecycleOwner) {
                 binding.textViewTotal.text = it
-            }
-            maxLiveData.observe(viewLifecycleOwner) {
-                binding.textViewMax.text = it
             }
             expensesLiveData.observe(viewLifecycleOwner){
                 expensesRecyclerAdapter.setExpenses(it)

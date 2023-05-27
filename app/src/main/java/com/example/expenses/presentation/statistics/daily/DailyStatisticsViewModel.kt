@@ -33,7 +33,6 @@ class DailyStatisticsViewModel @Inject constructor(
     val expensesLiveData = MutableLiveData<MutableList<Expense>>()
     val hasExpensesLiveData = MutableLiveData<Boolean>()
     val totalLiveData = MutableLiveData<String>()
-    val maxLiveData = MutableLiveData<String>()
 
     private val categoriesFilters = mutableSetOf<String>()
     private lateinit var calendar: Calendar
@@ -50,7 +49,7 @@ class DailyStatisticsViewModel @Inject constructor(
                 fetchLineChartStatistics(year, month, day)
                 fetchLegendData(year, month, day)
                 fetchExpenses(year, month, day)
-                fetchTotalMax(year, month, day)
+                fetchTotal(year, month, day)
             }
         }
     }
@@ -69,7 +68,7 @@ class DailyStatisticsViewModel @Inject constructor(
         }
     }
 
-    private fun fetchTotalMax(year: Int, month: Int, day: Int){
+    private fun fetchTotal(year: Int, month: Int, day: Int){
         viewModelScope.launch(Dispatchers.IO) {
             val mainCurrency = appPreferences.getMainCurrency().code
             totalLiveData.postValue(
@@ -77,11 +76,11 @@ class DailyStatisticsViewModel @Inject constructor(
                     expensesStatisticsService.getTotalByDay(
                         year,
                         month,
-                        day
+                        day,
+                        categoriesFilters
                     ).roundAndFormat()
                 } $mainCurrency"
             )
-            maxLiveData.postValue("${expensesStatisticsService.getMaxOfDay(year, month, day).roundAndFormat()} $mainCurrency")
         }
     }
 
@@ -115,11 +114,13 @@ class DailyStatisticsViewModel @Inject constructor(
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         fetchLineChartStatistics(year, month, day)
+        fetchTotal(year, month, day)
+        fetchExpenses(year, month, day)
     }
 
     private fun fetchExpenses(year: Int, month: Int, day: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            expensesLiveData.postValue(expensesDao.getExpensesByDay(year, month, day))
+            expensesLiveData.postValue(expensesDao.getExpensesByDayWithFilter(year, month, day, categoriesFilters))
         }
     }
 }

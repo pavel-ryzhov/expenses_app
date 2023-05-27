@@ -7,12 +7,22 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 @SuppressLint("SimpleDateFormat")
 fun formatTime(hour: Int, minute: Int): String {
-    return DateFormat.getTimeInstance(DateFormat.SHORT).format(SimpleDateFormat("H:m").parse("$hour:$minute")!!)
+    return DateFormat.getTimeInstance(DateFormat.SHORT)
+        .format(SimpleDateFormat("H:m").parse("$hour:$minute")!!)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun formatDate(month: Int, day: Int): String {
+    return SimpleDateFormat("MMMM d").format(GregorianCalendar().apply {
+        set(Calendar.MONTH, month)
+        set(Calendar.DAY_OF_MONTH, day)
+    }.time)
 }
 
 fun chooseMoreSimilarColor(color: Int, color1: Int, color2: Int) =

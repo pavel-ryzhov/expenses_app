@@ -20,17 +20,21 @@
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/category_item.xml" value="0.264" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/currencies_recycler_view_item.xml" value="0.3317657118426678" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/date_recycler_view_item.xml" value="0.3309106455750321" />
-        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_amount_in_secondary_currencies.xml" value="0.3317657118426678" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_amount_in_secondary_currencies.xml" value="0.264" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_choose_category.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_expense.xml" value="0.3317657118426678" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_expenses.xml" value="0.2" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_no_network_connection.xml" value="0.4" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_add_expense.xml" value="0.4" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_choose_category_in_dialog.xml" value="0.3309106455750321" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_choose_main_currency.xml" value="0.39844509232264336" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_choose_secondary_currencies.xml" value="0.3317657118426678" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_currency_calculator.xml" value="0.3309106455750321" />
-        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_daily_statistics.xml" value="0.3309106455750321" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_daily_statistics.xml" value="0.2" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_general.xml" value="0.4" />
-        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_monthly_statistics.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_monthly_statistics.xml" value="0.2" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_total_statistics.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_expense.xml" value="0.3309106455750321" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_legend.xml" value="0.4" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_manage_categories.xml" value="0.4" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/secondary_currencies_recycler_view_item.xml" value="0.3317657118426678" />

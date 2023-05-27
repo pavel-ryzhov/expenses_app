@@ -93,6 +93,8 @@
                 android:layout_marginTop="8dp"
                 android:text="Total:"
                 android:textSize="20sp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recyclerViewExpenses" />
 
@@ -108,34 +110,28 @@
                 app:layout_constraintTop_toBottomOf="@id/recyclerViewExpenses"
                 tools:text="873.34" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textViewMaxLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Max:"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel" />
-
-            <com.example.expenses.presentation.views.ConvertibleAmountView
-                android:id="@+id/textViewMax"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="8dp"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/textViewMaxLabel"
-                app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel"
-                tools:text="873.34" />
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/shadow_top"
+        app:layout_constraintEnd_toEndOf="@id/scrollView"
+        app:layout_constraintStart_toStartOf="@id/scrollView"
+        app:layout_constraintTop_toTopOf="@id/scrollView" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/shadow_bottom"
+        app:layout_constraintBottom_toBottomOf="@id/scrollView"
+        app:layout_constraintEnd_toEndOf="@id/scrollView"
+        app:layout_constraintStart_toStartOf="@id/scrollView" />
 
     <LinearLayout
         android:id="@+id/linearLayoutNavigationButtons"

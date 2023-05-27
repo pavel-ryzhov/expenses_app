@@ -96,6 +96,8 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewCategory"
         android:layout_width="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/textViewDescriptionLabel"
+        app:layout_constraintVertical_chainStyle="packed"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="20sp"
@@ -103,7 +105,9 @@
         tools:text="fjfrrrffr" />
 
     <com.google.android.material.textview.MaterialTextView
+        app:layout_constraintBottom_toTopOf="@id/textViewDescription"
         android:id="@+id/textViewDescriptionLabel"
+        app:layout_constraintVertical_chainStyle="packed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -115,11 +119,13 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewDescription"
+        app:layout_constraintVertical_chainStyle="packed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewDescriptionLabel"
         tools:text="fjfrrrfededefr" />
 

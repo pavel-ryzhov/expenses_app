@@ -1,4 +1,4 @@
-package com.example.expenses.presentation.statistics.monthly
+package com.example.expenses.presentation.statistics
 
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater

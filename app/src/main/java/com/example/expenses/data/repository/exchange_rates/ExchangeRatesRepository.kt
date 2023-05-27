@@ -7,11 +7,11 @@ import javax.inject.Singleton
 
 @Singleton
 interface ExchangeRatesRepository {
-    fun fetchExchangeRates(mainCurrency: Symbol)
+    suspend fun fetchExchangeRates(mainCurrency: Symbol)
     fun getAllExchangeRatesLiveData(): LiveData<MutableList<ExchangeRate>>
-    fun getAllExchangeRates(): MutableList<ExchangeRate>
-    fun getExchangeRate(symbol: Symbol): ExchangeRate
+    suspend fun getAllExchangeRates(): MutableList<ExchangeRate>
+    suspend fun getExchangeRate(symbol: Symbol): ExchangeRate
     fun getExchangeRateLiveData(symbol: Symbol): LiveData<ExchangeRate>
-    fun getExchangeRates(symbols: List<Symbol>): MutableList<ExchangeRate>
+    suspend fun getExchangeRates(symbols: List<Symbol>): MutableList<ExchangeRate>
     fun getExchangeRatesLiveData(symbols: List<Symbol>): LiveData<MutableList<ExchangeRate>>
 }

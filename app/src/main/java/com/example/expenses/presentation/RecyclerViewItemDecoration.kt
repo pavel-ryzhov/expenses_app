@@ -1,4 +1,4 @@
-package com.example.expenses.presentation.views
+package com.example.expenses.presentation
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable

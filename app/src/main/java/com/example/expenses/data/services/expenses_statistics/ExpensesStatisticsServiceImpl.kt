@@ -14,19 +14,19 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
     private val expensesDao: ExpensesDao,
     private val categoriesDao: CategoriesDao
 ) : ExpensesStatisticsService {
-    override fun getTotalByDay(year: Int, month: Int, day: Int, filter: Set<String>): Double {
+    override suspend fun getTotalByDay(year: Int, month: Int, day: Int, filter: Set<String>): Double {
         return expensesDao.getExpensesByDay(year, month, day).filter { it.category !in filter }.sumOf { it.amount }
     }
 
-    override fun getTotalByMonth(year: Int, month: Int, filter: Set<String>): Double {
+    override suspend fun getTotalByMonth(year: Int, month: Int, filter: Set<String>): Double {
         return expensesDao.getExpensesByMonth(year, month).filter { it.category !in filter }.sumOf { it.amount }
     }
 
-    override fun getTotalByYear(year: Int): Double {
+    override suspend fun getTotalByYear(year: Int): Double {
         return expensesDao.getExpensesByYear(year).sumOf { it.amount }
     }
 
-    override fun getTotalToday(): Double {
+    override suspend fun getTotalToday(): Double {
         val calendar = GregorianCalendar()
         return getTotalByDay(
             calendar.get(Calendar.YEAR),
@@ -35,7 +35,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         )
     }
 
-    override fun getTotalThisMonth(): Double {
+    override suspend fun getTotalThisMonth(): Double {
         val calendar = GregorianCalendar()
         return getTotalByMonth(
             calendar.get(Calendar.YEAR),
@@ -43,14 +43,14 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         )
     }
 
-    override fun getTotalThisYear(): Double {
+    override suspend fun getTotalThisYear(): Double {
         val calendar = GregorianCalendar()
         return getTotalByYear(
             calendar.get(Calendar.YEAR)
         )
     }
 
-    override fun getTotalForEachDayOfMonth(year: Int, month: Int): MutableList<Double> {
+    override suspend fun getTotalForEachDayOfMonth(year: Int, month: Int): MutableList<Double> {
         val calendar = GregorianCalendar(year, month, 1)
         val result = mutableListOf<Double>()
         for (i in 1..calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
@@ -59,7 +59,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         return result
     }
 
-    override fun getTotalForEachDayOfMonthByCategory(
+    override suspend fun getTotalForEachDayOfMonthByCategory(
         year: Int,
         month: Int,
         category: CategoryDBEntity
@@ -74,7 +74,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         return result
     }
 
-    override fun getLineChartStatisticsOfMonth(
+    override suspend fun getLineChartStatisticsOfMonth(
         year: Int,
         month: Int,
         filter: Set<String>
@@ -104,7 +104,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         return LineData(dataSets.toList())
     }
 
-    override fun getLineChartStatisticsOfDay(
+    override suspend fun getLineChartStatisticsOfDay(
         year: Int,
         month: Int,
         day: Int,
@@ -131,7 +131,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         return LineData(dataSets)
     }
 
-    override fun getTotalByMonthAndCategory(
+    override suspend fun getTotalByMonthAndCategory(
         year: Int,
         month: Int,
         category: CategoryDBEntity
@@ -140,7 +140,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
             .sumOf { it.amount }
     }
 
-    override fun getPieChartStatisticsOfMonth(year: Int, month: Int, filter: Set<String>): PieData {
+    override suspend fun getPieChartStatisticsOfMonth(year: Int, month: Int, filter: Set<String>): PieData {
         val categories = categoriesDao.getAllCategoryDBEntities()
         val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
@@ -154,25 +154,25 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         return PieData(PieDataSet(entries, "").apply { setColors(colors) })
     }
 
-    override fun getNonZeroCategoryOfMonth(year: Int, month: Int): Category {
+    override suspend fun getNonZeroCategoryOfMonth(year: Int, month: Int): Category {
         return categoriesDao.getRootCategory().apply {
             removeZeroCategoriesOfMonth(year, month, this)
         }
     }
 
-    override fun getNonZeroCategoryOfDay(year: Int, month: Int, day: Int): Category {
+    override suspend fun getNonZeroCategoryOfDay(year: Int, month: Int, day: Int): Category {
         return categoriesDao.getRootCategory().apply {
             removeZeroCategoriesOfDay(year, month, day, this)
         }
     }
 
-    override fun getNonZeroCategories(): Category {
+    override suspend fun getNonZeroCategories(): Category {
         return categoriesDao.getRootCategory().apply {
             removeZeroCategories(this)
         }
     }
 
-    private fun removeZeroCategoriesOfMonth(year: Int, month: Int, category: Category) {
+    private suspend fun removeZeroCategoriesOfMonth(year: Int, month: Int, category: Category) {
         if (category.hasSubCategories()) {
             for (i in category.subCategories.indices.reversed())
                 if (expensesDao.countExpensesOfCategoryAndSubCategoriesByMonth(
@@ -186,7 +186,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         }
     }
 
-    private fun removeZeroCategoriesOfDay(year: Int, month: Int, day: Int, category: Category) {
+    private suspend fun removeZeroCategoriesOfDay(year: Int, month: Int, day: Int, category: Category) {
         if (category.hasSubCategories()) {
             for (i in category.subCategories.indices.reversed())
                 if (expensesDao.countExpensesOfCategoryAndSubCategoriesByDay(
@@ -201,7 +201,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         }
     }
 
-    private fun removeZeroCategories(category: Category) {
+    private suspend fun removeZeroCategories(category: Category) {
         if (category.hasSubCategories()) {
             for (i in category.subCategories.indices.reversed())
                 if (expensesDao.countExpensesOfCategoryAndSubCategories(category.subCategories[i].fullName) == 0)
@@ -210,21 +210,21 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         }
     }
 
-    override fun hasExpensesInMonth(year: Int, month: Int) =
+    override suspend fun hasExpensesInMonth(year: Int, month: Int) =
         expensesDao.countExpensesInMonth(year, month) > 0
 
-    override fun hasExpensesInDay(year: Int, month: Int, day: Int) =
+    override suspend fun hasExpensesInDay(year: Int, month: Int, day: Int) =
         expensesDao.countExpensesInDay(year, month, day) > 0
 
-    override fun getNumberOfExpenses(filter: Set<String>): Int {
+    override suspend fun getNumberOfExpenses(filter: Set<String>): Int {
         return expensesDao.countExpensesWithFilter(filter)
     }
 
-    override fun getTotal(filter: Set<String>): Double {
+    override suspend fun getTotal(filter: Set<String>): Double {
         return expensesDao.getAllExpenses().filter { it.category !in filter }.sumOf { it.amount }
     }
 
-    override fun getPieChartStatistics(filter: Set<String>): PieData {
+    override suspend fun getPieChartStatistics(filter: Set<String>): PieData {
         val categories = categoriesDao.getAllCategoryDBEntities()
         val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
@@ -238,7 +238,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         return PieData(PieDataSet(entries, "").apply { setColors(colors) })
     }
 
-    override fun getTotalByCategory(category: CategoryDBEntity): Double {
+    override suspend fun getTotalByCategory(category: CategoryDBEntity): Double {
         return expensesDao.getExpensesByCategory(category.name).sumOf { it.amount }
     }
 }

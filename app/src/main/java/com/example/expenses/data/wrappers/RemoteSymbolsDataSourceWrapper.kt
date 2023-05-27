@@ -6,7 +6,7 @@ import org.json.JSONObject
 import javax.inject.Inject
 
 class RemoteSymbolsDataSourceWrapper @Inject constructor(private val remoteSymbolsDataSource: RemoteSymbolsDataSource) {
-    fun getSymbols() = stringJSONToSymbolsList(
+    suspend fun getSymbols() = stringJSONToSymbolsList(
         remoteSymbolsDataSource.getSymbolsAsString().execute().body().toString()
     )
 

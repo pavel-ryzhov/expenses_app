@@ -7,5 +7,5 @@ import javax.inject.Singleton
 @Singleton
 interface SymbolsRepository {
     fun getSymbolsLiveData(): LiveData<MutableList<Symbol>>
-    fun fetchSymbols()
+    suspend fun fetchSymbols()
 }

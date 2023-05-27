@@ -11,7 +11,7 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
     private val exchangeRatesDataSource: RemoteExchangeRatesDataSourceWrapper,
     private val symbolsDao: SymbolsDao
 ) : ExchangeRatesRepository {
-    override fun fetchExchangeRates(mainCurrency: Symbol) {
+    override suspend fun fetchExchangeRates(mainCurrency: Symbol) {
         exchangeRatesDao.insertAllExchangeRates(
             exchangeRatesDataSource.getExchangeRates(
                 symbolsDao.getAllSymbols().map { it.code }.toMutableList(), mainCurrency.code
@@ -21,13 +21,13 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
 
     override fun getAllExchangeRatesLiveData() = exchangeRatesDao.getAllExchangeRatesLiveData()
 
-    override fun getAllExchangeRates() = exchangeRatesDao.getAllExchangeRates()
+    override suspend fun getAllExchangeRates() = exchangeRatesDao.getAllExchangeRates()
 
     override fun getExchangeRateLiveData(symbol: Symbol) = exchangeRatesDao.getExchangeRateLiveData(symbol.code)
 
-    override fun getExchangeRate(symbol: Symbol) = exchangeRatesDao.getExchangeRate(symbol.code)
+    override suspend fun getExchangeRate(symbol: Symbol) = exchangeRatesDao.getExchangeRate(symbol.code)
 
     override fun getExchangeRatesLiveData(symbols: List<Symbol>) = exchangeRatesDao.getExchangeRatesLiveData(symbols.map { it.code })
 
-    override fun getExchangeRates(symbols: List<Symbol>) = exchangeRatesDao.getExchangeRates(symbols.map { it.code })
+    override suspend fun getExchangeRates(symbols: List<Symbol>) = exchangeRatesDao.getExchangeRates(symbols.map { it.code })
 }

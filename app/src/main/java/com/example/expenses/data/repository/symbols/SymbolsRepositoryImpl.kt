@@ -10,7 +10,7 @@ class SymbolsRepositoryImpl @Inject constructor(
 ) : SymbolsRepository {
     override fun getSymbolsLiveData() = symbolsDao.getSymbolsLiveData()
 
-    override fun fetchSymbols() {
+    override suspend fun fetchSymbols() {
         symbolsDao.insertAllSymbols(remoteSymbolsDataSource.getSymbols())
     }
 }

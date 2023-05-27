@@ -10,11 +10,11 @@ import com.example.expenses.entities.symbols.Symbol
 @Dao
 interface SymbolsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAllSymbols(list: MutableList<Symbol>)
+    suspend fun insertAllSymbols(list: MutableList<Symbol>)
 
     @Query("SELECT * FROM symbol")
     fun getSymbolsLiveData(): LiveData<MutableList<Symbol>>
 
     @Query("SELECT * FROM symbol")
-    fun getAllSymbols(): MutableList<Symbol>
+    suspend fun getAllSymbols(): MutableList<Symbol>
 }

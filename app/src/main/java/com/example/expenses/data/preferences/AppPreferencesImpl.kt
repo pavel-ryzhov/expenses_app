@@ -8,14 +8,6 @@ import javax.inject.Inject
 class AppPreferencesImpl @Inject constructor(@ApplicationContext context: Context) :
     AppPreferences {
 
-    //    companion object {
-//        private const val MAIN_CURRENCY_CODE_TAG = "MAIN_CURRENCY_CODE_TAG"
-//        private const val MAIN_CURRENCY_DESCRIPTION_TAG = "MAIN_CURRENCY_DESCRIPTION_TAG"
-//        private const val SHOW_DIALOG_ON_NETWORK_ERROR_TAG = "SHOW_DIALOG_ON_NETWORK_ERROR_TAG"
-//        private const val SECONDARY_CURRENCIES_CODES_TAG = "SECONDARY_CURRENCIES_CODES_TAG"
-//        private const val SECONDARY_CURRENCIES_DESCRIPTIONS_TAG = "SECONDARY_CURRENCIES_DESCRIPTIONS_TAG"
-//        private const val DEFAULT_CATEGORIES_SAVED_TAG = "DEFAULT_CATEGORIES_SAVED_TAG"
-//    }
     private enum class Tag {
         MAIN_CURRENCY_CODE_TAG,
         MAIN_CURRENCY_DESCRIPTION_TAG,

@@ -9,7 +9,7 @@ class RemoteExchangeRatesDataSourceWrapper @Inject constructor(
     private val remoteExchangeRatesDataSource: RemoteExchangeRatesDataSource
 ) {
 
-    fun getExchangeRates(codes: MutableList<String>, mainCurrency: String) =
+    suspend fun getExchangeRates(codes: MutableList<String>, mainCurrency: String) =
         stringJSONToExchangeRatesList(
             remoteExchangeRatesDataSource.getExchangeRates(mainCurrency.lowercase()).execute()
                 .body().toString(), codes

@@ -1,6 +1,5 @@
 package com.example.expenses.presentation.currency_calculator
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -57,10 +56,10 @@ class CurrencyCalculatorViewModel @Inject constructor(
                 setCurrency(currency, editText)
                 amountLiveData.postValue(list)
             }
-        }else setCurrency(currency, editText)
+        } else setCurrency(currency, editText)
     }
 
-    private fun setCurrency(currency: String, editText: Int){
+    private fun setCurrency(currency: String, editText: Int) {
         when (editText) {
             EDITTEXT_1 -> currency1 = currency
             EDITTEXT_2 -> currency2 = currency
@@ -74,15 +73,13 @@ class CurrencyCalculatorViewModel @Inject constructor(
     }
 
     fun fetchCurrencies() {
-        viewModelScope.launch(Dispatchers.IO) {
-            currenciesLiveData.postValue(mutableListOf<String?>(appPreferences.getMainCurrency().code).apply {
-                addAll(appPreferences.getSecondaryCurrencies().map { it.code })
-                while (size < 4) add(null)
-            })
-        }
+        currenciesLiveData.postValue(mutableListOf<String?>(appPreferences.getMainCurrency().code).apply {
+            addAll(appPreferences.getSecondaryCurrencies().map { it.code })
+            while (size < 4) add(null)
+        })
     }
 
-    private fun getAmount(
+    private suspend fun getAmount(
         amount: String,
         editTextFrom: Int,
         editTextTo: Int
@@ -95,7 +92,7 @@ class CurrencyCalculatorViewModel @Inject constructor(
         )
     }
 
-    private fun getAmount(
+    private suspend fun getAmount(
         amount: String,
         from: String?,
         to: String?

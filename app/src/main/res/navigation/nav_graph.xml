@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_generalFragment_to_monthlyStatisticsFragment"
             app:destination="@id/monthlyStatisticsFragment" />
+        <action
+            android:id="@+id/action_generalFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseSecondaryCurrenciesFragment"
@@ -108,4 +111,8 @@
             app:popExitAnim="@anim/fragment_slide_out"
             app:popUpTo="@id/generalFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.expenses.presentation.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

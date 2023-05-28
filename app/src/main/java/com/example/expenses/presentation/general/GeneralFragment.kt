@@ -40,6 +40,9 @@ class GeneralFragment : Fragment() {
             buttonStatistics.setOnClickListener {
                 findNavController().navigateWithDefaultAnimation(R.id.action_generalFragment_to_monthlyStatisticsFragment)
             }
+            buttonSettings.setOnClickListener {
+                findNavController().navigateWithDefaultAnimation(R.id.action_generalFragment_to_settingsFragment)
+            }
             expensesChartView.description = Description().apply {
                 text = "This month statistics"
                 textColor = ContextCompat.getColor(requireContext(), R.color.blue)

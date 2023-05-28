@@ -1,10 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Theme.Expenses" parent="Theme.MaterialComponents.NoActionBar">
-        <!-- Primary brand color. -->
         <item name="android:windowBackground">@color/milky_white</item>
         <item name="colorPrimary">@color/blue</item>
-        <!-- Customize your theme here. -->
         <item name="fontFamily">@font/antipasto</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
@@ -12,6 +9,7 @@
         <item name="android:textColor">@color/blue</item>
         <item name="colorSecondary">@color/blue</item>
         <item name="colorOnSurface">@color/blue</item>
+        <item name="colorControlNormal">@color/blue</item>
     </style>
     <style name="DatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">@drawable/rounded_background</item>

@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.expenses.R
-import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.extensions.hideSystemUI
+import com.example.expenses.presentation.BackPressBlockable
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -36,8 +35,10 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
     override fun onBackPressed() {
+        with(navHostFragment.childFragmentManager.fragments.first()){
+            if (this is BackPressBlockable && !this.isBackPressAllowed()) return
+        }
         if (navHostFragment.childFragmentManager.backStackEntryCount == 1) finish()
         else navController.navigateUp()
     }

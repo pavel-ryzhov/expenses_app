@@ -4,6 +4,7 @@
     <color name="blue">#1E3D59</color>
     <color name="orange">#FF6E40</color>
     <color name="milky_white">#F5F0E1</color>
+    <color name="milky_white_transparent">#88F5F0E1</color>
     <color name="yellow">#FFC13B</color>
     <color name="transparent_dark_grey">#66000000</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/blue</color>

@@ -1,5 +1,6 @@
 package com.example.expenses.presentation.choose_main_currency
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -54,6 +55,7 @@ class CurrenciesRecyclerAdapter(private val onItemClick: (symbol: Symbol) -> Uni
     inner class Holder(private val binding: CurrenciesRecyclerViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun setSymbol(symbol: Symbol) {
             binding.textViewSymbol.apply {
                 text = "${symbol.code}: ${symbol.description}"

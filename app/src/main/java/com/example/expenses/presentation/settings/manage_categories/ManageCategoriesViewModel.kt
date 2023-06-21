@@ -1,9 +1,10 @@
-package com.example.expenses.presentation.dialogs.choose_category_dialog
+package com.example.expenses.presentation.settings.manage_categories
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.expenses.data.data_sources.local.dao.CategoriesDao
+import com.example.expenses.data.data_sources.local.dao.ExpensesDao
 import com.example.expenses.entities.category.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -11,12 +12,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ChooseCategoryViewModel @Inject constructor(
-    private val categoriesDao: CategoriesDao
+class ManageCategoriesViewModel @Inject constructor(
+    private val categoriesDao: CategoriesDao,
+    private val expensesDao: ExpensesDao
 ) : ViewModel() {
-
-    val chooseCategoriesDialogLiveData = MutableLiveData<MutableList<Category>>()
     val provideCategoriesLiveData = MutableLiveData<MutableList<Category>>()
+    val categoriesLiveData = MutableLiveData<MutableList<Category>>()
+    val checkCategoryHasSubCategoriesAndExpensesLiveData = MutableLiveData<Triple<Category, Boolean, Boolean>>()
+    val categoryDeletedLiveData = MutableLiveData<Unit>()
 
     private lateinit var rootCategory: Category
     private lateinit var currentCategory: Category
@@ -26,7 +29,7 @@ class ChooseCategoryViewModel @Inject constructor(
             if (category == null) {
                 rootCategory = categoriesDao.getRootCategory()
                 currentCategory = rootCategory
-                chooseCategoriesDialogLiveData.postValue(rootCategory.subCategories)
+                categoriesLiveData.postValue(rootCategory.subCategories)
             } else {
                 currentCategory = category
                 provideCategoriesLiveData.postValue(category.subCategories)
@@ -40,6 +43,21 @@ class ChooseCategoryViewModel @Inject constructor(
             if (currentCategory != rootCategory){
                 currentCategory = currentCategory.parent!!
             }
+        }
+    }
+
+    fun deleteCategory(category: Category){
+        viewModelScope.launch(Dispatchers.IO) {
+            currentCategory.subCategories.remove(category)
+            expensesDao.deleteByCategory(category.fullName)
+            categoriesDao.deleteCategoryAndSubCategories(category.fullName)
+            categoryDeletedLiveData.postValue(Unit)
+        }
+    }
+
+    fun checkCategoryHasSubcategoriesAndExpenses(category: Category) {
+        viewModelScope.launch(Dispatchers.IO) {
+            checkCategoryHasSubCategoriesAndExpensesLiveData.postValue(Triple(category, category.hasSubCategories(), expensesDao.countExpensesOfCategoryAndSubCategories(category.fullName) > 0))
         }
     }
 }

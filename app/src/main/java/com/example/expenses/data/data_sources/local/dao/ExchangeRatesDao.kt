@@ -29,4 +29,7 @@ interface ExchangeRatesDao {
 
     @Query("SELECT * FROM exchangeRate WHERE code IN (:codes)")
     fun getExchangeRatesLiveData(codes: List<String>): LiveData<MutableList<ExchangeRate>>
+
+    @Query("DELETE FROM exchangeRate")
+    suspend fun deleteAll()
 }

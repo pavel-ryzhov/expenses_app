@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/circle.xml" value="0.2265" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/foreground.xml" value="0.22" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/inner_shadow.xml" value="0.232" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/drawable/inner_shadow_vertical.xml" value="0.22" />
@@ -22,9 +23,15 @@
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/date_recycler_view_item.xml" value="0.3309106455750321" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_amount_in_secondary_currencies.xml" value="0.264" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_choose_category.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_choose_main_currency.xml" value="0.3309106455750321" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_color_picker.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_color_picker_1.xml" value="0.3275643731532292" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_confirm_action.xml" value="0.264" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_expense.xml" value="0.3317657118426678" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_expenses.xml" value="0.2" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_no_network_connection.xml" value="0.4" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/dialog_unable_to_fetch_exchange_rates.xml" value="0.4" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_add_category.xml" value="0.4" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_add_expense.xml" value="0.4" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_choose_category_in_dialog.xml" value="0.3309106455750321" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_choose_main_currency.xml" value="0.39844509232264336" />
@@ -32,15 +39,20 @@
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_currency_calculator.xml" value="0.3309106455750321" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_daily_statistics.xml" value="0.2" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_general.xml" value="0.4" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_loading.xml" value="0.1671654553227875" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_manage_categories.xml" value="0.264" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_monthly_statistics.xml" value="0.2" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/fragment_total_statistics.xml" value="0.264" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_add_category.xml" value="0.3309106455750321" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_category_in_manage_categories_recycler_view.xml" value="0.3309106455750321" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_expense.xml" value="0.3309106455750321" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_legend.xml" value="0.4" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/item_manage_categories.xml" value="0.4" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/secondary_currencies_recycler_view_item.xml" value="0.3317657118426678" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/strange_entity.xml" value="0.17528858486532706" />
         <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/symbols_recycler_adapter_item.xml" value="0.4041666666666667" />
+        <entry key="..\:/Programming/projects/expenses/app/src/main/res/layout/unable_to_fetch_exchange_rates_dialog.xml" value="0.17400598546387344" />
         <entry key="..\:/Users/Amigo/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.17528858486532706" />
         <entry key="..\:/Users/Amigo/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.17528858486532706" />
       </map>

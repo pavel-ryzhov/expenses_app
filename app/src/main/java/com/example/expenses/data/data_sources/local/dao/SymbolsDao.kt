@@ -17,4 +17,10 @@ interface SymbolsDao {
 
     @Query("SELECT * FROM symbol")
     suspend fun getAllSymbols(): MutableList<Symbol>
+
+    @Query("SELECT * FROM symbol WHERE code IN (:codes)")
+    suspend fun getSymbolsByCodes(codes: List<String>): MutableList<Symbol>
+
+    @Query("SELECT * FROM symbol WHERE code = :code")
+    fun getSymbolByCode(code: String): Symbol
 }

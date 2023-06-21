@@ -31,35 +31,44 @@ abstract class CategoriesDao {
     @Query("SELECT * FROM categoryDBEntity WHERE parentName IS NULL")
     abstract suspend fun getRootCategoryDBEntity(): CategoryDBEntity
 
+    @Query("DELETE FROM categoryDBEntity WHERE name LIKE :categoryDBEntityName || '%'")
+    abstract suspend fun deleteCategoryAndSubCategories(categoryDBEntityName: String)
 
-     suspend fun insertAllCategories(categories: List<Category>){
+    @Query("SELECT color FROM categoryDBEntity")
+    abstract suspend fun getColors(): MutableList<Int>
+
+    suspend fun insertAllCategories(categories: List<Category>) {
         insertAllCategoryDBEntities(categoriesToCategoryDBEntities(categories))
     }
 
-     suspend fun insertCategory(category: Category){
+    suspend fun insertCategory(category: Category) {
         insertAllCategoryDBEntities(categoryToCategoryDBEntities(category))
     }
 
-     suspend fun hasCategoryDBEntity(categoryDBEntity: CategoryDBEntity) =
+    suspend fun hasCategoryDBEntity(categoryDBEntity: CategoryDBEntity) =
         hasCategoryDBEntity(categoryDBEntity.name)
 
-     suspend fun getCategoryDBEntityChildren(categoryDBEntityParent: CategoryDBEntity) =
+    suspend fun getCategoryDBEntityChildren(categoryDBEntityParent: CategoryDBEntity) =
         getCategoryDBEntityChildren(categoryDBEntityParent.name)
 
-     suspend fun getAllCategories(): MutableList<Category> {
-        val categories = getCategoryDBEntityChildren("Root").map { Category(it.name, it.name, color = it.color) }
+    suspend fun getAllCategories(): MutableList<Category> {
+        val categories =
+            getCategoryDBEntityChildren("Root").map { Category(it.name, it.name, color = it.color) }
         fillCategories(categories)
         return categories.toMutableList()
     }
 
-     suspend fun getRootCategory(): Category{
+    suspend fun hasColor(color: Int) = color in getColors()
+
+    suspend fun getRootCategory(): Category {
         val categoryDBEntity = getRootCategoryDBEntity()
-        val category = Category(categoryDBEntity.name, categoryDBEntity.name, color = categoryDBEntity.color)
+        val category =
+            Category(categoryDBEntity.name, categoryDBEntity.name, color = categoryDBEntity.color)
         fillCategories(listOf(category))
         return category
     }
 
-    private fun categoriesToCategoryDBEntities(categories: List<Category>): List<CategoryDBEntity>{
+    private fun categoriesToCategoryDBEntities(categories: List<Category>): List<CategoryDBEntity> {
         val result = categories.map(Category::toCategoryDBEntity).toMutableList()
         categories.forEach {
             result.addAll(categoryToCategoryDBEntities(it))
@@ -67,9 +76,9 @@ abstract class CategoriesDao {
         return result
     }
 
-    private fun categoryToCategoryDBEntities(category: Category): List<CategoryDBEntity>{
+    private fun categoryToCategoryDBEntities(category: Category): List<CategoryDBEntity> {
         val result = mutableListOf(category.toCategoryDBEntity())
-        if (category.hasSubCategories()){
+        if (category.hasSubCategories()) {
             category.subCategories.forEach {
                 result.addAll(categoryToCategoryDBEntities(it))
             }

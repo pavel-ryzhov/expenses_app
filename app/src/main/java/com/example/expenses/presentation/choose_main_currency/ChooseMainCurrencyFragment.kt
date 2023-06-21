@@ -64,7 +64,7 @@ class ChooseMainCurrencyFragment : Fragment() {
     }
 
     private fun onRecyclerViewItemClick(symbol: Symbol){
-        viewModel.saveMainCurrency(symbol)
+        viewModel.saveMainCurrency(symbol.code)
         findNavController().navigateWithDefaultAnimation(R.id.chooseSecondaryCurrenciesFragment)
     }
 

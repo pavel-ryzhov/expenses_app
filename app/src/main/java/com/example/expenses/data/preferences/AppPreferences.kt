@@ -1,19 +1,21 @@
 package com.example.expenses.data.preferences
 
+import com.example.expenses.data.data_sources.local.dao.SymbolsDao
 import com.example.expenses.entities.symbols.Symbol
 import javax.inject.Singleton
 
 @Singleton
 interface AppPreferences {
-    fun saveMainCurrency(symbol: Symbol)
-    fun getMainCurrency(): Symbol
+    fun saveMainCurrency(code: String)
+    fun getMainCurrency(): String
+    fun getMainCurrencySymbol(symbolsDao: SymbolsDao): Symbol
     fun hasMainCurrency(): Boolean
 
     fun saveShowDialogOnNetworkError(showDialog: Boolean)
     fun getShowDialogOnNetworkError(): Boolean
 
-    fun saveSecondaryCurrencies(currencies: MutableList<Symbol>)
-    fun getSecondaryCurrencies(): MutableList<Symbol>
+    fun saveSecondaryCurrenciesCodes(currencies: List<String>)
+    fun getSecondaryCurrenciesCodes(): MutableList<String>
     fun hasSecondaryCurrencies(): Boolean
 
     fun saveDefaultCategoriesSaved(value: Boolean)

@@ -13,5 +13,8 @@ class NoNetworkHelper {
             else
                 CustomSnackbar.makeAndShow(rootView, "No network connection!")
         }
+        fun showSnackbarNoNetwork(rootView: View){
+            CustomSnackbar.makeAndShow(rootView, "No network connection!")
+        }
     }
 }

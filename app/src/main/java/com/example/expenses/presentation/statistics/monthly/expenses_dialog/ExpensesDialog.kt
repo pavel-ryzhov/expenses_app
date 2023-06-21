@@ -11,25 +11,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.databinding.DialogExpensesBinding
-import com.example.expenses.entities.category.Category
 import com.example.expenses.entities.category.CategoryDBEntity
 import com.example.expenses.extensions.hideSystemUI
 import com.example.expenses.presentation.statistics.ExpensesRecyclerAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ExpensesDialog(
     private val categoryName: String,
     private val calendar: Calendar
 ) : DialogFragment() {
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
     private lateinit var binding: DialogExpensesBinding
     private val viewModel by viewModels<ExpensesDialogViewModel>()
-    private val adapter = ExpensesRecyclerAdapter(true)
+    private lateinit var adapter: ExpensesRecyclerAdapter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        adapter = ExpensesRecyclerAdapter(true, appPreferences.getDoubleRounding())
         return MaterialAlertDialogBuilder(requireContext()).setView(onCreateView(layoutInflater, null, savedInstanceState)).create().apply {
             window?.setBackgroundDrawable(InsetDrawable(ColorDrawable(Color.TRANSPARENT), 50, 0, 50, 300))
         }

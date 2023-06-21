@@ -22,9 +22,9 @@ class AmountInSecondaryCurrenciesViewModel @Inject constructor(
     fun fetchValues(amount: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             val rounding = appPreferences.getDoubleRounding()
-            val map = mutableMapOf(appPreferences.getMainCurrency().code to amount.roundAndFormat(rounding))
-            for (currency in appPreferences.getSecondaryCurrencies()){
-                map[currency.code] = currenciesConverterService.fromMainCurrency(amount, currency.code).roundAndFormat(rounding)
+            val map = mutableMapOf(appPreferences.getMainCurrency() to amount.roundAndFormat(rounding))
+            for (currency in appPreferences.getSecondaryCurrenciesCodes()){
+                map[currency] = currenciesConverterService.fromMainCurrency(amount, currency).roundAndFormat(rounding)
             }
             valuesLiveData.postValue(map)
         }

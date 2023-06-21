@@ -1,4 +1,4 @@
-package com.example.expenses.presentation.dialogs.choose_category_dialog
+package com.example.expenses.presentation.settings.manage_categories.choose_category_dialog
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -12,17 +12,23 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.expenses.R
 import com.example.expenses.databinding.DialogChooseCategoryBinding
 import com.example.expenses.entities.category.Category
 import com.example.expenses.extensions.hideSystemUI
 import com.example.expenses.presentation.RecyclerViewItemDecoration
+import com.example.expenses.presentation.add_expense.AddExpenseFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChooseCategoryDialog(private val onCategorySelected: (category: Category) -> Unit = {}) : DialogFragment() {
+class ChooseCategoryDialog(
+    private val onCategorySelected: (category: Category) -> Unit = {},
+    private val onManageCategoriesClick: () -> Unit = {},
+    private val showManageCategoriesOption: Boolean = true
+) : DialogFragment() {
 
     private lateinit var chooseCategoryRecyclerAdapter: ChooseCategoryRecyclerAdapter
     private var selectedCategory: Category? = null
@@ -46,8 +52,6 @@ class ChooseCategoryDialog(private val onCategorySelected: (category: Category) 
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-
         return MaterialAlertDialogBuilder(requireContext()).setView(
             onCreateView(
                 layoutInflater,
@@ -73,7 +77,9 @@ class ChooseCategoryDialog(private val onCategorySelected: (category: Category) 
                 binding.recyclerViewChooseCategory.apply {
                     chooseCategoryRecyclerAdapter = ChooseCategoryRecyclerAdapter(
                         viewModel::provideCategories,
-                        this@ChooseCategoryDialog::onChooseCategoryRecyclerViewItemClick
+                        this@ChooseCategoryDialog::onChooseCategoryRecyclerViewItemClick,
+                        this@ChooseCategoryDialog::extendedOnManageCategoriesClick,
+                        showManageCategoriesOption
                     )
                     this.adapter = chooseCategoryRecyclerAdapter
                     val linearLayoutManager = LinearLayoutManager(requireContext())
@@ -106,6 +112,11 @@ class ChooseCategoryDialog(private val onCategorySelected: (category: Category) 
         }
     }
 
+    private fun extendedOnManageCategoriesClick(){
+        dismiss()
+        onManageCategoriesClick()
+    }
+
     private fun onChooseCategoryRecyclerViewItemClick(category: Category) {
         selectedCategory = category
         onCategorySelected(selectedCategory!!)
@@ -118,7 +129,8 @@ class ChooseCategoryDialog(private val onCategorySelected: (category: Category) 
         super.onResume()
     }
 
-    override fun onCancel(dialog: DialogInterface) {
+    override fun onDestroy() {
         requireActivity().hideSystemUI()
+        super.onDestroy()
     }
 }

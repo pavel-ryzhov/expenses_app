@@ -13,7 +13,7 @@ import com.example.expenses.presentation.statistics.daily.ExpenseDialog
 import com.example.expenses.utils.formatDate
 import com.example.expenses.utils.formatTime
 
-class ExpensesRecyclerAdapter(private val typeDate: Boolean = false) : RecyclerView.Adapter<ExpensesRecyclerAdapter.Holder>() {
+class ExpensesRecyclerAdapter(private val typeDate: Boolean = false, private val rounding: Int = 2) : RecyclerView.Adapter<ExpensesRecyclerAdapter.Holder>() {
 
     private val expenses = mutableListOf<Expense>()
 
@@ -38,7 +38,7 @@ class ExpensesRecyclerAdapter(private val typeDate: Boolean = false) : RecyclerV
         @SuppressLint("SetTextI18n")
         fun setExpense(expense: Expense){
             binding.apply {
-                textViewAmount.text = "${expense.amount.roundAndFormat()} ${AppPreferencesImpl(binding.root.context).getMainCurrency().code}"
+                textViewAmount.text = "${expense.amount.roundAndFormat(rounding)} ${AppPreferencesImpl(binding.root.context).getMainCurrency()}"
                 textViewTimeOrDate.text = if (typeDate) formatDate(expense.month, expense.day) else formatTime(expense.hour, expense.minute)
                 root.setOnClickListener {
                     ExpenseDialog(expense).show(root.context.toActivity().supportFragmentManager, null)

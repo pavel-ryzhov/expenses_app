@@ -73,8 +73,8 @@ class CurrencyCalculatorViewModel @Inject constructor(
     }
 
     fun fetchCurrencies() {
-        currenciesLiveData.postValue(mutableListOf<String?>(appPreferences.getMainCurrency().code).apply {
-            addAll(appPreferences.getSecondaryCurrencies().map { it.code })
+        currenciesLiveData.postValue(mutableListOf<String?>(appPreferences.getMainCurrency()).apply {
+            addAll(appPreferences.getSecondaryCurrenciesCodes())
             while (size < 4) add(null)
         })
     }

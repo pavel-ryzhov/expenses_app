@@ -21,7 +21,7 @@ class AddExpenseViewModel @Inject constructor(
     private val expensesDao: ExpensesDao,
     private val currenciesConverterService: CurrenciesConverterService
 ) : ViewModel() {
-    val currenciesLiveData = MutableLiveData<MutableList<Symbol>>()
+    val currenciesLiveData = MutableLiveData<MutableList<String>>()
 
     val expenseAddedSuccessfullyLiveData = MutableLiveData<Unit>()
     val amountFieldIsEmptyLiveData = MutableLiveData<Unit>()
@@ -30,7 +30,7 @@ class AddExpenseViewModel @Inject constructor(
 
     fun fetchCurrencies() {
         currenciesLiveData.postValue(
-            appPreferences.getSecondaryCurrencies().apply { add(appPreferences.getMainCurrency()) })
+            appPreferences.getSecondaryCurrenciesCodes().apply { add(appPreferences.getMainCurrency()) })
     }
 
     fun addExpense(

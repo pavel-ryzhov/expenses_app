@@ -49,7 +49,7 @@ class TotalStatisticsViewModel @Inject constructor(
     }
     private fun fetchTotal(){
         viewModelScope.launch(Dispatchers.IO){
-            totalLiveData.postValue("${expensesStatisticsService.getTotal(categoriesFilters).roundAndFormat()} ${appPreferences.getMainCurrency().code}")
+            totalLiveData.postValue("${expensesStatisticsService.getTotal(categoriesFilters).roundAndFormat(appPreferences.getDoubleRounding())} ${appPreferences.getMainCurrency()}")
         }
     }
     private fun fetchPieChartStatistics(){
@@ -57,8 +57,8 @@ class TotalStatisticsViewModel @Inject constructor(
             pieChartStatisticsLiveData.postValue(
                 expensesStatisticsService.getPieChartStatistics(categoriesFilters).apply {
                     setValueFormatter(PercentageCurrencyValueFormatter(
-                        appPreferences.getMainCurrency().code,
-                        this.yValueSum.toDouble()
+                        this.yValueSum.toDouble(),
+                        appPreferences.getDoubleRounding()
                     ))
                     val color1 = ContextCompat.getColor(getApplication(), R.color.blue)
                     val color2 = ContextCompat.getColor(getApplication(), R.color.milky_white)

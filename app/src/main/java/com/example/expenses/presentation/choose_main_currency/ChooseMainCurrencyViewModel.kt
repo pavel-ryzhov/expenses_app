@@ -42,8 +42,8 @@ class ChooseMainCurrencyViewModel @Inject constructor(
         }
     }
 
-    fun saveMainCurrency(symbol: Symbol) {
-        appPreferences.saveMainCurrency(symbol)
+    fun saveMainCurrency(code: String) {
+        appPreferences.saveMainCurrency(code)
     }
 
     fun getAppPreferences() = appPreferences

@@ -1,6 +1,8 @@
 package com.example.expenses.utils
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
+import android.app.Service
 import android.content.Context
 import android.graphics.Color
 import androidx.annotation.ColorRes
@@ -57,9 +59,17 @@ fun chooseLessSimilarColorWithRes(
 
 private fun countDistance(color1: Int, color2: Int): Double {
     return sqrt(
-        (Color.alpha(color1) - Color.alpha(color2)).toDouble().pow(2)
-                + (Color.red(color1) - Color.red(color2)).toDouble().pow(2)
+        (Color.red(color1) - Color.red(color2)).toDouble().pow(2)
                 + (Color.green(color1) - Color.green(color2)).toDouble().pow(2)
                 + (Color.blue(color1) - Color.blue(color2)).toDouble().pow(2)
     )
+}
+
+fun isServiceRunning(context: Context, serviceClass: Class<out Service>): Boolean {
+    for (service in (context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).getRunningServices(
+        Int.MAX_VALUE
+    )) {
+        if (serviceClass.name == service.service.className) return true
+    }
+    return false
 }

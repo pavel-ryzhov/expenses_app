@@ -12,7 +12,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.net.UnknownHostException
 import java.util.*
 import javax.inject.Inject
 
@@ -26,45 +25,63 @@ class GeneralViewModel @Inject constructor(
     val totalTodayLiveData = MutableLiveData<String>()
     val totalThisMonthLiveData = MutableLiveData<String>()
     val monthStatisticsLiveData = MutableLiveData<LineDataSet>()
-    val networkErrorLiveData = MutableLiveData<Unit>()
+    val networkErrorLiveData = exchangeRatesRepository.getNetworkErrorLiveData()
 
-    fun fetchData(){
+    private var firstLaunch = true
+
+    fun fetchData() {
         fetchExchangeRates()
         fetchTotalToday()
         fetchTotalThisMonth()
         fetchMonthStatistics()
+        firstLaunch = false
     }
 
     private fun fetchExchangeRates() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
+        if (firstLaunch)
+            viewModelScope.launch(Dispatchers.IO) {
                 exchangeRatesRepository.fetchExchangeRates(appPreferences.getMainCurrency())
-            }catch (e: UnknownHostException){
-                networkErrorLiveData.postValue(Unit)
             }
-        }
     }
-    private fun fetchTotalToday(){
+
+    private fun fetchTotalToday() {
         viewModelScope.launch(Dispatchers.IO) {
-            totalTodayLiveData.postValue("${expensesStatisticsService.getTotalToday().roundAndFormat(appPreferences.getDoubleRounding())} ${appPreferences.getMainCurrency().code}")
+            totalTodayLiveData.postValue(
+                "${
+                    expensesStatisticsService.getTotalToday()
+                        .roundAndFormat(appPreferences.getDoubleRounding())
+                } ${appPreferences.getMainCurrency()}"
+            )
         }
     }
-    private fun fetchTotalThisMonth(){
+
+    private fun fetchTotalThisMonth() {
         viewModelScope.launch(Dispatchers.IO) {
-            totalThisMonthLiveData.postValue("${expensesStatisticsService.getTotalThisMonth().roundAndFormat(appPreferences.getDoubleRounding())} ${appPreferences.getMainCurrency().code}")
+            totalThisMonthLiveData.postValue(
+                "${
+                    expensesStatisticsService.getTotalThisMonth()
+                        .roundAndFormat(appPreferences.getDoubleRounding())
+                } ${appPreferences.getMainCurrency()}"
+            )
         }
     }
-    private fun fetchMonthStatistics(){
+
+    private fun fetchMonthStatistics() {
         viewModelScope.launch(Dispatchers.IO) {
             val entries = mutableListOf<Entry>()
             val calendar = GregorianCalendar()
-            val expenses = expensesStatisticsService.getTotalForEachDayOfMonth(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH))
-            for (i in calendar.getActualMaximum(Calendar.DAY_OF_MONTH) - 1 downTo calendar.get(Calendar.DAY_OF_MONTH)){
+            val expenses = expensesStatisticsService.getTotalForEachDayOfMonth(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH)
+            )
+            for (i in calendar.getActualMaximum(Calendar.DAY_OF_MONTH) - 1 downTo calendar.get(
+                Calendar.DAY_OF_MONTH
+            )) {
                 if (expenses[i] == 0.0)
                     expenses.removeLast()
                 else break
             }
-            for (i in expenses.indices){
+            for (i in expenses.indices) {
                 entries.add(Entry(i + 1f, expenses[i].toFloat()))
             }
             monthStatisticsLiveData.postValue(LineDataSet(entries, ""))
@@ -72,4 +89,8 @@ class GeneralViewModel @Inject constructor(
     }
 
     fun getAppPreferences() = appPreferences
+
+    fun notifyFragmentStopped(){
+        networkErrorLiveData.postValue(null)
+    }
 }

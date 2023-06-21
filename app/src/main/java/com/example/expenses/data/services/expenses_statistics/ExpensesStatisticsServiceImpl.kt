@@ -9,7 +9,9 @@ import com.example.expenses.extensions.roundWithAccuracy
 import com.github.mikephil.charting.data.*
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ExpensesStatisticsServiceImpl @Inject constructor(
     private val expensesDao: ExpensesDao,
     private val categoriesDao: CategoriesDao

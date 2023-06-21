@@ -14,6 +14,8 @@ import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.preferences.AppPreferencesImpl
 import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepository
 import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepositoryImpl
+import com.example.expenses.data.repository.settings.SettingsRepository
+import com.example.expenses.data.repository.settings.SettingsRepositoryImpl
 import com.example.expenses.data.repository.symbols.SymbolsRepository
 import com.example.expenses.data.repository.symbols.SymbolsRepositoryImpl
 import com.example.expenses.data.services.currency_converter.CurrenciesConverterService
@@ -24,6 +26,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ServiceComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
@@ -104,5 +108,9 @@ abstract class SingletonComponentBindsModule {
     abstract fun bindsExchangeRatesRepository(
         exchangeRatesRepositoryImpl: ExchangeRatesRepositoryImpl
     ): ExchangeRatesRepository
-}
 
+    @Binds
+    abstract fun bindsSettingsRepository(
+        settingsRepositoryImpl: SettingsRepositoryImpl
+    ): SettingsRepository
+}

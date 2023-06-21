@@ -11,12 +11,14 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.expenses.R
 import com.example.expenses.databinding.FragmentAddExpenseBinding
 import com.example.expenses.entities.category.Category
 import com.example.expenses.extensions.getCenterXChildPosition
+import com.example.expenses.extensions.navigateWithDefaultAnimation
 import com.example.expenses.presentation.DateRecyclerAdapter
-import com.example.expenses.presentation.dialogs.choose_category_dialog.ChooseCategoryDialog
+import com.example.expenses.presentation.settings.manage_categories.choose_category_dialog.ChooseCategoryDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -93,8 +95,8 @@ class AddExpenseFragment : Fragment() {
     private fun subscribeOnLiveData() {
         viewModel.apply {
             currenciesLiveData.observe(viewLifecycleOwner) { symbols ->
-                autoCompleteTextViewCurrenciesAdapter.addAll(symbols.map { it.code })
-                binding.autoCompleteTextViewCurrency.setText(symbols[symbols.size - 1].code, false)
+                autoCompleteTextViewCurrenciesAdapter.addAll(symbols)
+                binding.autoCompleteTextViewCurrency.setText(symbols[symbols.size - 1], false)
                 val layoutParams = binding.autoCompleteTextViewCurrency.layoutParams
                 layoutParams.height = binding.editTextAmount.height
                 binding.autoCompleteTextViewCurrency.layoutParams = layoutParams
@@ -116,7 +118,7 @@ class AddExpenseFragment : Fragment() {
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
                 }
             }
-            amountIsZeroLiveData.observe(viewLifecycleOwner){
+            amountIsZeroLiveData.observe(viewLifecycleOwner) {
                 binding.textInputLayoutAmount.apply {
                     error = "Amount cannot be zero!"
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
@@ -126,9 +128,11 @@ class AddExpenseFragment : Fragment() {
     }
 
     private fun showChooseCategoryDialog() {
-        ChooseCategoryDialog {
+        ChooseCategoryDialog ({
             selectedCategory = it
             binding.autoCompleteTextViewCategory.setText(it.name)
-        }.show(requireActivity().supportFragmentManager, null)
+        }, {
+            findNavController().navigateWithDefaultAnimation(R.id.action_addExpenseFragment_to_manageCategoriesFragment)
+        }).show(requireActivity().supportFragmentManager, null)
     }
 }

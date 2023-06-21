@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expenses.R
+import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.databinding.FragmentDailyStatisticsBinding
 import com.example.expenses.extensions.getCenterXChildPosition
 import com.example.expenses.presentation.DateRecyclerAdapter
@@ -21,16 +22,19 @@ import com.example.expenses.presentation.value_formatters.TimeValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DailyStatisticsFragment : Fragment() {
 
+    @Inject
+    lateinit var appPreferences: AppPreferences
     private lateinit var binding: FragmentDailyStatisticsBinding
     private val viewModel: DailyStatisticsViewModel by viewModels()
     @SuppressLint("SimpleDateFormat")
     private val dateRecyclerAdapter = DateRecyclerAdapter(SimpleDateFormat("MMMM d"), Calendar.DAY_OF_MONTH)
     private lateinit var legendRecyclerAdapter: LegendRecyclerAdapter
-    private val expensesRecyclerAdapter = ExpensesRecyclerAdapter()
+    private lateinit var expensesRecyclerAdapter: ExpensesRecyclerAdapter
     private var dateRecyclerViewPosition = -1
 
     override fun onCreateView(
@@ -43,6 +47,7 @@ class DailyStatisticsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        expensesRecyclerAdapter = ExpensesRecyclerAdapter(rounding = appPreferences.getDoubleRounding())
         legendRecyclerAdapter = LegendRecyclerAdapter(
             viewModel::addCategoryFilter,
             viewModel::removeCategoryFilter

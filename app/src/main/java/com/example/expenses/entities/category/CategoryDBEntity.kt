@@ -14,8 +14,10 @@ data class CategoryDBEntity(
     @ColumnInfo val color: Int = Random.randomColor()
 ){
     fun getFriendlyName() = getFriendlyName(name)
+    fun getShortName() = Companion.getShortName(name)
 
     companion object{
         fun getFriendlyName(name: String) = name.removePrefix("Root#").replace("#", " → ")
+        fun getShortName(name: String) = name.substring(name.lastIndexOf('#') + 1)
     }
 }

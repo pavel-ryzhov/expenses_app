@@ -9,4 +9,8 @@ data class Symbol(
     @PrimaryKey
     @ColumnInfo(name = "code") val code: String,
     @ColumnInfo(name = "description") val description: String
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        return code == (other as? Symbol)?.code
+    }
+}

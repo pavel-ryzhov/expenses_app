@@ -4,12 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Color
+import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +19,7 @@ import com.example.expenses.R
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.random.Random
+import dagger.hilt.android.internal.managers.ViewComponentManager.FragmentContextWrapper
 
 private val DEFAULT_NAV_OPTIONS = NavOptions.Builder()
     .setEnterAnim(R.anim.fragment_slide_in)
@@ -67,8 +70,8 @@ private fun RecyclerView.isChildInCenterX(child: View): Boolean {
 
 fun getDefaultNavOptions() = DEFAULT_NAV_OPTIONS
 
-fun NavController.navigateWithDefaultAnimation(@IdRes id: Int){
-    navigate(id, null, getDefaultNavOptions())
+fun NavController.navigateWithDefaultAnimation(@IdRes id: Int, args: Bundle? = null){
+    navigate(id, args, getDefaultNavOptions())
 }
 
 

@@ -2,7 +2,9 @@ package com.example.expenses.data.services.currency_converter
 
 import com.example.expenses.data.data_sources.local.dao.ExchangeRatesDao
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CurrenciesConverterServiceImpl @Inject constructor(
     private val exchangeRatesDao: ExchangeRatesDao,
 ) : CurrenciesConverterService {

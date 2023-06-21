@@ -43,7 +43,11 @@
     <fragment
         android:id="@+id/addExpenseFragment"
         android:name="com.example.expenses.presentation.add_expense.AddExpenseFragment"
-        android:label="AddExpenseFragment" />
+        android:label="AddExpenseFragment" >
+        <action
+            android:id="@+id/action_addExpenseFragment_to_manageCategoriesFragment"
+            app:destination="@id/manageCategoriesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/currencyCalculatorFragment"
         android:name="com.example.expenses.presentation.currency_calculator.CurrencyCalculatorFragment"
@@ -114,5 +118,24 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.expenses.presentation.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_chooseSecondaryCurrenciesFragment"
+            app:destination="@id/chooseSecondaryCurrenciesFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_manageCategoriesFragment"
+            app:destination="@id/manageCategoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageCategoriesFragment"
+        android:name="com.example.expenses.presentation.settings.manage_categories.ManageCategoriesFragment"
+        android:label="ManageCategoriesFragment" >
+        <action
+            android:id="@+id/action_manageCategoriesFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCategoryFragment"
+        android:name="com.example.expenses.presentation.settings.manage_categories.add_category.AddCategoryFragment"
+        android:label="AddCategoryFragment" />
 </navigation>

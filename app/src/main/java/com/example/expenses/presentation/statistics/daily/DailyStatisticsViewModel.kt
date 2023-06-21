@@ -70,7 +70,7 @@ class DailyStatisticsViewModel @Inject constructor(
 
     private fun fetchTotal(year: Int, month: Int, day: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            val mainCurrency = appPreferences.getMainCurrency().code
+            val mainCurrency = appPreferences.getMainCurrency()
             totalLiveData.postValue(
                 "${
                     expensesStatisticsService.getTotalByDay(
@@ -78,7 +78,7 @@ class DailyStatisticsViewModel @Inject constructor(
                         month,
                         day,
                         categoriesFilters
-                    ).roundAndFormat()
+                    ).roundAndFormat(appPreferences.getDoubleRounding())
                 } $mainCurrency"
             )
         }

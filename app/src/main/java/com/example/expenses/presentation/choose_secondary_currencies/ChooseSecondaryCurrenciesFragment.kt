@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.expenses.R
 import com.example.expenses.databinding.FragmentChooseSecondaryCurrenciesBinding
 import com.example.expenses.entities.symbols.Symbol
-import com.example.expenses.extensions.navigateWithDefaultAnimation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +39,7 @@ class ChooseSecondaryCurrenciesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val openedFromSettings = findNavController().previousBackStackEntry!!.destination.id == R.id.settingsFragment
         binding.apply {
             recyclerViewSymbols.apply {
                 val linearLayoutManager = LinearLayoutManager(requireContext())
@@ -73,11 +73,17 @@ class ChooseSecondaryCurrenciesFragment : Fragment() {
             }
             buttonDone.setOnClickListener {
                 viewModel.saveSecondaryCurrencies(selectedCurrenciesRecyclerAdapter.getSelectedCurrencies())
-                findNavController().navigate(R.id.action_chooseSecondaryCurrenciesFragment_to_generalFragment)
+                if (openedFromSettings)
+                    findNavController().navigateUp()
+                else
+                    findNavController().navigate(R.id.action_chooseSecondaryCurrenciesFragment_to_generalFragment)
             }
             layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         }
+
         subscribeOnLiveData()
+
+        if (openedFromSettings) viewModel.fetchSavedSecondaryCurrencies()
     }
 
     private fun onRecyclerViewCurrenciesItemClick(symbol: Symbol) {
@@ -113,6 +119,11 @@ class ChooseSecondaryCurrenciesFragment : Fragment() {
                 if (it.isNotEmpty()) {
                     currenciesRecyclerAdapter.setSymbols(it)
                     binding.progressBarLoading.visibility = View.GONE
+                }
+            }
+            savedSecondaryCurrenciesLiveData.observe(viewLifecycleOwner){
+                it.forEach { symbol ->
+                    onRecyclerViewCurrenciesItemClick(symbol)
                 }
             }
         }

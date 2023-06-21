@@ -81,14 +81,14 @@ class MonthlyStatisticsViewModel @Inject constructor(
 
     private fun fetchTotal(year: Int, month: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val mainCurrency = appPreferences.getMainCurrency().code
+            val mainCurrency = appPreferences.getMainCurrency()
             totalLiveData.postValue(
                 "${
                     expensesStatisticsService.getTotalByMonth(
                         year,
                         month,
                         categoriesFilters
-                    ).roundAndFormat()
+                    ).roundAndFormat(appPreferences.getDoubleRounding())
                 } $mainCurrency"
             )
         }
@@ -122,8 +122,8 @@ class MonthlyStatisticsViewModel @Inject constructor(
                 ).apply {
                     setValueFormatter(
                         PercentageCurrencyValueFormatter(
-                            appPreferences.getMainCurrency().code,
-                            this.yValueSum.toDouble()
+                            this.yValueSum.toDouble(),
+                            appPreferences.getDoubleRounding()
                         )
                     )
                     val color1 = ContextCompat.getColor(getApplication(), R.color.blue)

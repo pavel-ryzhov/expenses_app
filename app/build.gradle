@@ -79,4 +79,6 @@ dependencies {
     kapt 'com.google.dagger:hilt-compiler:2.42'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation "com.github.skydoves:colorpickerpreference:2.0.6"
 }

@@ -41,8 +41,11 @@ class ConfirmActionDialog(
         }
     }
 
-    override fun onStop() {
+    override fun onCancel(dialog: DialogInterface) {
         onCanceled()
+    }
+
+    override fun onStop() {
         requireActivity().hideSystemUI()
         super.onStop()
     }

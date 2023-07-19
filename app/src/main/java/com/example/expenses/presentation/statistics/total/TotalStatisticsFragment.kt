@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.expenses.R
 import com.example.expenses.databinding.FragmentTotalStatisticsBinding
+import com.example.expenses.extensions.navigateWithDefaultAnimation
 import com.example.expenses.presentation.statistics.LegendRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,6 +49,12 @@ class TotalStatisticsFragment : Fragment() {
             buttonMonthly.setOnClickListener {
                 findNavController().navigate(R.id.action_totalStatisticsFragment_to_monthlyStatisticsFragment)
             }
+            textViewNumberOfExpensesLabel.setOnClickListener {
+                openAllExpensesFragment()
+            }
+            textViewNumberOfExpenses.setOnClickListener {
+                openAllExpensesFragment()
+            }
             textViewNoExpenses.visibility = View.GONE
             constraintLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
             recyclerViewLegend.adapter = legendRecyclerAdapter
@@ -79,5 +86,9 @@ class TotalStatisticsFragment : Fragment() {
                 binding.scrollView.visibility = if (it) View.VISIBLE else View.INVISIBLE
             }
         }
+    }
+
+    private fun openAllExpensesFragment(){
+        findNavController().navigateWithDefaultAnimation(R.id.action_totalStatisticsFragment_to_allExpensesFragment)
     }
 }

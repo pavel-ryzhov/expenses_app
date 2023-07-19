@@ -137,10 +137,10 @@ class ChooseMainCurrencyDialog : DialogFragment() {
                 } else {
                     requireContext().startService(intent)
                 }
-                requireDialog().cancel()
+                requireDialog().dismiss()
             },
             onCanceled = {
-                requireDialog().cancel()
+                requireDialog().dismiss()
             }).show(requireActivity().supportFragmentManager, null)
     }
 
@@ -150,7 +150,8 @@ class ChooseMainCurrencyDialog : DialogFragment() {
         super.onResume()
     }
 
-    override fun onCancel(dialog: DialogInterface) {
+    override fun onDestroy() {
         requireActivity().hideSystemUI()
+        super.onDestroy()
     }
 }

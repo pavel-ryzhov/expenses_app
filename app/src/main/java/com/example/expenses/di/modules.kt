@@ -16,6 +16,8 @@ import com.example.expenses.data.repository.exchange_rates.ExchangeRatesReposito
 import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepositoryImpl
 import com.example.expenses.data.repository.settings.SettingsRepository
 import com.example.expenses.data.repository.settings.SettingsRepositoryImpl
+import com.example.expenses.data.repository.statistics.StatisticsRepository
+import com.example.expenses.data.repository.statistics.StatisticsRepositoryImpl
 import com.example.expenses.data.repository.symbols.SymbolsRepository
 import com.example.expenses.data.repository.symbols.SymbolsRepositoryImpl
 import com.example.expenses.data.services.currency_converter.CurrenciesConverterService
@@ -26,9 +28,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.components.ServiceComponent
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
@@ -113,4 +112,9 @@ abstract class SingletonComponentBindsModule {
     abstract fun bindsSettingsRepository(
         settingsRepositoryImpl: SettingsRepositoryImpl
     ): SettingsRepository
+
+    @Binds
+    abstract fun bindsStatisticsRepository(
+        statisticsRepositoryImpl: StatisticsRepositoryImpl
+    ): StatisticsRepository
 }

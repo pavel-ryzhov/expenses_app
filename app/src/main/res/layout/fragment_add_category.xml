@@ -5,13 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.textview.MaterialTextView
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Add category:"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:gravity="center_horizontal"
+
+        android:id="@+id/textViewLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutParent"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:hint="Parent category"
         android:textColorHint="@color/blue"
         app:boxStrokeColor="@color/blue"
@@ -19,7 +30,7 @@
         app:errorEnabled="true"
         app:errorIconTint="@android:color/holo_red_dark"
         app:errorTextColor="@android:color/holo_red_dark"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewLabel"
         app:layout_constraintVertical_chainStyle="packed">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView

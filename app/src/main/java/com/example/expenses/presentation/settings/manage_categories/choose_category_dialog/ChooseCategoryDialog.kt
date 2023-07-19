@@ -27,7 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class ChooseCategoryDialog(
     private val onCategorySelected: (category: Category) -> Unit = {},
     private val onManageCategoriesClick: () -> Unit = {},
-    private val showManageCategoriesOption: Boolean = true
+    private val showManageCategoriesOption: Boolean = true,
+    private val allowToChooseRoot: Boolean = false
 ) : DialogFragment() {
 
     private lateinit var chooseCategoryRecyclerAdapter: ChooseCategoryRecyclerAdapter
@@ -43,6 +44,7 @@ class ChooseCategoryDialog(
     ): View {
         if (!this::binding.isInitialized)
             binding = DialogChooseCategoryBinding.inflate(inflater)
+        if (!allowToChooseRoot) binding.buttonChooseThisCategory.visibility = View.INVISIBLE
         return binding.root.apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -76,10 +78,12 @@ class ChooseCategoryDialog(
             chooseCategoriesDialogLiveData.observe(viewLifecycleOwner) {
                 binding.recyclerViewChooseCategory.apply {
                     chooseCategoryRecyclerAdapter = ChooseCategoryRecyclerAdapter(
+                        binding.buttonChooseThisCategory,
                         viewModel::provideCategories,
                         this@ChooseCategoryDialog::onChooseCategoryRecyclerViewItemClick,
                         this@ChooseCategoryDialog::extendedOnManageCategoriesClick,
-                        showManageCategoriesOption
+                        showManageCategoriesOption,
+                        allowToChooseRoot
                     )
                     this.adapter = chooseCategoryRecyclerAdapter
                     val linearLayoutManager = LinearLayoutManager(requireContext())

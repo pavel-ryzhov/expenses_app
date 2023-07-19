@@ -114,6 +114,9 @@
             app:popEnterAnim="@anim/fragment_fade_in"
             app:popExitAnim="@anim/fragment_slide_out"
             app:popUpTo="@id/generalFragment"/>
+        <action
+            android:id="@+id/action_totalStatisticsFragment_to_allExpensesFragment"
+            app:destination="@id/allExpensesFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -138,4 +141,8 @@
         android:id="@+id/addCategoryFragment"
         android:name="com.example.expenses.presentation.settings.manage_categories.add_category.AddCategoryFragment"
         android:label="AddCategoryFragment" />
+    <fragment
+        android:id="@+id/allExpensesFragment"
+        android:name="com.example.expenses.presentation.statistics.total.all_expenses.AllExpensesFragment"
+        android:label="AllExpensesFragment" />
 </navigation>

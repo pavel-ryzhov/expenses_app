@@ -2,7 +2,6 @@ package com.example.expenses.presentation.settings.manage_categories.add_categor
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,12 +10,9 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.expenses.R
 import com.example.expenses.databinding.FragmentAddCategoryBinding
-import com.example.expenses.entities.category.Category
 import com.example.expenses.entities.category.CategoryDBEntity
-import com.example.expenses.extensions.navigateWithDefaultAnimation
 import com.example.expenses.extensions.randomColor
 import com.example.expenses.presentation.dialogs.ColorPickerDialog
 import com.example.expenses.presentation.settings.manage_categories.choose_category_dialog.ChooseCategoryDialog
@@ -47,7 +43,7 @@ class AddCategoryFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        with(binding){
+        with(binding) {
             textInputLayoutParent.setEndIconOnClickListener {
                 showChooseCategoryDialog()
             }
@@ -80,29 +76,34 @@ class AddCategoryFragment : Fragment() {
         viewModel.setDefaultParent(requireArguments().getString(PARENT_CATEGORY_NAME_TAG)!!)
     }
 
-    private fun subscribeOnLiveData(){
-        with(viewModel){
-            colorAlreadyExistsLiveData.observe(viewLifecycleOwner){
-                Toast.makeText(requireContext(), "There is already a category with this color!", Toast.LENGTH_SHORT).show()
+    private fun subscribeOnLiveData() {
+        with(viewModel) {
+            colorAlreadyExistsLiveData.observe(viewLifecycleOwner) {
+                Toast.makeText(
+                    requireContext(),
+                    "There is already a category with this color!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            invalidNameLiveData.observe(viewLifecycleOwner){
+            invalidNameLiveData.observe(viewLifecycleOwner) {
                 binding.textInputLayoutName.apply {
                     error = it
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
                 }
             }
-            categoryAddedSuccessfullyLiveData.observe(viewLifecycleOwner){
-                Toast.makeText(requireContext(), "Category added successfully.", Toast.LENGTH_LONG).show()
+            categoryAddedSuccessfullyLiveData.observe(viewLifecycleOwner) {
+                Toast.makeText(requireContext(), "Category added successfully.", Toast.LENGTH_LONG)
+                    .show()
                 requireActivity().onBackPressed()
             }
-            defaultParentLiveData.observe(viewLifecycleOwner){
+            defaultParentLiveData.observe(viewLifecycleOwner) {
                 parent = it
                 binding.autoCompleteTextViewParent.setText(it.getShortName())
             }
         }
     }
 
-    private fun showColorPickerDialog(){
+    private fun showColorPickerDialog() {
         ColorPickerDialog(requireActivity()) {
             color = it
             binding.imageViewColor.setBackgroundColor(it)
@@ -110,9 +111,13 @@ class AddCategoryFragment : Fragment() {
     }
 
     private fun showChooseCategoryDialog() {
-        ChooseCategoryDialog ({
-            parent = it.toCategoryDBEntity()
-            binding.autoCompleteTextViewParent.setText(it.name)
-        }, showManageCategoriesOption = false).show(requireActivity().supportFragmentManager, null)
+        ChooseCategoryDialog(
+            {
+                parent = it.toCategoryDBEntity()
+                binding.autoCompleteTextViewParent.setText(it.name)
+            },
+            showManageCategoriesOption = false,
+            allowToChooseRoot = true
+        ).show(requireActivity().supportFragmentManager, null)
     }
 }

@@ -11,12 +11,16 @@ import com.example.expenses.R
 import com.example.expenses.databinding.CategoryItemBinding
 import com.example.expenses.databinding.ItemManageCategoriesBinding
 import com.example.expenses.entities.category.Category
+import com.example.expenses.entities.category.CategoryDBEntity
+import com.google.android.material.button.MaterialButton
 
 class ChooseCategoryRecyclerAdapter(
+    private val buttonChooseThisCategory: MaterialButton,
     private val provideCategories: (category: Category) -> Unit,
     private val onItemClick: (category: Category) -> Unit = {},
     private val onManageCategoriesClick: () -> Unit = {},
-    private val showManageCategoriesOption: Boolean = true
+    private val showManageCategoriesOption: Boolean = true,
+    private val allowToChooseRoot: Boolean = false
 ) : RecyclerView.Adapter<ChooseCategoryRecyclerAdapter.Holder>() {
 
     companion object {
@@ -39,6 +43,29 @@ class ChooseCategoryRecyclerAdapter(
         recyclerView.startAnimation(fadeOut)
         this.categories.clear()
         this.categories.addAll(categories)
+        with(buttonChooseThisCategory) {
+            if (allowToChooseRoot || !checkParentIsRoot(categories)) {
+                if (visibility != View.VISIBLE) {
+                    startAnimation(
+                        AnimationUtils.loadAnimation(
+                            recyclerView.context,
+                            R.anim.fade_in
+                        )
+                    )
+                    visibility = View.VISIBLE
+                }
+            } else {
+                if (visibility != View.INVISIBLE) {
+                    startAnimation(
+                        AnimationUtils.loadAnimation(
+                            recyclerView.context,
+                            R.anim.fade_out
+                        )
+                    )
+                    visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     override fun getItemViewType(position: Int) =
@@ -60,6 +87,11 @@ class ChooseCategoryRecyclerAdapter(
 
             override fun onAnimationRepeat(p0: Animation?) {}
         })
+        buttonChooseThisCategory.setOnClickListener {
+            if (allowToChooseRoot || !checkParentIsRoot(categories)) {
+                onItemClick(categories.first().parent!!)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -81,6 +113,9 @@ class ChooseCategoryRecyclerAdapter(
     }
 
     override fun getItemCount() = categories.size + if (showManageCategoriesOption) 1 else 0
+
+    private fun checkParentIsRoot(categories: List<Category>) =
+        categories.first().parent!!.toCategoryDBEntity() == CategoryDBEntity.ROOT
 
     inner class Holder(val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setCategory(category: Category? = null) {

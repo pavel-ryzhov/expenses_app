@@ -23,32 +23,32 @@ class SettingsRepositoryImpl @Inject constructor(
     override val changingMainCurrencyStartedLiveData = MutableLiveData<Unit?>()
 
     override suspend fun changeMainCurrency(currencyTo: String) {
-        changingMainCurrencyStartedLiveData.postValue(Unit)
-        stateChangedLiveData.postValue("Fetching new exchange rates...")
-        val additionalDelays = 4000L //TODO delete this
-        Thread.sleep(additionalDelays)
-        val exchangeRates = exchangeRatesRepository.getExchangeRatesWithoutWritingToDatabase(currencyTo)
-        if (exchangeRates != null){
-            stateChangedLiveData.postValue("Recalculating expenses...")
-            Thread.sleep(additionalDelays)
-            expensesDao.getAllExpensesAmountsAsMap().entries.forEach { entry -> expensesDao.updateExpenseAmount(entry.key, converterService.fromMainCurrency(entry.value, currencyTo)) }
-            stateChangedLiveData.postValue("Deleting old exchange rates...")
-            Thread.sleep(additionalDelays)
-            exchangeRatesRepository.deleteAllExchangeRates()
-            stateChangedLiveData.postValue("Writing new exchange rates...")
-            Thread.sleep(additionalDelays)
-            exchangeRatesRepository.writeExchangeRatesToDatabase(exchangeRates)
-            appPreferences.saveMainCurrency(currencyTo)
-            Thread.sleep(additionalDelays)
-            val secondaryCurrencies = appPreferences.getSecondaryCurrenciesCodes()
-            if (currencyTo in secondaryCurrencies) {
-                appPreferences.saveSecondaryCurrenciesCodes(secondaryCurrencies.apply {
-                    remove(currencyTo)
-                })
-            }
-            mainCurrencyChangedLiveData.postValue(Unit)
-        } else {
-            networkErrorLiveData.postValue(Unit)
-        }
+//        changingMainCurrencyStartedLiveData.postValue(Unit)
+//        stateChangedLiveData.postValue("Fetching new exchange rates...")
+//        val additionalDelays = 4000L //TODO delete this
+//        Thread.sleep(additionalDelays)//TODO
+//        val exchangeRates = exchangeRatesRepository.getExchangeRatesWithoutWritingToDatabase(currencyTo)
+//        if (exchangeRates != null){
+//            stateChangedLiveData.postValue("Recalculating expenses...")
+//            Thread.sleep(additionalDelays)
+//            expensesDao.getAllExpensesAmountsAsMap().entries.forEach { entry -> expensesDao.updateExpenseAmount(entry.key, converterService.fromMainCurrency(entry.value, currencyTo)) }
+//            stateChangedLiveData.postValue("Deleting old exchange rates...")
+//            Thread.sleep(additionalDelays)
+//            exchangeRatesRepository.deleteAllExchangeRates()
+//            stateChangedLiveData.postValue("Writing new exchange rates...")
+//            Thread.sleep(additionalDelays)
+//            exchangeRatesRepository.writeExchangeRatesToDatabase(exchangeRates)
+//            appPreferences.saveMainCurrency(currencyTo)
+//            Thread.sleep(additionalDelays)
+//            val secondaryCurrencies = appPreferences.getSecondaryCurrenciesCodes()
+//            if (currencyTo in secondaryCurrencies) {
+//                appPreferences.saveSecondaryCurrenciesCodes(secondaryCurrencies.apply {
+//                    remove(currencyTo)
+//                })
+//            }
+//            mainCurrencyChangedLiveData.postValue(Unit)
+//        } else {
+//            networkErrorLiveData.postValue(Unit)
+//        }
     }
 }

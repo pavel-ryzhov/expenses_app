@@ -8,10 +8,10 @@ import com.example.expenses.databinding.AmountInSecondaryCurrenciesRecyclerViewI
 class AmountInSecondaryCurrenciesRecyclerAdapter(
 ) : RecyclerView.Adapter<AmountInSecondaryCurrenciesRecyclerAdapter.Holder>() {
 
-    private lateinit var data: Map<String, String>
-    private lateinit var iterator: Iterator<Map.Entry<String, String>>
+    private lateinit var data: Map<String, Double>
+    private lateinit var iterator: Iterator<Map.Entry<String, Double>>
 
-    fun setInitialData(map: Map<String, String>){
+    fun setInitialData(map: Map<String, Double>){
         data = map
         iterator = data.iterator()
         notifyItemRangeInserted(0, data.size)
@@ -28,9 +28,9 @@ class AmountInSecondaryCurrenciesRecyclerAdapter(
     override fun getItemCount() = if (this::data.isInitialized) data.size else 0
 
     inner class Holder(val binding: AmountInSecondaryCurrenciesRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun setData(entry: Map.Entry<String, String>){
+        fun setData(entry: Map.Entry<String, Double>){
             binding.apply {
-                textViewAmount.text = entry.value
+                textViewAmount.text = entry.value.toString()
                 textViewCurrencyCode.text = entry.key
                 constraintLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             }

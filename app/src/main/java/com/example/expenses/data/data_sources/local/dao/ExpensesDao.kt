@@ -78,12 +78,12 @@ interface ExpensesDao {
     @Query("SELECT COUNT() FROM expense WHERE NOT category IN (:filter)")
     suspend fun countExpensesWithFilter(filter: Set<String>): Int
 
-    @MapInfo(keyColumn = "id", valueColumn = "amount")
-    @Query("SELECT id, amount FROM expense")
-    suspend fun getAllExpensesAmountsAsMap(): Map<Int, Double>
+//    @MapInfo(keyColumn = "id", valueColumn = "amount")
+//    @Query("SELECT id, amount FROM expense")//TODO
+//    suspend fun getAllExpensesAmountsAsMap(): MutableMap<Int, MutableMap<String, Double>>
 
     @Query("UPDATE expense SET amount = :amount WHERE id = :id")
-    suspend fun updateExpenseAmount(id: Int, amount: Double)
+    suspend fun updateExpenseAmount(id: Int, amount: Map<String, Double>)
 
     @Query("DELETE FROM expense WHERE category LIKE :categoryName || '%'")
     suspend fun deleteByCategory(categoryName: String)

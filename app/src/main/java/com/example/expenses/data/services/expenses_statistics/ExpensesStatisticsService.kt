@@ -9,15 +9,15 @@ import javax.inject.Singleton
 
 @Singleton
 interface ExpensesStatisticsService {
-    suspend fun getTotalByDay(year: Int, month: Int, day: Int, filter: Set<String> = setOf()): Double
-    suspend fun getTotalByMonth(year: Int, month: Int, filter: Set<String> = setOf()): Double
-    suspend fun getTotalByYear(year: Int): Double
-    suspend fun getTotalToday(): Double
-    suspend fun getTotalThisMonth(): Double
-    suspend fun getTotalThisYear(): Double
-    suspend fun getTotalForEachDayOfMonth(year: Int, month: Int): MutableList<Double>
-    suspend fun getTotalForEachDayOfMonthByCategory(year: Int, month: Int, category: CategoryDBEntity): MutableList<Double>
-    suspend fun getTotalByMonthAndCategory(year: Int, month: Int, category: CategoryDBEntity): Double
+    suspend fun getTotalByDay(year: Int, month: Int, day: Int, filter: Set<String> = setOf()): MutableMap<String, Double>?
+    suspend fun getTotalByMonth(year: Int, month: Int, filter: Set<String> = setOf()): MutableMap<String, Double>?
+    suspend fun getTotalByYear(year: Int): MutableMap<String, Double>?
+    suspend fun getTotalToday(): MutableMap<String, Double>?
+    suspend fun getTotalThisMonth(): MutableMap<String, Double>?
+    suspend fun getTotalThisYear(): MutableMap<String, Double>?
+    suspend fun getTotalForEachDayOfMonth(year: Int, month: Int): MutableList<MutableMap<String, Double>?>
+    suspend fun getTotalForEachDayOfMonthByCategory(year: Int, month: Int, category: CategoryDBEntity): MutableList<MutableMap<String, Double>?>
+    suspend fun getTotalByMonthAndCategory(year: Int, month: Int, category: CategoryDBEntity): MutableMap<String, Double>?
     suspend fun getLineChartStatisticsOfMonth(year: Int, month: Int, filter: Set<String> = setOf()): LineData
     suspend fun getPieChartStatisticsOfMonth(year: Int, month: Int, filter: Set<String> = setOf()): PieData
     suspend fun getNonZeroCategoryOfMonth(year: Int, month: Int): Category
@@ -26,8 +26,8 @@ interface ExpensesStatisticsService {
     suspend fun hasExpensesInDay(year: Int, month: Int, day: Int): Boolean
     suspend fun getLineChartStatisticsOfDay(year: Int, month: Int, day: Int, filter: Set<String> = setOf()): LineData
     suspend fun getNumberOfExpenses(filter: Set<String> = setOf()): Int
-    suspend fun getTotal(filter: Set<String> = setOf()): Double
+    suspend fun getTotal(filter: Set<String> = setOf()): MutableMap<String, Double>?
     suspend fun getNonZeroCategories(): Category
     suspend fun getPieChartStatistics(filter: Set<String> = setOf()): PieData
-    suspend fun getTotalByCategory(category: CategoryDBEntity): Double
+    suspend fun getTotalByCategory(category: CategoryDBEntity): MutableMap<String, Double>?
 }

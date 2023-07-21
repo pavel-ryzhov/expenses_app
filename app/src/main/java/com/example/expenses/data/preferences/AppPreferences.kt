@@ -8,7 +8,7 @@ import javax.inject.Singleton
 interface AppPreferences {
     fun saveMainCurrency(code: String)
     fun getMainCurrency(): String
-    fun getMainCurrencySymbol(symbolsDao: SymbolsDao): Symbol
+    fun getMainCurrencySymbol(symbolsDao: SymbolsDao): Symbol//TODO: delete this method
     fun hasMainCurrency(): Boolean
 
     fun saveShowDialogOnNetworkError(showDialog: Boolean)
@@ -17,6 +17,8 @@ interface AppPreferences {
     fun saveSecondaryCurrenciesCodes(currencies: List<String>)
     fun getSecondaryCurrenciesCodes(): MutableList<String>
     fun hasSecondaryCurrencies(): Boolean
+
+    fun getCurrencies(): MutableList<String>
 
     fun saveDefaultCategoriesSaved(value: Boolean)
     fun getDefaultCategoriesSaved(): Boolean

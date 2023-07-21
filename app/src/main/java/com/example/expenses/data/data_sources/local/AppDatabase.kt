@@ -2,6 +2,7 @@ package com.example.expenses.data.data_sources.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.expenses.data.data_sources.local.dao.CategoriesDao
 import com.example.expenses.data.data_sources.local.dao.ExchangeRatesDao
 import com.example.expenses.data.data_sources.local.dao.ExpensesDao
@@ -22,6 +23,7 @@ import javax.inject.Singleton
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 @Singleton
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getSymbolsDao(): SymbolsDao

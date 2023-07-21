@@ -12,6 +12,8 @@ class AppPreferencesImpl @Inject constructor(
     @ApplicationContext context: Context,
 ) : AppPreferences {
 
+    private lateinit var MAIN_CURRENCY: String
+
     private enum class Tag {
         MAIN_CURRENCY_CODE_TAG,
         SHOW_DIALOG_ON_NETWORK_ERROR_TAG,
@@ -27,10 +29,13 @@ class AppPreferencesImpl @Inject constructor(
         sharedPreferences.edit()
             .putString(Tag.MAIN_CURRENCY_CODE_TAG.name, code)
             .apply()
+        MAIN_CURRENCY = code
     }
 
     override fun getMainCurrency(): String {
-        return sharedPreferences.getString(Tag.MAIN_CURRENCY_CODE_TAG.name, "null")!!
+        if (!::MAIN_CURRENCY.isInitialized)
+            MAIN_CURRENCY = sharedPreferences.getString(Tag.MAIN_CURRENCY_CODE_TAG.name, "null")!!
+        return MAIN_CURRENCY
     }
 
     override fun getMainCurrencySymbol(symbolsDao: SymbolsDao): Symbol {
@@ -39,6 +44,10 @@ class AppPreferencesImpl @Inject constructor(
 
     override fun hasMainCurrency() =
         sharedPreferences.getString(Tag.MAIN_CURRENCY_CODE_TAG.name, null) != null
+
+    override fun getCurrencies(): MutableList<String> {
+        return getSecondaryCurrenciesCodes().apply { add(getMainCurrency()) }
+    }
 
     override fun saveShowDialogOnNetworkError(showDialog: Boolean) {
         sharedPreferences.edit().putBoolean(Tag.SHOW_DIALOG_ON_NETWORK_ERROR_TAG.name, showDialog)

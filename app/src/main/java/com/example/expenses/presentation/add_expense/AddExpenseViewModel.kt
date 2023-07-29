@@ -8,12 +8,14 @@ import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.services.currency_converter.CurrenciesConverterService
 import com.example.expenses.entities.category.Category
 import com.example.expenses.entities.expense.Expense
-import com.example.expenses.entities.symbols.Symbol
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 import java.util.*
+import java.util.Calendar.*
 import javax.inject.Inject
+
 
 @HiltViewModel
 class AddExpenseViewModel @Inject constructor(
@@ -27,25 +29,27 @@ class AddExpenseViewModel @Inject constructor(
     val amountFieldIsEmptyLiveData = MutableLiveData<Unit>()
     val amountIsZeroLiveData = MutableLiveData<Unit>()
     val categoryFieldIsEmptyLiveData = MutableLiveData<Unit>()
+    val networkErrorLiveData = MutableLiveData<Unit?>()
+    val addingExpenseStartedLiveData = MutableLiveData<Unit?>()
 
     fun fetchCurrencies() {
         currenciesLiveData.postValue(
-            appPreferences.getSecondaryCurrenciesCodes().apply { add(appPreferences.getMainCurrency()) })
+            appPreferences.getSecondaryCurrencies().apply { add(appPreferences.getMainCurrency()) })
     }
 
     fun addExpense(
-        date: Calendar,
-        amount: String,
+        calendar: Calendar,
+        amountString: String,
         currency: String,
         category: Category?,
         description: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             var success = true
-            if (amount.isBlank()) {
+            if (amountString.isBlank()) {
                 amountFieldIsEmptyLiveData.postValue(Unit)
                 success = false
-            } else if (amount.toDouble() == 0.0) {
+            } else if (amountString.toDouble() == 0.0) {
                 amountIsZeroLiveData.postValue(Unit)
                 success = false
             }
@@ -54,16 +58,35 @@ class AddExpenseViewModel @Inject constructor(
                 success = false
             }
             if (success) {
-                expensesDao.insertExpense(
-                    Expense(
-                        category = category!!.fullName,
-                        amount = currenciesConverterService.toMainCurrency(amount.toDouble(), currency),
-                        description = description,
-                        date = date
-                    )
-                )
+                expensesDao.insertExpense(Expense(
+                    category = category!!.fullName,
+                    amount = if (Expense.checkUseLatestRates(calendar)) {
+                        currenciesConverterService.amountFromCurrencyByLatest(amountString.toDouble(), currency)
+                    } else {
+                        addingExpenseStartedLiveData.postValue(Unit)
+                        try {
+                            currenciesConverterService.amountFromCurrency(
+                                amountString.toDouble(),
+                                currency,
+                                calendar.get(YEAR),
+                                calendar.get(MONTH),
+                                calendar.get(DAY_OF_MONTH)
+                            )
+                        } catch (e: UnknownHostException){
+                            networkErrorLiveData.postValue(Unit)
+                            return@launch
+                        }
+                    },
+                    description = description,
+                    date = calendar
+                ))
                 expenseAddedSuccessfullyLiveData.postValue(Unit)
             }
         }
+    }
+
+    fun notifyFragmentStopped(){
+        networkErrorLiveData.postValue(null)
+        addingExpenseStartedLiveData.postValue(null)
     }
 }

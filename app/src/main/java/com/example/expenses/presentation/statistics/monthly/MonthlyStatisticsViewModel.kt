@@ -9,7 +9,7 @@ import com.example.expenses.R
 import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
 import com.example.expenses.entities.category.Category
-import com.example.expenses.extensions.roundAndFormat
+import com.example.expenses.entities.expense.Amount
 import com.example.expenses.presentation.value_formatters.PercentageCurrencyValueFormatter
 import com.example.expenses.utils.chooseLessSimilarColor
 import com.github.mikephil.charting.data.LineData
@@ -30,7 +30,7 @@ class MonthlyStatisticsViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    val totalLiveData = MutableLiveData<String>()
+    val totalLiveData = MutableLiveData<Amount>()
     val lineChartStatisticsLiveData = MutableLiveData<LineData>()
     val pieChartStatisticsLiveData = MutableLiveData<PieData>()
     val legendLiveData = MutableLiveData<Category>()
@@ -54,7 +54,7 @@ class MonthlyStatisticsViewModel @Inject constructor(
         }
     }
 
-    private fun fetchFilterableData(calendar: Calendar){
+    private fun fetchFilterableData(calendar: Calendar) {
         val year = calendar.get(YEAR)
         val month = calendar.get(MONTH)
         fetchLineChartStatistics(year, month)
@@ -62,17 +62,18 @@ class MonthlyStatisticsViewModel @Inject constructor(
         fetchTotal(year, month)
     }
 
-    fun addCategoryFilter(category: Category){
+    fun addCategoryFilter(category: Category) {
         addCategoryFilterRecursively(category)
         fetchFilterableData(calendar)
     }
 
-    fun removeCategoryFilter(category: Category){
-        categoriesFilters.removeAll(categoriesFilters.filter { it.startsWith(category.fullName) }.toSet())
+    fun removeCategoryFilter(category: Category) {
+        categoriesFilters.removeAll(categoriesFilters.filter { it.startsWith(category.fullName) }
+            .toSet())
         fetchFilterableData(calendar)
     }
 
-    private fun addCategoryFilterRecursively(category: Category){
+    private fun addCategoryFilterRecursively(category: Category) {
         categoriesFilters.add(category.fullName)
         if (category.hasSubCategories())
             for (subCategory in category.subCategories)
@@ -81,15 +82,12 @@ class MonthlyStatisticsViewModel @Inject constructor(
 
     private fun fetchTotal(year: Int, month: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val mainCurrency = appPreferences.getMainCurrency()
             totalLiveData.postValue(
-                "${
-                    expensesStatisticsService.getTotalByMonth(
-                        year,
-                        month,
-                        categoriesFilters
-                    ).roundAndFormat(appPreferences.getDoubleRounding())
-                } $mainCurrency"
+                expensesStatisticsService.getTotalByMonth(
+                    year,
+                    month,
+                    categoriesFilters
+                )
             )
         }
     }
@@ -133,11 +131,22 @@ class MonthlyStatisticsViewModel @Inject constructor(
         }
     }
 
-    private fun fetchLegendData(year: Int, month: Int){
+    private fun fetchLegendData(year: Int, month: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            legendLiveData.postValue(expensesStatisticsService.getNonZeroCategoryOfMonth(year, month).apply {
-                subCategories.add(Category("All", "All", this, color = ContextCompat.getColor(getApplication(), R.color.blue)))
-            })
+            legendLiveData.postValue(
+                expensesStatisticsService.getNonZeroCategoryOfMonth(
+                    year,
+                    month
+                ).apply {
+                    subCategories.add(
+                        Category(
+                            "All",
+                            "All",
+                            this,
+                            color = ContextCompat.getColor(getApplication(), R.color.blue)
+                        )
+                    )
+                })
         }
     }
 }

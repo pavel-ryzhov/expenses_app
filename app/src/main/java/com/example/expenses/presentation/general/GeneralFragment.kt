@@ -65,10 +65,10 @@ class GeneralFragment : Fragment() {
     private fun subscribeOnLiveData() {
         viewModel.apply {
             totalTodayLiveData.observe(viewLifecycleOwner) {
-                binding.textViewToday.text = it
+                binding.textViewToday.setAmount(it)
             }
             totalThisMonthLiveData.observe(viewLifecycleOwner) {
-                binding.textViewThisMonth.text = it
+                binding.textViewThisMonth.setAmount(it)
             }
             monthStatisticsLiveData.observe(viewLifecycleOwner) {
                 binding.expensesChartView.setLineDataSet(it.apply {

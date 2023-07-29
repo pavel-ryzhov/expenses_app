@@ -41,8 +41,7 @@ class ExpenseDialog(
     ): View {
         binding = DialogExpenseBinding.inflate(inflater)
         return binding.apply {
-            textViewAmount.text =
-                "${expense.amount.roundAndFormat(appPreferences.getDoubleRounding())} ${appPreferences.getMainCurrency()}"
+            textViewAmount.setAmount(expense.amount)
             textViewDate.text = SimpleDateFormat("MMMM d, yyyy").format(with(expense) {
                 GregorianCalendar(
                     year,

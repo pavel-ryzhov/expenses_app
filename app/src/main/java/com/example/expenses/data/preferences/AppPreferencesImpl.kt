@@ -46,7 +46,7 @@ class AppPreferencesImpl @Inject constructor(
         sharedPreferences.getString(Tag.MAIN_CURRENCY_CODE_TAG.name, null) != null
 
     override fun getCurrencies(): MutableList<String> {
-        return getSecondaryCurrenciesCodes().apply { add(getMainCurrency()) }
+        return getSecondaryCurrencies().apply { add(getMainCurrency()) }
     }
 
     override fun saveShowDialogOnNetworkError(showDialog: Boolean) {
@@ -61,11 +61,11 @@ class AppPreferencesImpl @Inject constructor(
     override fun hasSecondaryCurrencies() =
         sharedPreferences.getStringSet(Tag.SECONDARY_CURRENCIES_CODES_TAG.name, null) != null
 
-    override fun saveSecondaryCurrenciesCodes(currencies: List<String>) {
+    override fun saveSecondaryCurrencies(currencies: List<String>) {
         sharedPreferences.edit().putStringSet(Tag.SECONDARY_CURRENCIES_CODES_TAG.name, currencies.toSet()).apply()
     }
 
-    override fun getSecondaryCurrenciesCodes() =
+    override fun getSecondaryCurrencies() =
         sharedPreferences.getStringSet(Tag.SECONDARY_CURRENCIES_CODES_TAG.name, setOf<String>())!!.toMutableList()
 
     override fun saveDefaultCategoriesSaved(value: Boolean) {

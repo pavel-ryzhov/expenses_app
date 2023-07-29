@@ -4,17 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expenses.databinding.AmountInSecondaryCurrenciesRecyclerViewItemBinding
+import com.example.expenses.entities.expense.Amount
+import com.example.expenses.extensions.roundAndFormat
 
-class AmountInSecondaryCurrenciesRecyclerAdapter(
-) : RecyclerView.Adapter<AmountInSecondaryCurrenciesRecyclerAdapter.Holder>() {
+class AmountInSecondaryCurrenciesRecyclerAdapter(private val rounding: Int) : RecyclerView.Adapter<AmountInSecondaryCurrenciesRecyclerAdapter.Holder>() {
 
-    private lateinit var data: Map<String, Double>
+    private lateinit var data: Amount
     private lateinit var iterator: Iterator<Map.Entry<String, Double>>
 
-    fun setInitialData(map: Map<String, Double>){
-        data = map
+    fun setInitialData(amount: Amount){
+        data = amount
         iterator = data.iterator()
-        notifyItemRangeInserted(0, data.size)
+        notifyItemRangeInserted(0, data.size())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -25,12 +26,12 @@ class AmountInSecondaryCurrenciesRecyclerAdapter(
         holder.setData(iterator.next())
     }
 
-    override fun getItemCount() = if (this::data.isInitialized) data.size else 0
+    override fun getItemCount() = if (this::data.isInitialized) data.size() else 0
 
     inner class Holder(val binding: AmountInSecondaryCurrenciesRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun setData(entry: Map.Entry<String, Double>){
             binding.apply {
-                textViewAmount.text = entry.value.toString()
+                textViewAmount.text = entry.value.roundAndFormat(rounding)
                 textViewCurrencyCode.text = entry.key
                 constraintLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             }

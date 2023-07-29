@@ -32,12 +32,12 @@ class ChooseSecondaryCurrenciesViewModel @Inject constructor(
     val savedSecondaryCurrenciesLiveData = MutableLiveData<MutableList<Symbol>>()
 
     fun saveSecondaryCurrencies(currencies: MutableList<Symbol>) {
-        appPreferences.saveSecondaryCurrenciesCodes(currencies.map { it.code })
+        appPreferences.saveSecondaryCurrencies(currencies.map { it.code })
     }
 
     fun fetchSavedSecondaryCurrencies() {
         viewModelScope.launch(Dispatchers.IO){
-            savedSecondaryCurrenciesLiveData.postValue(symbolsDao.getSymbolsByCodes(appPreferences.getSecondaryCurrenciesCodes()))
+            savedSecondaryCurrenciesLiveData.postValue(symbolsDao.getSymbolsByCodes(appPreferences.getSecondaryCurrencies()))
         }
     }
 }

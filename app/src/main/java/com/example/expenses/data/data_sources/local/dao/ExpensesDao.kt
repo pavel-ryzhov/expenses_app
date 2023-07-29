@@ -1,10 +1,10 @@
 package com.example.expenses.data.data_sources.local.dao
 
-import androidx.room.MapInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Delete
+import com.example.expenses.entities.expense.Amount
 import com.example.expenses.entities.expense.Expense
 
 @Dao
@@ -78,12 +78,8 @@ interface ExpensesDao {
     @Query("SELECT COUNT() FROM expense WHERE NOT category IN (:filter)")
     suspend fun countExpensesWithFilter(filter: Set<String>): Int
 
-//    @MapInfo(keyColumn = "id", valueColumn = "amount")
-//    @Query("SELECT id, amount FROM expense")//TODO
-//    suspend fun getAllExpensesAmountsAsMap(): MutableMap<Int, MutableMap<String, Double>>
-
     @Query("UPDATE expense SET amount = :amount WHERE id = :id")
-    suspend fun updateExpenseAmount(id: Int, amount: Map<String, Double>)
+    suspend fun updateExpenseAmount(id: Int, amount: Amount)
 
     @Query("DELETE FROM expense WHERE category LIKE :categoryName || '%'")
     suspend fun deleteByCategory(categoryName: String)

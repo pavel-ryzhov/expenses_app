@@ -10,7 +10,7 @@ import com.example.expenses.entities.exchange_rates.ExchangeRate
 @Dao
 interface ExchangeRatesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllExchangeRates(list: MutableList<ExchangeRate>)
+    suspend fun insertAllExchangeRates(list: List<ExchangeRate>)
 
     @Query("SELECT * FROM exchangeRate WHERE code = :code")
     suspend fun getExchangeRate(code: String): ExchangeRate

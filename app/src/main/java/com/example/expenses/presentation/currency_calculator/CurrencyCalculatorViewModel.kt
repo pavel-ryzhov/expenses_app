@@ -74,7 +74,7 @@ class CurrencyCalculatorViewModel @Inject constructor(
 
     fun fetchCurrencies() {
         currenciesLiveData.postValue(mutableListOf<String?>(appPreferences.getMainCurrency()).apply {
-            addAll(appPreferences.getSecondaryCurrenciesCodes())
+            addAll(appPreferences.getSecondaryCurrencies())
             while (size < 4) add(null)
         })
     }
@@ -100,7 +100,7 @@ class CurrencyCalculatorViewModel @Inject constructor(
         if (from == null || to == null) return null
         if (from == to) return amount
         if (amount.isBlank()) return ""
-        return currenciesConverterService.convertCurrency(amount.toDouble(), from, to).toString()
+        return currenciesConverterService.convertCurrencyByLatest(amount.toDouble(), from, to).toString()
     }
 
     private fun getCurrencyByEditText(editText: Int) = when (editText) {

@@ -10,18 +10,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.databinding.DialogAmountInSecondaryCurrenciesBinding
+import com.example.expenses.entities.expense.Amount
 import com.example.expenses.extensions.hideSystemUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AmountInSecondaryCurrenciesDialog(
-    private val amount: MutableMap<String, Double>
+    private val amount: Amount
 ) : DialogFragment() {
 
     private lateinit var binding: DialogAmountInSecondaryCurrenciesBinding
-    private val adapter = AmountInSecondaryCurrenciesRecyclerAdapter()
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(requireContext()).setView(onCreateView(layoutInflater, null, savedInstanceState)).create().apply {
@@ -35,6 +39,7 @@ class AmountInSecondaryCurrenciesDialog(
         savedInstanceState: Bundle?
     ): View {
         binding = DialogAmountInSecondaryCurrenciesBinding.inflate(inflater)
+        val adapter = AmountInSecondaryCurrenciesRecyclerAdapter(appPreferences.getDoubleRounding())
         binding.recyclerView.adapter = adapter
         adapter.setInitialData(amount)
         return binding.root

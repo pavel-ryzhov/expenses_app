@@ -14,8 +14,8 @@ interface AppPreferences {
     fun saveShowDialogOnNetworkError(showDialog: Boolean)
     fun getShowDialogOnNetworkError(): Boolean
 
-    fun saveSecondaryCurrenciesCodes(currencies: List<String>)
-    fun getSecondaryCurrenciesCodes(): MutableList<String>
+    fun saveSecondaryCurrencies(currencies: List<String>)
+    fun getSecondaryCurrencies(): MutableList<String>
     fun hasSecondaryCurrencies(): Boolean
 
     fun getCurrencies(): MutableList<String>

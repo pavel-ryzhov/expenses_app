@@ -9,4 +9,13 @@ data class ExchangeRate(
     @PrimaryKey
     @ColumnInfo(name = "code") val code: String,
     @ColumnInfo(name = "value") val value: Float
-)
+){
+    companion object {
+        fun getExchangeRateFromList(exchangeRates: List<ExchangeRate>, currency: String): ExchangeRate? {
+            exchangeRates.forEach {
+                if (it.code == currency) return it
+            }
+            return null
+        }
+    }
+}

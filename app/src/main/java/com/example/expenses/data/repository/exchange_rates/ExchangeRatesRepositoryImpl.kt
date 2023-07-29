@@ -18,45 +18,75 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
 
     private val networkErrorLiveData = MutableLiveData<Unit?>()
 
-    override suspend fun fetchExchangeRates(mainCurrency: String) {
+    override suspend fun fetchLatestExchangeRates(mainCurrency: String, throwExceptionOnNetworkError: Boolean) {
         try {
             exchangeRatesDao.insertAllExchangeRates(
-                exchangeRatesDataSource.getExchangeRates(
+                exchangeRatesDataSource.getLatestExchangeRates(
                     symbolsDao.getAllSymbols().map { it.code }.toMutableList(), mainCurrency
                 )
             )
         } catch (e: UnknownHostException) {
-            networkErrorLiveData.postValue(Unit)
+            if (throwExceptionOnNetworkError)
+                throw UnknownHostException()
+            else
+                networkErrorLiveData.postValue(Unit)
         }
     }
 
-    override fun getAllExchangeRatesLiveData() = exchangeRatesDao.getAllExchangeRatesLiveData()
+    override fun getAllCachedLatestExchangeRatesLiveData() = exchangeRatesDao.getAllExchangeRatesLiveData()
 
-    override suspend fun getAllExchangeRates() = exchangeRatesDao.getAllExchangeRates()
+    override suspend fun getAllCachedLatestExchangeRates() = exchangeRatesDao.getAllExchangeRates()
 
-    override fun getExchangeRateLiveData(code: String) =
+    override fun getCachedLatestExchangeRateLiveData(code: String) =
         exchangeRatesDao.getExchangeRateLiveData(code)
 
-    override suspend fun getExchangeRate(code: String) = exchangeRatesDao.getExchangeRate(code)
+    override suspend fun getCachedLatestExchangeRate(code: String) = exchangeRatesDao.getExchangeRate(code)
 
-    override fun getExchangeRatesLiveData(codes: List<String>) =
+    override fun getCachedLatestExchangeRatesLiveData(codes: List<String>) =
         exchangeRatesDao.getExchangeRatesLiveData(codes)
 
-    override suspend fun getExchangeRates(codes: List<String>) =
+    override suspend fun getCachedLatestExchangeRates(codes: List<String>) =
         exchangeRatesDao.getExchangeRates(codes)
 
-    override suspend fun getExchangeRatesWithoutWritingToDatabase(mainCurrency: String) = try {
-        exchangeRatesDataSource.getExchangeRates(symbolsDao.getAllSymbols().map { it.code }
-            .toMutableList(), mainCurrency)
-    } catch (e: UnknownHostException) {
-        null
+    override suspend fun getLatestExchangeRates(mainCurrency: String, throwExceptionOnNetworkError: Boolean): MutableList<ExchangeRate>? {
+        return try {
+            exchangeRatesDataSource.getLatestExchangeRates(symbolsDao.getAllSymbols().map { it.code }
+                .toMutableList(), mainCurrency)
+        } catch (e: UnknownHostException) {
+            if (throwExceptionOnNetworkError)
+                throw UnknownHostException()
+            else {
+                networkErrorLiveData.postValue(Unit)
+                null
+            }
+        }
     }
 
-    override suspend fun writeExchangeRatesToDatabase(exchangeRates: MutableList<ExchangeRate>) {
+    override suspend fun writeLatestExchangeRatesToDatabase(exchangeRates: MutableList<ExchangeRate>) {
         exchangeRatesDao.insertAllExchangeRates(exchangeRates)
     }
 
-    override suspend fun deleteAllExchangeRates() = exchangeRatesDao.deleteAll()
+    override suspend fun deleteAllLatestExchangeRates() = exchangeRatesDao.deleteAll()
 
     override fun getNetworkErrorLiveData() = networkErrorLiveData
+
+    override suspend fun getExchangeRates(
+        mainCurrency: String,
+        year: Int,
+        month: Int,
+        day: Int,
+        throwExceptionOnNetworkError: Boolean
+    ): MutableList<ExchangeRate>? {
+        return try {
+            exchangeRatesDataSource.getExchangeRates(symbolsDao.getAllSymbols().map { it.code }
+                .toMutableList(), mainCurrency, year, month, day)
+        } catch (e: UnknownHostException) {
+            if (throwExceptionOnNetworkError)
+                throw UnknownHostException()
+            else {
+                networkErrorLiveData.postValue(Unit)
+                null
+            }
+        }
+    }
 }

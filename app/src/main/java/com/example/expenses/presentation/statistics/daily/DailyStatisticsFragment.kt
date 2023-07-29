@@ -117,7 +117,7 @@ class DailyStatisticsFragment : Fragment() {
                 binding.scrollView.visibility = if (it) View.VISIBLE else View.INVISIBLE
             }
             totalLiveData.observe(viewLifecycleOwner) {
-                binding.textViewTotal.text = it
+                binding.textViewTotal.setAmount(it)
             }
             expensesLiveData.observe(viewLifecycleOwner){
                 expensesRecyclerAdapter.setExpenses(it)

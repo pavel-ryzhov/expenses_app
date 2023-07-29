@@ -1,17 +1,30 @@
 package com.example.expenses.data.wrappers
 
+import android.annotation.SuppressLint
+import android.util.Log
 import com.example.expenses.data.data_sources.remote.RemoteExchangeRatesDataSource
 import com.example.expenses.entities.exchange_rates.ExchangeRate
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class RemoteExchangeRatesDataSourceWrapper @Inject constructor(
     private val remoteExchangeRatesDataSource: RemoteExchangeRatesDataSource
 ) {
 
-    suspend fun getExchangeRates(codes: MutableList<String>, mainCurrency: String) =
+    suspend fun getLatestExchangeRates(codes: MutableList<String>, mainCurrency: String) =
         stringJSONToExchangeRatesList(
-            remoteExchangeRatesDataSource.getExchangeRates(mainCurrency.lowercase()).execute()
+            remoteExchangeRatesDataSource.getLatestExchangeRates(mainCurrency.lowercase()).execute()
+                .body().toString(), codes
+        )
+
+    @SuppressLint("SimpleDateFormat")
+    suspend fun getExchangeRates(codes: List<String>, mainCurrency: String, year: Int, month: Int, day: Int) =
+        stringJSONToExchangeRatesList(
+            remoteExchangeRatesDataSource.getExchangeRates(SimpleDateFormat("yyyy-MM-dd").format(
+                GregorianCalendar(year, month, day).time
+            ), mainCurrency.lowercase()).execute()
                 .body().toString(), codes
         )
 

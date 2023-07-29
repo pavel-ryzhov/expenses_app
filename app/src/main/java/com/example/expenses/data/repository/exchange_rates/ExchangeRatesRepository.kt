@@ -7,15 +7,16 @@ import javax.inject.Singleton
 
 @Singleton
 interface ExchangeRatesRepository {
-    suspend fun fetchExchangeRates(mainCurrency: String)
-    fun getAllExchangeRatesLiveData(): LiveData<MutableList<ExchangeRate>>
-    suspend fun getAllExchangeRates(): MutableList<ExchangeRate>
-    suspend fun getExchangeRate(code: String): ExchangeRate
-    fun getExchangeRateLiveData(code: String): LiveData<ExchangeRate>
-    suspend fun getExchangeRates(codes: List<String>): MutableList<ExchangeRate>
-    fun getExchangeRatesLiveData(codes: List<String>): LiveData<MutableList<ExchangeRate>>
-    suspend fun getExchangeRatesWithoutWritingToDatabase(mainCurrency: String): MutableList<ExchangeRate>?
-    suspend fun writeExchangeRatesToDatabase(exchangeRates: MutableList<ExchangeRate>)
-    suspend fun deleteAllExchangeRates()
     fun getNetworkErrorLiveData(): MutableLiveData<Unit?>
+    suspend fun fetchLatestExchangeRates(mainCurrency: String, throwExceptionOnNetworkError: Boolean = false)
+    fun getAllCachedLatestExchangeRatesLiveData(): LiveData<MutableList<ExchangeRate>>
+    suspend fun getAllCachedLatestExchangeRates(): MutableList<ExchangeRate>
+    suspend fun getCachedLatestExchangeRate(code: String): ExchangeRate
+    fun getCachedLatestExchangeRateLiveData(code: String): LiveData<ExchangeRate>
+    suspend fun getCachedLatestExchangeRates(codes: List<String>): MutableList<ExchangeRate>
+    fun getCachedLatestExchangeRatesLiveData(codes: List<String>): LiveData<MutableList<ExchangeRate>>
+    suspend fun writeLatestExchangeRatesToDatabase(exchangeRates: MutableList<ExchangeRate>)
+    suspend fun deleteAllLatestExchangeRates()
+    suspend fun getLatestExchangeRates(mainCurrency: String, throwExceptionOnNetworkError: Boolean = false): MutableList<ExchangeRate>?
+    suspend fun getExchangeRates(mainCurrency: String, year: Int, month: Int, day: Int, throwExceptionOnNetworkError: Boolean = false): MutableList<ExchangeRate>?
 }

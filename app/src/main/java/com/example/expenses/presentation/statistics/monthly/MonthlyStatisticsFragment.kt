@@ -98,7 +98,7 @@ class MonthlyStatisticsFragment : Fragment() {
     private fun subscribeOnLiveData() {
         viewModel.apply {
             totalLiveData.observe(viewLifecycleOwner) {
-                binding.textViewTotal.text = it
+                binding.textViewTotal.setAmount(it)
             }
             lineChartStatisticsLiveData.observe(viewLifecycleOwner) {
                 binding.expensesChartView.apply {

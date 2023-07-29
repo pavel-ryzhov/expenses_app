@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:gravity="center_horizontal"
-        android:text="It seems there is no internet connection, so it's impossible to get the latest currency rates!"
+        android:text="It seems there is no internet connection, so it's impossible to get currency rates!"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

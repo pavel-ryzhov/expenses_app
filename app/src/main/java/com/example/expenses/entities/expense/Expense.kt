@@ -4,15 +4,19 @@ import android.annotation.SuppressLint
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.expenses.entities.expense.Amount.Companion.checkAmountIsNull
+import com.example.expenses.entities.expense.Amount.Companion.sumOfAmounts
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.GregorianCalendar
+import java.util.Date
 
 @Entity
 data class Expense(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Int = 0,
     @ColumnInfo(name = "category") val category: String,
-    @ColumnInfo(name = "amount") val amount: MutableMap<String, Double>,
+    @ColumnInfo(name = "amount") val amount: Amount,
     @ColumnInfo(name = "description") val description: String,
 
     @ColumnInfo(name = "month") val month: Int,
@@ -25,7 +29,7 @@ data class Expense(
     constructor(
         id: Int = 0,
         category: String,
-        amount: MutableMap<String, Double>,
+        amount: Amount,
         description: String,
         date: Calendar
     ) : this(
@@ -43,7 +47,7 @@ data class Expense(
     constructor(
         id: Int = 0,
         category: String,
-        amount: MutableMap<String, Double>?,
+        amount: Amount?,
         currencies: List<String>,
         description: String,
         date: Calendar
@@ -59,34 +63,21 @@ data class Expense(
         date.get(Calendar.MINUTE)
     )
 
+    fun useLatestRates() = checkUseLatestRates(Calendar.getInstance().apply { time = getDate() })
+
     @SuppressLint("SimpleDateFormat")
     fun getDate(): Date =
         SimpleDateFormat("M-d-yyyy H:m").parse("$month-$day-$year $hour:$minute")!!
 
     companion object{
-        fun sumOfExpenses(expenses: List<Expense>): MutableMap<String, Double>? {
-            val result = mutableMapOf<String, Double>()
-            val currencies = expenses.firstOrNull()?.amount?.keys ?: return null
-            val amounts = DoubleArray(currencies.size)
-            for (expense in expenses){
-                currencies.forEachIndexed { index, currency ->
-                    amounts[index] += expense.amount[currency]!!
-                }
-            }
-            currencies.forEachIndexed { index, currency ->
-                result[currency] = amounts[index]
-            }
-            return result
-        }
-
-        private fun checkAmountIsNull(amount: MutableMap<String, Double>? = null, currencies: List<String>): MutableMap<String, Double>{
-            return amount ?: let {
-                val result = mutableMapOf<String, Double>()
-                currencies.forEach { currency ->
-                    result[currency] = 0.0
-                }
-                result
-            }
+        fun sumOfExpenses(expenses: List<Expense>) = sumOfAmounts(expenses.map { it.amount })
+        fun sumOfExpenses(expenses: List<Expense>, currencies: List<String>) = sumOfAmounts(expenses.map { it.amount }, currencies)
+        fun checkUseLatestRates(calendar: Calendar): Boolean {
+            val currentCalendar = GregorianCalendar()
+            return if (currentCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+                && currentCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+                && currentCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)
+            ) true else calendar.after(currentCalendar)
         }
     }
 }

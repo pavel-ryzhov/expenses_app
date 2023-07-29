@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepository
 import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
-import com.example.expenses.extensions.roundAndFormat
+import com.example.expenses.entities.expense.Amount
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,8 +22,8 @@ class GeneralViewModel @Inject constructor(
     private val expensesStatisticsService: ExpensesStatisticsService,
 ) : ViewModel() {
 
-    val totalTodayLiveData = MutableLiveData<String>()
-    val totalThisMonthLiveData = MutableLiveData<String>()
+    val totalTodayLiveData = MutableLiveData<Amount>()
+    val totalThisMonthLiveData = MutableLiveData<Amount>()
     val monthStatisticsLiveData = MutableLiveData<LineDataSet>()
     val networkErrorLiveData = exchangeRatesRepository.getNetworkErrorLiveData()
 
@@ -40,17 +40,14 @@ class GeneralViewModel @Inject constructor(
     private fun fetchExchangeRates() {
         if (firstLaunch)
             viewModelScope.launch(Dispatchers.IO) {
-                exchangeRatesRepository.fetchExchangeRates(appPreferences.getMainCurrency())
+                exchangeRatesRepository.fetchLatestExchangeRates(appPreferences.getMainCurrency())
             }
     }
 
     private fun fetchTotalToday() {
         viewModelScope.launch(Dispatchers.IO) {
             totalTodayLiveData.postValue(
-                "${
-                    expensesStatisticsService.getTotalToday()
-                        .roundAndFormat(appPreferences.getDoubleRounding())
-                } ${appPreferences.getMainCurrency()}"
+                expensesStatisticsService.getTotalToday()
             )
         }
     }
@@ -58,10 +55,7 @@ class GeneralViewModel @Inject constructor(
     private fun fetchTotalThisMonth() {
         viewModelScope.launch(Dispatchers.IO) {
             totalThisMonthLiveData.postValue(
-                "${
-                    expensesStatisticsService.getTotalThisMonth()
-                        .roundAndFormat(appPreferences.getDoubleRounding())
-                } ${appPreferences.getMainCurrency()}"
+                expensesStatisticsService.getTotalThisMonth()
             )
         }
     }
@@ -77,12 +71,12 @@ class GeneralViewModel @Inject constructor(
             for (i in calendar.getActualMaximum(Calendar.DAY_OF_MONTH) - 1 downTo calendar.get(
                 Calendar.DAY_OF_MONTH
             )) {
-                if (expenses[i] == 0.0)
+                if (expenses[i].isZero())
                     expenses.removeLast()
                 else break
             }
             for (i in expenses.indices) {
-                entries.add(Entry(i + 1f, expenses[i].toFloat()))
+                entries.add(Entry(i + 1f, expenses[i].get(appPreferences.getMainCurrency()).toFloat()))
             }
             monthStatisticsLiveData.postValue(LineDataSet(entries, ""))
         }

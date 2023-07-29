@@ -11,8 +11,8 @@ enum class Sorting(val friendlyName: String) {
 
     fun sortExpenses(expenses: MutableList<Expense>): MutableList<Expense>{
         return when(this){
-            AMOUNT_INCREASING -> expenses.sortedBy { it.amount.entries.first().value }
-            AMOUNT_DECREASING -> expenses.sortedByDescending { it.amount.entries.first().value }
+            AMOUNT_INCREASING -> expenses.sortedBy { it.amount.first().value }
+            AMOUNT_DECREASING -> expenses.sortedByDescending { it.amount.first().value }
             DATE_REVERSED -> expenses.sortedBy { GregorianCalendar(it.year, it.month, it.day, it.hour, it.minute).time.time }
             DATE -> expenses.sortedByDescending { GregorianCalendar(it.year, it.month, it.day, it.hour, it.minute).time.time }
         }.toMutableList()

@@ -5,6 +5,7 @@ import com.example.expenses.data.data_sources.local.dao.ExpensesDao
 import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.entities.category.Category
 import com.example.expenses.entities.category.CategoryDBEntity
+import com.example.expenses.entities.expense.Amount
 import com.example.expenses.entities.expense.Expense.Companion.sumOfExpenses
 import com.example.expenses.extensions.roundWithAccuracy
 import com.github.mikephil.charting.data.*
@@ -18,19 +19,19 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
     private val categoriesDao: CategoriesDao,
     private val appPreferences: AppPreferences
 ) : ExpensesStatisticsService {
-    override suspend fun getTotalByDay(year: Int, month: Int, day: Int, filter: Set<String>): MutableMap<String, Double>? {
-        return sumOfExpenses(expensesDao.getExpensesByDay(year, month, day).filter { it.category !in filter })
+    override suspend fun getTotalByDay(year: Int, month: Int, day: Int, filter: Set<String>): Amount {
+        return sumOfExpenses(expensesDao.getExpensesByDay(year, month, day).filter { it.category !in filter }, appPreferences.getCurrencies())
     }
 
-    override suspend fun getTotalByMonth(year: Int, month: Int, filter: Set<String>): MutableMap<String, Double>? {
-        return sumOfExpenses(expensesDao.getExpensesByMonth(year, month).filter { it.category !in filter })
+    override suspend fun getTotalByMonth(year: Int, month: Int, filter: Set<String>): Amount {
+        return sumOfExpenses(expensesDao.getExpensesByMonth(year, month).filter { it.category !in filter }, appPreferences.getCurrencies())
     }
 
-    override suspend fun getTotalByYear(year: Int): MutableMap<String, Double>? {
-        return sumOfExpenses(expensesDao.getExpensesByYear(year))
+    override suspend fun getTotalByYear(year: Int): Amount {
+        return sumOfExpenses(expensesDao.getExpensesByYear(year), appPreferences.getCurrencies())
     }
 
-    override suspend fun getTotalToday(): MutableMap<String, Double>? {
+    override suspend fun getTotalToday(): Amount {
         val calendar = GregorianCalendar()
         return getTotalByDay(
             calendar.get(Calendar.YEAR),
@@ -39,7 +40,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getTotalThisMonth(): MutableMap<String, Double>? {
+    override suspend fun getTotalThisMonth(): Amount {
         val calendar = GregorianCalendar()
         return getTotalByMonth(
             calendar.get(Calendar.YEAR),
@@ -47,18 +48,19 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getTotalThisYear(): MutableMap<String, Double>? {
+    override suspend fun getTotalThisYear(): Amount {
         val calendar = GregorianCalendar()
         return getTotalByYear(
             calendar.get(Calendar.YEAR)
         )
     }
 
-    override suspend fun getTotalForEachDayOfMonth(year: Int, month: Int): MutableList<MutableMap<String, Double>?> {
+    override suspend fun getTotalForEachDayOfMonth(year: Int, month: Int): MutableList<Amount> {
         val calendar = GregorianCalendar(year, month, 1)
-        val result = mutableListOf<MutableMap<String, Double>?>()
+        val result = mutableListOf<Amount>()
+        val currencies = appPreferences.getCurrencies()
         for (i in 1..calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-            result.add(sumOfExpenses(expensesDao.getExpensesByDay(year, month, i)))
+            result.add(sumOfExpenses(expensesDao.getExpensesByDay(year, month, i), currencies))
         }
         return result
     }
@@ -67,12 +69,13 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         year: Int,
         month: Int,
         category: CategoryDBEntity
-    ): MutableList<MutableMap<String, Double>?> {
+    ): MutableList<Amount> {
         val calendar = GregorianCalendar(year, month, 1)
-        val result = mutableListOf<MutableMap<String, Double>?>()
+        val result = mutableListOf<Amount>()
+        val currencies = appPreferences.getCurrencies()
         for (i in 1..calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             result.add(
-                sumOfExpenses(expensesDao.getExpensesByDayAndCategory(year, month, i, category.name))
+                sumOfExpenses(expensesDao.getExpensesByDayAndCategory(year, month, i, category.name), currencies)
             )
         }
         return result
@@ -88,7 +91,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
                 getTotalForEachDayOfMonth(
                     year,
                     month
-                ).mapIndexed { index, it -> Entry((index + 1).toFloat(), it?.get(appPreferences.getMainCurrency())?.toFloat() ?: 0f) }, "All"
+                ).mapIndexed { index, it -> Entry((index + 1).toFloat(), it.get(appPreferences.getMainCurrency()).toFloat()) }, "All"
             )
         ) else mutableListOf()
         dataSets.addAll(categoriesDao.getAllCategoryDBEntities().filter { it.name !in filter }
@@ -98,7 +101,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
                         year,
                         month,
                         category
-                    ).mapIndexed { index, it -> Entry((index + 1).toFloat(), it?.get(appPreferences.getMainCurrency())?.toFloat() ?: 0f) },
+                    ).mapIndexed { index, it -> Entry((index + 1).toFloat(), it.get(appPreferences.getMainCurrency()).toFloat()) },
                     category.name
                 ).apply {
                     color = category.color
@@ -120,8 +123,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         val dataSets = categories.map { category ->
             val list = MutableList(24 * 60 / 5) { 0.0 }
             expenses1.filter { category == "All" || it.category == category }.forEach {
-                list[it.hour * 60 / 5 + it.minute.toDouble().roundWithAccuracy(5) / 5] = it.amount[appPreferences.getMainCurrency()]
-                    ?: 0.0
+                list[it.hour * 60 / 5 + it.minute.toDouble().roundWithAccuracy(5) / 5] = it.amount.getOpt(appPreferences.getMainCurrency(), 0.0)
             }
             LineDataSet(
                 list.mapIndexed { index, d -> Entry(index.toFloat(), d.toFloat()) },
@@ -140,8 +142,8 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         year: Int,
         month: Int,
         category: CategoryDBEntity
-    ): MutableMap<String, Double>? {
-        return sumOfExpenses(expensesDao.getExpensesByMonthAndCategory(year, month, category.name))
+    ): Amount {
+        return sumOfExpenses(expensesDao.getExpensesByMonthAndCategory(year, month, category.name), appPreferences.getCurrencies())
     }
 
     override suspend fun getPieChartStatisticsOfMonth(year: Int, month: Int, filter: Set<String>): PieData {
@@ -149,7 +151,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
         categories.forEach { category ->
-            val value = getTotalByMonthAndCategory(year, month, category)?.get(appPreferences.getMainCurrency())?.toFloat() ?: 0f
+            val value = getTotalByMonthAndCategory(year, month, category).get(appPreferences.getMainCurrency()).toFloat()
             if (value != 0f && category.name !in filter) {
                 entries.add(PieEntry(value, category.name))
                 colors.add(category.color)
@@ -224,8 +226,8 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         return expensesDao.countExpensesWithFilter(filter)
     }
 
-    override suspend fun getTotal(filter: Set<String>): MutableMap<String, Double>? {
-        return sumOfExpenses(expensesDao.getAllExpenses().filter { it.category !in filter })
+    override suspend fun getTotal(filter: Set<String>): Amount {
+        return sumOfExpenses(expensesDao.getAllExpenses().filter { it.category !in filter }, appPreferences.getCurrencies())
     }
 
     override suspend fun getPieChartStatistics(filter: Set<String>): PieData {
@@ -233,7 +235,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
         categories.forEach { category ->
-            val value = getTotalByCategory(category)?.get(appPreferences.getMainCurrency())?.toFloat() ?: 0f
+            val value = getTotalByCategory(category).get(appPreferences.getMainCurrency()).toFloat()
             if (value != 0f && category.name !in filter) {
                 entries.add(PieEntry(value, category.name))
                 colors.add(category.color)
@@ -242,7 +244,7 @@ class ExpensesStatisticsServiceImpl @Inject constructor(
         return PieData(PieDataSet(entries, "").apply { setColors(colors) })
     }
 
-    override suspend fun getTotalByCategory(category: CategoryDBEntity): MutableMap<String, Double>? {
-        return sumOfExpenses(expensesDao.getExpensesByCategory(category.name))
+    override suspend fun getTotalByCategory(category: CategoryDBEntity): Amount {
+        return sumOfExpenses(expensesDao.getExpensesByCategory(category.name), appPreferences.getCurrencies())
     }
 }

@@ -65,7 +65,7 @@ class TotalStatisticsFragment : Fragment() {
     private fun subscribeOnLiveData(){
         viewModel.apply {
             totalLiveData.observe(viewLifecycleOwner) {
-                binding.textViewTotal.text = it
+                binding.textViewTotal.setAmount(it)
             }
             numberOfExpensesLiveData.observe(viewLifecycleOwner){
                 binding.textViewNumberOfExpenses.text = it.toString()

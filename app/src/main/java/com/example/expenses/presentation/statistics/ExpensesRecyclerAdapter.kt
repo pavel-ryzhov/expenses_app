@@ -38,7 +38,7 @@ class ExpensesRecyclerAdapter(private val typeDate: Boolean = false, private val
         @SuppressLint("SetTextI18n")
         fun setExpense(expense: Expense){
             binding.apply {
-                textViewAmount.text = "${expense.amount.roundAndFormat(rounding)} ${AppPreferencesImpl(binding.root.context).getMainCurrency()}"
+                textViewAmount.setAmount(expense.amount)
                 textViewTimeOrDate.text = if (typeDate) formatDate(expense.month, expense.day) else formatTime(expense.hour, expense.minute)
                 root.setOnClickListener {
                     ExpenseDialog(expense).show(root.context.toActivity().supportFragmentManager, null)

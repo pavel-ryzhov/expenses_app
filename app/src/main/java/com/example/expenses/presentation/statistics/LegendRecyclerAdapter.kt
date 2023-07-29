@@ -31,7 +31,7 @@ class LegendRecyclerAdapter(
     private fun closeCategory(category: Category) {
         val index = displayedCategories.indexOf(category) + 1
         var removedItems = 0
-        while (displayedCategories[index].fullName.startsWith(category.fullName)) {
+        while (index < displayedCategories.size && displayedCategories[index].fullName.startsWith(category.fullName)) {
             displayedCategories.removeAt(index)
             removedItems++
         }

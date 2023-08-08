@@ -1,12 +1,15 @@
 package com.example.expenses.presentation.choose_secondary_currencies
 
 import android.animation.LayoutTransition
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -17,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.expenses.R
 import com.example.expenses.databinding.FragmentChooseSecondaryCurrenciesBinding
 import com.example.expenses.entities.symbols.Symbol
+import com.example.expenses.presentation.settings.ChangeMainCurrencyForegroundService
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.ArrayList
 
 @AndroidEntryPoint
 class ChooseSecondaryCurrenciesFragment : Fragment() {
@@ -72,11 +77,7 @@ class ChooseSecondaryCurrenciesFragment : Fragment() {
                 findNavController().navigateUp()
             }
             buttonDone.setOnClickListener {
-                viewModel.saveSecondaryCurrencies(selectedCurrenciesRecyclerAdapter.getSelectedCurrencies())
-                if (openedFromSettings)
-                    findNavController().navigateUp()
-                else
-                    findNavController().navigate(R.id.action_chooseSecondaryCurrenciesFragment_to_generalFragment)
+                viewModel.saveSecondaryCurrencies(selectedCurrenciesRecyclerAdapter.getSelectedCurrencies(), openedFromSettings)
             }
             layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         }
@@ -126,6 +127,29 @@ class ChooseSecondaryCurrenciesFragment : Fragment() {
                     onRecyclerViewCurrenciesItemClick(symbol)
                 }
             }
+            secondaryCurrenciesSavedLiveData.observe(viewLifecycleOwner) {
+                it?.let {
+                    if (it)
+                        findNavController().navigateUp()
+                    else
+                        findNavController().navigate(R.id.action_chooseSecondaryCurrenciesFragment_to_generalFragment)
+                }
+            }
+            noSelectedSecondaryCurrenciesLiveData.observe(viewLifecycleOwner) {
+                it?.let {
+                    Toast.makeText(requireContext(), "Select at least one currency!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            nothingChangedLiveData.observe(viewLifecycleOwner) {
+                it?.let {
+                    Toast.makeText(requireContext(), "Nothing changed!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+    }
+
+    override fun onStop() {
+        viewModel.notifyFragmentStopped()
+        super.onStop()
     }
 }

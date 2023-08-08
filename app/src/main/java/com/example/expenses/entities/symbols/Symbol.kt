@@ -13,4 +13,7 @@ data class Symbol(
     override fun equals(other: Any?): Boolean {
         return code == (other as? Symbol)?.code
     }
+    override fun hashCode(): Int {
+        return code.hashCode()
+    }
 }

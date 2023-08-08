@@ -17,8 +17,11 @@ import javax.inject.Inject
 class ChangeMainCurrencyForegroundService : Service() {
 
     companion object {
+        const val ACTION_CHANGE_MAIN_CURRENCY = "ACTION_CHANGE_MAIN_CURRENCY"
+        const val ACTION_CHANGE_SECONDARY_CURRENCIES = "ACTION_CHANGE_SECONDARY_CURRENCIES"
         const val CURRENCY_TO_TAG = "CURRENCY_TO_TAG"
-        private const val NOTIFICATION_CHANNEL_ID = "Changing main currency"
+        const val CURRENCIES_TO_TAG = "CURRENCIES_TO_TAG"
+        private const val NOTIFICATION_CHANNEL_ID = "Changing currencies"
         private const val NOTIFICATION_ID = 1
     }
 
@@ -37,7 +40,7 @@ class ChangeMainCurrencyForegroundService : Service() {
             notificationManager.notifyWithLoading(
                 NOTIFICATION_ID,
                 NOTIFICATION_CHANNEL_ID,
-                "Fetching new exchange rates..."
+                "Changing currencies..."
             )
         )
     }
@@ -46,8 +49,13 @@ class ChangeMainCurrencyForegroundService : Service() {
         observer = Observer<String> { notificationManager.notifyWithLoading(NOTIFICATION_ID, NOTIFICATION_CHANNEL_ID, it) }
         settingsRepository.stateChangedLiveData.observeForever(observer)
         CoroutineScope(Dispatchers.IO + job).launch {
-            settingsRepository.changeMainCurrency(intent!!.getStringExtra(CURRENCY_TO_TAG)!!)
-            stopSelf()
+            intent!!.let {
+                when (intent.action!!){
+                    ACTION_CHANGE_MAIN_CURRENCY -> settingsRepository.changeMainCurrency(intent.getStringExtra(CURRENCY_TO_TAG)!!)
+                    ACTION_CHANGE_SECONDARY_CURRENCIES -> settingsRepository.changeSecondaryCurrencies(intent.getStringArrayListExtra(CURRENCIES_TO_TAG)!!)
+                }
+                stopSelf()
+            }
         }
         return START_NOT_STICKY
     }
@@ -57,8 +65,9 @@ class ChangeMainCurrencyForegroundService : Service() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        notificationManager.cancel(NOTIFICATION_ID)
         settingsRepository.stateChangedLiveData.removeObserver(observer)
         job.cancel()
+        super.onDestroy()
     }
 }

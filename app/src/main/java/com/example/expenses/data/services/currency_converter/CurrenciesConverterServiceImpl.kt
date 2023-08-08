@@ -6,6 +6,7 @@ import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.data.wrappers.RemoteExchangeRatesDataSourceWrapper
 import com.example.expenses.entities.exchange_rates.ExchangeRate
 import com.example.expenses.entities.expense.Amount
+import com.example.expenses.extensions.find
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,7 +42,7 @@ class CurrenciesConverterServiceImpl @Inject constructor(
         from: String,
         exchangeRates: List<ExchangeRate>
     ): Double {
-        return amount / ExchangeRate.getExchangeRateFromList(exchangeRates, from)!!.value
+        return amount / exchangeRates.find(from)!!.value
     }
 
     override suspend fun fromMainCurrency(
@@ -49,7 +50,7 @@ class CurrenciesConverterServiceImpl @Inject constructor(
         to: String,
         exchangeRates: List<ExchangeRate>
     ): Double {
-        return amount * ExchangeRate.getExchangeRateFromList(exchangeRates, to)!!.value
+        return amount * exchangeRates.find(to)!!.value
     }
 
     override suspend fun amountFromMainCurrencyByLatest(amount: Double): Amount {
@@ -100,8 +101,7 @@ class CurrenciesConverterServiceImpl @Inject constructor(
             day
         )
         val map = mutableMapOf<String, Double>()
-        val mainExchangeRate =
-            ExchangeRate.getExchangeRateFromList(exchangeRates, appPreferences.getMainCurrency())!!
+        val mainExchangeRate = exchangeRates.find(appPreferences.getMainCurrency())!!
         val amountInMainCurrency = toMainCurrency(amount, from, exchangeRates)
         exchangeRates.remove(mainExchangeRate)
         map[appPreferences.getMainCurrency()] = amountInMainCurrency

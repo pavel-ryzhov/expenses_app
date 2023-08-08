@@ -13,24 +13,32 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.expenses.R
+import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.databinding.FragmentAddExpenseBinding
 import com.example.expenses.entities.category.Category
 import com.example.expenses.extensions.getCenterXChildPosition
 import com.example.expenses.extensions.navigateWithDefaultAnimation
+import com.example.expenses.presentation.BackPressBlockable
 import com.example.expenses.presentation.DateRecyclerAdapter
+import com.example.expenses.presentation.NoNetworkHelper
 import com.example.expenses.presentation.settings.manage_categories.choose_category_dialog.ChooseCategoryDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class AddExpenseFragment : Fragment() {
+class AddExpenseFragment : Fragment(), BackPressBlockable {
     private lateinit var binding: FragmentAddExpenseBinding
     private val viewModel: AddExpenseViewModel by viewModels()
     private lateinit var dateRecyclerAdapter: DateRecyclerAdapter
     private lateinit var autoCompleteTextViewCurrenciesAdapter: ArrayAdapter<String>
     private var selectedCategory: Category? = null
+    private var backPressAllowed = true
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,6 +82,8 @@ class AddExpenseFragment : Fragment() {
                 }
                 true
             }
+            constraintLayoutLoading.setOnClickListener {
+            }
             buttonBack.setOnClickListener {
                 requireActivity().onBackPressed()
             }
@@ -102,6 +112,7 @@ class AddExpenseFragment : Fragment() {
                 binding.autoCompleteTextViewCurrency.layoutParams = layoutParams
             }
             expenseAddedSuccessfullyLiveData.observe(viewLifecycleOwner) {
+                hideLoadingLayout()
                 requireActivity().onBackPressed()
                 Toast.makeText(requireContext(), "Expense added successfully.", Toast.LENGTH_SHORT)
                     .show()
@@ -124,7 +135,28 @@ class AddExpenseFragment : Fragment() {
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
                 }
             }
+            addingExpenseStartedLiveData.observe(viewLifecycleOwner){
+                it?.let {
+                    binding.constraintLayoutLoading.visibility = View.VISIBLE
+                    backPressAllowed = false
+                }
+            }
+            networkErrorLiveData.observe(viewLifecycleOwner){
+                if (it != null) {
+                    hideLoadingLayout()
+                    NoNetworkHelper.notifyNoNetwork(
+                        requireActivity(),
+                        binding.root,
+                        appPreferences
+                    )
+                }
+            }
         }
+    }
+
+    private fun hideLoadingLayout() {
+        binding.constraintLayoutLoading.visibility = View.GONE
+        backPressAllowed = true
     }
 
     private fun showChooseCategoryDialog() {
@@ -134,5 +166,14 @@ class AddExpenseFragment : Fragment() {
         }, {
             findNavController().navigateWithDefaultAnimation(R.id.action_addExpenseFragment_to_manageCategoriesFragment)
         }).show(requireActivity().supportFragmentManager, null)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.notifyFragmentStopped()
+    }
+
+    override fun isBackPressAllowed(): Boolean {
+        return backPressAllowed
     }
 }

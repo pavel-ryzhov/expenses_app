@@ -60,15 +60,20 @@ class SettingsFragment : Fragment(), BackPressBlockable {
 
         arguments?.let {
             if (it.getBoolean(FOREGROUND_SERVICE_IS_RUNNING_TAG, false))
-                onChangingMainCurrencyStarted()
+                blockUI()
         }
 
         viewModel.fetchData()
     }
 
-    private fun onChangingMainCurrencyStarted(){
+    private fun blockUI(){
         binding.constraintLayoutLoading.visibility = View.VISIBLE
         backPressAllowed = false
+    }
+
+    private fun unblockUI(){
+        binding.constraintLayoutLoading.visibility = View.GONE
+        backPressAllowed = true
     }
 
     private fun subscribeOnLiveData() {
@@ -80,13 +85,14 @@ class SettingsFragment : Fragment(), BackPressBlockable {
                 binding.editTextRounding.setText(it.toString())
             }
             fetchExchangeRatesErrorLiveData.observe(viewLifecycleOwner) {
-                if (it != null)
+                it?.let {
+                    unblockUI()
                     UnableToFetchExchangeRatesDialog(requireActivity()).show()
+                }
             }
             mainCurrencySavedLiveData.observe(viewLifecycleOwner) {
                 it?.let {
-                    binding.constraintLayoutLoading.visibility = View.GONE
-                    backPressAllowed = true
+                    unblockUI()
                     viewModel.fetchData()
                     Toast.makeText(
                         requireContext(),
@@ -97,10 +103,25 @@ class SettingsFragment : Fragment(), BackPressBlockable {
             }
             changingMainCurrencyStartedLiveData.observe(viewLifecycleOwner) {
                 if (it != null)
-                    onChangingMainCurrencyStarted()
+                    blockUI()
             }
             stateChangedLiveData.observe(viewLifecycleOwner) {
                 binding.textViewLoading.text = it
+            }
+            changingSecondaryCurrenciesStartedLiveData.observe(viewLifecycleOwner) {
+                it?.let {
+                    blockUI()
+                }
+            }
+            secondaryCurrenciesChangedLiveData.observe(viewLifecycleOwner) {
+                it?.let {
+                    unblockUI()
+                    Toast.makeText(
+                        requireContext(),
+                        "Secondary currencies changed successfully.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
     }

@@ -22,6 +22,8 @@ class SettingsViewModel @Inject constructor(
     val mainCurrencySavedLiveData = settingsRepository.mainCurrencyChangedLiveData
     val stateChangedLiveData = settingsRepository.stateChangedLiveData
     val changingMainCurrencyStartedLiveData = settingsRepository.changingMainCurrencyStartedLiveData
+    val changingSecondaryCurrenciesStartedLiveData = settingsRepository.changingSecondaryCurrenciesStartedLiveData
+    val secondaryCurrenciesChangedLiveData = settingsRepository.secondaryCurrenciesChangedLiveData
 
     fun fetchData() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -42,5 +44,8 @@ class SettingsViewModel @Inject constructor(
         fetchExchangeRatesErrorLiveData.postValue(null)
         changingMainCurrencyStartedLiveData.postValue(null)
         mainCurrencySavedLiveData.postValue(null)
+        changingSecondaryCurrenciesStartedLiveData.postValue(null)
+        secondaryCurrenciesChangedLiveData.postValue(null)
+        fetchExchangeRatesErrorLiveData.postValue(null)
     }
 }

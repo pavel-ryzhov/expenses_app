@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expenses.R
+import com.example.expenses.entities.exchange_rates.ExchangeRate
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -96,3 +97,18 @@ fun Random.randomColor() = Color.rgb(nextInt(256), nextInt(256), nextInt(256))
 fun Context.toActivity() = (if (this is ContextWrapper) this.baseContext else this) as AppCompatActivity
 
 fun Double.roundWithAccuracy(accuracy: Int): Int = (this / accuracy).roundToInt() * accuracy
+
+fun List<ExchangeRate>.find(currency: String): ExchangeRate? {
+    this.forEach {
+        if (it.code == currency) return it
+    }
+    return null
+}
+
+fun List<ExchangeRate>.toMap(): MutableMap<String, Float> {
+    val result = mutableMapOf<String, Float>()
+    this.forEach {
+        result[it.code] = it.value
+    }
+    return result
+}

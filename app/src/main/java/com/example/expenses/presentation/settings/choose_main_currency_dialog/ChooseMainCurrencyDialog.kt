@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.expenses.R
 import com.example.expenses.data.preferences.AppPreferences
+import com.example.expenses.data.repository.settings.SettingsRepository
 import com.example.expenses.databinding.DialogChooseMainCurrencyBinding
 import com.example.expenses.entities.symbols.Symbol
 import com.example.expenses.extensions.hideSystemUI
@@ -113,6 +114,7 @@ class ChooseMainCurrencyDialog : DialogFragment() {
         viewModel.apply {
             symbolsLiveData.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
+                    it.remove(Symbol(appPreferences.getMainCurrency(), ""))
                     currenciesRecyclerAdapter.setSymbols(it)
                     binding.progressBarLoading.visibility = View.GONE
                     binding.buttonTryToReload.visibility = View.GONE
@@ -130,8 +132,10 @@ class ChooseMainCurrencyDialog : DialogFragment() {
         ConfirmActionDialog(
             "This operation may take some time because it requires recalculation of all expenses. Are you sure you want to change main currency to %s?".format(symbol.code),
             onConfirmed = {
-                val intent = Intent(requireContext(), ChangeMainCurrencyForegroundService::class.java).apply { putExtra(
-                    ChangeMainCurrencyForegroundService.CURRENCY_TO_TAG, symbol.code) }
+                val intent = Intent(requireContext(), ChangeMainCurrencyForegroundService::class.java).apply {
+                    putExtra(ChangeMainCurrencyForegroundService.CURRENCY_TO_TAG, symbol.code)
+                    action = ChangeMainCurrencyForegroundService.ACTION_CHANGE_MAIN_CURRENCY
+                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     requireContext().startForegroundService(intent)
                 } else {

@@ -1,14 +1,11 @@
 package com.example.expenses.data.preferences
 
-import com.example.expenses.data.data_sources.local.dao.SymbolsDao
-import com.example.expenses.entities.symbols.Symbol
 import javax.inject.Singleton
 
 @Singleton
 interface AppPreferences {
     fun saveMainCurrency(code: String)
     fun getMainCurrency(): String
-    fun getMainCurrencySymbol(symbolsDao: SymbolsDao): Symbol//TODO: delete this method
     fun hasMainCurrency(): Boolean
 
     fun saveShowDialogOnNetworkError(showDialog: Boolean)

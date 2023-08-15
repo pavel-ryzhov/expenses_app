@@ -15,7 +15,7 @@
         android:hint="Description"
         android:textColorHint="@color/blue"
         app:boxStrokeColor="@color/blue"
-        app:layout_constraintEnd_toStartOf="@id/moreView"
+        app:layout_constraintEnd_toStartOf="@id/filterView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -30,11 +30,11 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.example.expenses.presentation.views.MoreView
-        android:id="@+id/moreView"
+    <com.example.expenses.presentation.views.FilterView
+        android:id="@+id/filterView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="4dp"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="@id/textInputLayoutDescription"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"

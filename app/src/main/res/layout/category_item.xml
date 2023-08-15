@@ -16,18 +16,19 @@
         android:padding="8dp"
         android:textColor="@color/blue"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@id/moreView"
+        app:layout_constraintEnd_toStartOf="@id/dropdownButtonView"
         app:layout_constraintStart_toEndOf="@id/view"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="eededed" />
 
-    <com.example.expenses.presentation.views.MoreView
-        android:id="@+id/moreView"
+    <com.example.expenses.presentation.views.DropdownButtonView
+        android:id="@+id/dropdownButtonView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/textViewCategory"
         app:layout_constraintDimensionRatio="1:1"
+        android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/textViewCategory"
         tools:visibility="visible" />
@@ -36,6 +37,7 @@
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="8dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/textViewCategory"
         app:layout_constraintDimensionRatio="1:1"

@@ -14,7 +14,9 @@ import androidx.fragment.app.viewModels
 import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.databinding.DialogExpensesBinding
 import com.example.expenses.entities.category.CategoryDBEntity
+import com.example.expenses.entities.expense.Expense
 import com.example.expenses.extensions.hideSystemUI
+import com.example.expenses.presentation.dialogs.DeleteExpenseDialog
 import com.example.expenses.presentation.statistics.ExpensesRecyclerAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +26,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ExpensesDialog(
     private val categoryName: String,
-    private val calendar: Calendar
+    private val calendar: Calendar,
+    private val onExpenseDeleted: (expense: Expense) -> Unit
 ) : DialogFragment() {
 
     @Inject
@@ -34,7 +37,12 @@ class ExpensesDialog(
     private lateinit var adapter: ExpensesRecyclerAdapter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        adapter = ExpensesRecyclerAdapter(true, appPreferences.getDoubleRounding())
+        adapter = ExpensesRecyclerAdapter(true){
+            DeleteExpenseDialog(it){
+                adapter.deleteExpense(it)
+                onExpenseDeleted(it)
+            }.show(requireActivity().supportFragmentManager, null)
+        }
         return MaterialAlertDialogBuilder(requireContext()).setView(onCreateView(layoutInflater, null, savedInstanceState)).create().apply {
             window?.setBackgroundDrawable(InsetDrawable(ColorDrawable(Color.TRANSPARENT), 50, 0, 50, 300))
         }

@@ -29,6 +29,9 @@ class ChooseMainCurrencyViewModel @Inject constructor(
             } catch (e: UnknownHostException) {
                 fetchSymbolsErrorLiveData.postValue(Unit)
                 e.printStackTrace()
+            } catch (e: Exception){
+                e.printStackTrace()
+                fetchSymbols()
             }
         }
     }

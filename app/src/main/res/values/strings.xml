@@ -6,4 +6,6 @@
     <string name="manage_categories_underlined"><u>Manage categories</u></string>
     <string name="manage_secondary_currencies_underlined"><u>Manage secondary currencies</u></string>
     <string name="add_category_underlined"><u>Add category</u></string>
+    <string name="number_of_expenses_underlined"><u>Number of expenses:</u></string>
+    <string name="exchange_rates_source">Source of exchange rates: \n<a href="https://exchangerate.host/">https://exchangerate.host/</a></string>
 </resources>

@@ -30,6 +30,9 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
                 throw UnknownHostException()
             else
                 networkErrorLiveData.postValue(Unit)
+        }  catch (e: Exception){
+            e.printStackTrace()
+            fetchLatestExchangeRates(mainCurrency, throwExceptionOnNetworkError)
         }
     }
 
@@ -59,6 +62,9 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
                 networkErrorLiveData.postValue(Unit)
                 null
             }
+        } catch (e: Exception){
+            e.printStackTrace()
+            getLatestExchangeRates(mainCurrency, throwExceptionOnNetworkError)
         }
     }
 
@@ -87,6 +93,9 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
                 networkErrorLiveData.postValue(Unit)
                 null
             }
+        } catch (e: Exception){
+            e.printStackTrace()
+            getExchangeRates(mainCurrency, year, month, day, throwExceptionOnNetworkError)
         }
     }
 }

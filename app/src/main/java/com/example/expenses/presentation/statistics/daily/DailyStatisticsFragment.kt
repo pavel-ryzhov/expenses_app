@@ -16,6 +16,7 @@ import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.databinding.FragmentDailyStatisticsBinding
 import com.example.expenses.extensions.getCenterXChildPosition
 import com.example.expenses.presentation.DateRecyclerAdapter
+import com.example.expenses.presentation.dialogs.DeleteExpenseDialog
 import com.example.expenses.presentation.statistics.ExpensesRecyclerAdapter
 import com.example.expenses.presentation.statistics.LegendRecyclerAdapter
 import com.example.expenses.presentation.value_formatters.TimeValueFormatter
@@ -47,7 +48,12 @@ class DailyStatisticsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        expensesRecyclerAdapter = ExpensesRecyclerAdapter(rounding = appPreferences.getDoubleRounding())
+        expensesRecyclerAdapter = ExpensesRecyclerAdapter {
+            DeleteExpenseDialog(it){
+                expensesRecyclerAdapter.deleteExpense(it)
+                viewModel.fetchData(dateRecyclerAdapter.getCurrentDate())
+            }.show(requireActivity().supportFragmentManager, null)
+        }
         legendRecyclerAdapter = LegendRecyclerAdapter(
             viewModel::addCategoryFilter,
             viewModel::removeCategoryFilter

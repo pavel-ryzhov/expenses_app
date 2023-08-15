@@ -29,7 +29,6 @@ class AddCategoryFragment : Fragment() {
     private lateinit var binding: FragmentAddCategoryBinding
     private val viewModel by viewModels<AddCategoryViewModel>()
 
-    private lateinit var parent: CategoryDBEntity
     private var color: Int? = null
 
     override fun onCreateView(
@@ -44,20 +43,11 @@ class AddCategoryFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
-            textInputLayoutParent.setEndIconOnClickListener {
-                showChooseCategoryDialog()
-            }
-            autoCompleteTextViewParent.setOnTouchListener { _, motionEvent ->
-                if (motionEvent.action == MotionEvent.ACTION_UP) {
-                    showChooseCategoryDialog()
-                }
-                true
-            }
             buttonBack.setOnClickListener {
                 requireActivity().onBackPressed()
             }
             buttonDone.setOnClickListener {
-                viewModel.addCategory(parent, editTextName.text.toString(), color!!)
+                viewModel.addCategory(editTextName.text.toString(), color!!)
             }
             textViewColorLabel.setOnClickListener {
                 showColorPickerDialog()
@@ -96,10 +86,6 @@ class AddCategoryFragment : Fragment() {
                     .show()
                 requireActivity().onBackPressed()
             }
-            defaultParentLiveData.observe(viewLifecycleOwner) {
-                parent = it
-                binding.autoCompleteTextViewParent.setText(it.getShortName())
-            }
         }
     }
 
@@ -108,16 +94,5 @@ class AddCategoryFragment : Fragment() {
             color = it
             binding.imageViewColor.setBackgroundColor(it)
         }.show()
-    }
-
-    private fun showChooseCategoryDialog() {
-        ChooseCategoryDialog(
-            {
-                parent = it.toCategoryDBEntity()
-                binding.autoCompleteTextViewParent.setText(it.name)
-            },
-            showManageCategoriesOption = false,
-            allowToChooseRoot = true
-        ).show(requireActivity().supportFragmentManager, null)
     }
 }

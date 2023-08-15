@@ -126,13 +126,13 @@ class ChooseCategoryRecyclerAdapter(
                         onItemClick(category)
                     }
                     if (category.hasSubCategories()) {
-                        binding.moreView.visibility = View.VISIBLE
+                        binding.dropdownButtonView.visibility = View.VISIBLE
                         binding.view.visibility = View.INVISIBLE
-                        binding.moreView.setOnClickListener {
+                        binding.dropdownButtonView.setOnClickListener {
                             provideCategories(category)
                         }
                     } else {
-                        binding.moreView.visibility = View.GONE
+                        binding.dropdownButtonView.visibility = View.GONE
                         binding.view.visibility = View.GONE
                     }
                 }

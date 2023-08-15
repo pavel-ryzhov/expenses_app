@@ -24,8 +24,7 @@ class ChooseSecondaryCurrenciesViewModel @Inject constructor(
     symbolsRepository: SymbolsRepository,
     private val appPreferences: AppPreferences,
     private val symbolsDao: SymbolsDao
-) :
-    AndroidViewModel(application) {
+) : AndroidViewModel(application) {
 
     private val symbolsLiveData = symbolsRepository.getSymbolsLiveData()
     val symbolsLiveDataMediator = MediatorLiveData<MutableList<Symbol>>().apply {
@@ -62,10 +61,10 @@ class ChooseSecondaryCurrenciesViewModel @Inject constructor(
                 } else {
                     getApplication<Application>().startService(intent)
                 }
-                secondaryCurrenciesSavedLiveData.postValue(true)
             } else {
                 appPreferences.saveSecondaryCurrencies(currencies.map { it.code })
             }
+            secondaryCurrenciesSavedLiveData.postValue(openedFromSettings)
         } else {
             noSelectedSecondaryCurrenciesLiveData.postValue(Unit)
         }

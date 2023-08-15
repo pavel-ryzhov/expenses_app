@@ -16,31 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutParent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="16dp"
-        android:hint="Parent category"
-        android:textColorHint="@color/blue"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeErrorColor="@android:color/holo_red_dark"
-        app:errorEnabled="true"
-        app:errorIconTint="@android:color/holo_red_dark"
-        app:errorTextColor="@android:color/holo_red_dark"
-        app:layout_constraintTop_toBottomOf="@id/textViewLabel"
-        app:layout_constraintVertical_chainStyle="packed">
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/autoCompleteTextViewParent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutName"
@@ -48,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:hint="Category name"
         android:textColorHint="@color/blue"
         app:boxStrokeColor="@color/blue"
@@ -58,7 +33,7 @@
         app:errorTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutParent"
+        app:layout_constraintTop_toBottomOf="@id/textViewLabel"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_goneMarginTop="32dp">
 

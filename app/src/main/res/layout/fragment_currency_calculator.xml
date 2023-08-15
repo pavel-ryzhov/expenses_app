@@ -237,6 +237,22 @@
             android:textColor="@color/blue" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewExchangeRatesSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:alpha="0.5"
+        android:autoLink="web"
+        android:gravity="center_horizontal"
+        android:text="@string/exchange_rates_source"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutNavigationButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
 
     <LinearLayout
         android:id="@+id/linearLayoutNavigationButtons"
@@ -259,11 +275,11 @@
             android:textSize="16sp" />
 
         <com.google.android.material.button.MaterialButton
-            android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:visibility="invisible" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

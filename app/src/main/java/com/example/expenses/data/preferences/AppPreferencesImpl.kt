@@ -37,11 +37,7 @@ class AppPreferencesImpl @Inject constructor(
             MAIN_CURRENCY = sharedPreferences.getString(Tag.MAIN_CURRENCY_CODE_TAG.name, "null")!!
         return MAIN_CURRENCY
     }
-
-    override fun getMainCurrencySymbol(symbolsDao: SymbolsDao): Symbol {
-        return symbolsDao.getSymbolByCode(getMainCurrency())
-    }
-
+    
     override fun hasMainCurrency() =
         sharedPreferences.getString(Tag.MAIN_CURRENCY_CODE_TAG.name, null) != null
 

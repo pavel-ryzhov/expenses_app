@@ -79,7 +79,9 @@ class MonthlyStatisticsFragment : Fragment() {
             expensesChartView.description.text = ""
             pieChart.setOnEntryClickListener(object : PieChartView.OnEntryClickListener {
                 override fun onEntryClick(entry: PieEntry) {
-                    ExpensesDialog(entry.label, viewModel.calendar).show(requireActivity().supportFragmentManager, null)
+                    ExpensesDialog(entry.label, viewModel.calendar){
+                        viewModel.fetchData(dateRecyclerAdapter.getCurrentDate())
+                    }.show(requireActivity().supportFragmentManager, null)
                 }
             })
             textViewNoExpenses.visibility = View.GONE

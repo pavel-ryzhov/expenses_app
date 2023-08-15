@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.example.expenses.data.preferences.AppPreferences
 import com.example.expenses.databinding.FragmentAllExpensesBinding
 import com.example.expenses.entities.sorting.Sorting
+import com.example.expenses.presentation.dialogs.DeleteExpenseDialog
 import com.example.expenses.presentation.statistics.ExpensesRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,9 +35,14 @@ class AllExpensesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        expensesRecyclerAdapter = ExpensesRecyclerAdapter(true, appPreferences.getDoubleRounding())
+        expensesRecyclerAdapter = ExpensesRecyclerAdapter(true){
+            DeleteExpenseDialog(it){
+                expensesRecyclerAdapter.deleteExpense(it)
+                fetchExpensesWithLoading()
+            }.show(requireActivity().supportFragmentManager, null)
+        }
         with(binding){
-            moreView.setOnClickListener {
+            filterView.setOnClickListener {
                 SortingDialog({
                     sorting = it
                     fetchExpensesWithLoading(editTextDescription.text.toString())

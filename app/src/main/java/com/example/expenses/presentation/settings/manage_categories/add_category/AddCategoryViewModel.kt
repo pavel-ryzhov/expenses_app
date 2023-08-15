@@ -18,9 +18,9 @@ class AddCategoryViewModel @Inject constructor(
     val invalidNameLiveData = MutableLiveData<String>()
     val colorAlreadyExistsLiveData = MutableLiveData<Unit>()
     val categoryAddedSuccessfullyLiveData = MutableLiveData<Unit>()
-    val defaultParentLiveData = MutableLiveData<CategoryDBEntity>()
+    private lateinit var parentCategory: CategoryDBEntity
 
-    fun addCategory(parent: CategoryDBEntity, name: String, color: Int){
+    fun addCategory(name: String, color: Int){
         viewModelScope.launch(Dispatchers.IO) {
             var success = true
             if (name.isBlank()){
@@ -29,7 +29,7 @@ class AddCategoryViewModel @Inject constructor(
             } else if (name.contains('#')) {
                 invalidNameLiveData.postValue("The name cannot contain hash symbols!")
                 success = false
-            } else if (categoriesDao.hasCategoryDBEntity("${parent.name}#$name")) {
+            } else if (categoriesDao.hasCategoryDBEntity("${parentCategory.name}#$name")) {
                 invalidNameLiveData.postValue("There is already a category with this name!")
                 success = false
             }
@@ -39,7 +39,7 @@ class AddCategoryViewModel @Inject constructor(
                 success = false
             }
             if (success){
-                addCheckedCategory(parent, name, color)
+                addCheckedCategory(parentCategory, name, color)
                 categoryAddedSuccessfullyLiveData.postValue(Unit)
             }
         }
@@ -47,7 +47,7 @@ class AddCategoryViewModel @Inject constructor(
 
     fun setDefaultParent(name: String){
         viewModelScope.launch(Dispatchers.IO){
-            defaultParentLiveData.postValue(categoriesDao.getCategoryDBEntityByName(name))
+            parentCategory = categoriesDao.getCategoryDBEntityByName(name)
         }
     }
 

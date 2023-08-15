@@ -100,12 +100,12 @@ class ManageCategoriesRecyclerAdapter(
                         onItemClick(category)
                     }
                     if (category.hasSubCategories()) {
-                        binding.moreView.visibility = View.VISIBLE
-                        binding.moreView.setOnClickListener {
+                        binding.dropdownButtonView.visibility = View.VISIBLE
+                        binding.dropdownButtonView.setOnClickListener {
                             provideCategories(category)
                         }
                     } else {
-                        binding.moreView.visibility = View.INVISIBLE
+                        binding.dropdownButtonView.visibility = View.INVISIBLE
                     }
                 }
             } ?: run {

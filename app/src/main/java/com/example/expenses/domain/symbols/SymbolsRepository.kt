@@ -1,4 +1,4 @@
-package com.example.expenses.data.repository.symbols
+package com.example.expenses.domain.symbols
 
 import androidx.lifecycle.LiveData
 import com.example.expenses.entities.symbols.Symbol

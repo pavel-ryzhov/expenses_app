@@ -1,15 +1,12 @@
 package com.example.expenses.presentation.choose_secondary_currencies
 
 import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.lifecycle.*
-import androidx.navigation.fragment.findNavController
-import com.example.expenses.R
 import com.example.expenses.data.data_sources.local.dao.SymbolsDao
 import com.example.expenses.data.preferences.AppPreferences
-import com.example.expenses.data.repository.symbols.SymbolsRepository
+import com.example.expenses.domain.symbols.SymbolsRepository
 import com.example.expenses.entities.symbols.Symbol
 import com.example.expenses.presentation.settings.ChangeMainCurrencyForegroundService
 import dagger.hilt.android.lifecycle.HiltViewModel

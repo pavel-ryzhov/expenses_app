@@ -1,4 +1,4 @@
-package com.example.expenses.data.repository.statistics
+package com.example.expenses.domain.statistics
 
 import com.example.expenses.data.data_sources.local.dao.ExpensesDao
 import com.example.expenses.entities.expense.Expense

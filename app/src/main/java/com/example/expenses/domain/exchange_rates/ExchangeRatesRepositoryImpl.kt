@@ -1,4 +1,4 @@
-package com.example.expenses.data.repository.exchange_rates
+package com.example.expenses.domain.exchange_rates
 
 import androidx.lifecycle.MutableLiveData
 import com.example.expenses.data.data_sources.local.dao.ExchangeRatesDao

@@ -5,9 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.expenses.data.data_sources.local.dao.CategoriesDao
 import com.example.expenses.data.preferences.AppPreferences
-import com.example.expenses.data.repository.symbols.SymbolsRepository
+import com.example.expenses.domain.symbols.SymbolsRepository
 import com.example.expenses.entities.category.Category
-import com.example.expenses.entities.symbols.Symbol
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

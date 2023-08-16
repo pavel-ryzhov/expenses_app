@@ -1,4 +1,4 @@
-package com.example.expenses.data.repository.symbols
+package com.example.expenses.domain.symbols
 
 import com.example.expenses.data.data_sources.local.dao.SymbolsDao
 import com.example.expenses.data.wrappers.RemoteSymbolsDataSourceWrapper

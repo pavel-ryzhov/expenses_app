@@ -1,7 +1,6 @@
 package com.example.expenses.presentation.settings.choose_main_currency_dialog
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.expenses.R
 import com.example.expenses.data.preferences.AppPreferences
-import com.example.expenses.data.repository.settings.SettingsRepository
 import com.example.expenses.databinding.DialogChooseMainCurrencyBinding
 import com.example.expenses.entities.symbols.Symbol
 import com.example.expenses.extensions.hideSystemUI

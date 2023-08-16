@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.expenses.data.preferences.AppPreferences
-import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepository
+import com.example.expenses.domain.exchange_rates.ExchangeRatesRepository
 import com.example.expenses.data.services.expenses_statistics.ExpensesStatisticsService
 import com.example.expenses.entities.expense.Amount
 import com.github.mikephil.charting.data.Entry

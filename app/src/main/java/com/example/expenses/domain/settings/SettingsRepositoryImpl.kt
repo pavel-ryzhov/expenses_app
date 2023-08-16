@@ -1,4 +1,4 @@
-package com.example.expenses.data.repository.settings
+package com.example.expenses.domain.settings
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import com.example.expenses.R
 import com.example.expenses.data.data_sources.local.dao.ExchangeRatesDao
 import com.example.expenses.data.data_sources.local.dao.ExpensesDao
 import com.example.expenses.data.preferences.AppPreferences
-import com.example.expenses.data.repository.exchange_rates.ExchangeRatesRepository
+import com.example.expenses.domain.exchange_rates.ExchangeRatesRepository
 import com.example.expenses.data.wrappers.RemoteExchangeRatesDataSourceWrapper
 import com.example.expenses.entities.exchange_rates.ExchangeRate
 import com.example.expenses.entities.expense.Amount

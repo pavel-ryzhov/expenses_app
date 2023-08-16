@@ -3,7 +3,7 @@ package com.example.expenses.presentation.statistics.total.all_expenses
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.expenses.data.repository.statistics.StatisticsRepository
+import com.example.expenses.domain.statistics.StatisticsRepository
 import com.example.expenses.entities.expense.Expense
 import com.example.expenses.entities.sorting.Sorting
 import dagger.hilt.android.lifecycle.HiltViewModel

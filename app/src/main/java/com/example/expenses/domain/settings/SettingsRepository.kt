@@ -1,4 +1,4 @@
-package com.example.expenses.data.repository.settings
+package com.example.expenses.domain.settings
 
 import androidx.lifecycle.MutableLiveData
 import javax.inject.Singleton

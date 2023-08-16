@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.lifecycle.Observer
 import com.example.expenses.R
-import com.example.expenses.data.repository.settings.SettingsRepository
+import com.example.expenses.domain.settings.SettingsRepository
 import com.example.expenses.utils.NotificationManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope

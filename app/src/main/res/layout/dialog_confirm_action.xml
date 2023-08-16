@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@color/milky_white" />
 
         <com.google.android.material.button.MaterialButton
@@ -40,7 +40,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:text="Confirm"
+            android:text="@string/confirm"
             android:textColor="@color/milky_white" />
 
     </LinearLayout>

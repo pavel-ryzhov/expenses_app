@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/choose_main_currency"
+        android:text="@string/choose_main_currency_with_colon"
         android:textColor="@color/blue"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Try to reload"
+        android:text="@string/try_to_reload"
         android:textColor="@color/milky_white"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +99,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="Back"
+            android:text="@string/back"
             android:textColor="@color/milky_white" />
 
         <com.google.android.material.button.MaterialButton

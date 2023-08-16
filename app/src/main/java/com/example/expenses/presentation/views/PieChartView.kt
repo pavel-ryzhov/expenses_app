@@ -24,7 +24,7 @@ class PieChartView(context: Context, attributeSet: AttributeSet) : PieChart(cont
     }
 
     init {
-        this.setNoDataText("Loading data...")
+        this.setNoDataText(context.getString(R.string.loading_data))
         this.setNoDataTextColor(ContextCompat.getColor(context, R.color.milky_white))
         this.legend.isEnabled = false
         this.setHoleColor(ContextCompat.getColor(context, R.color.milky_white))

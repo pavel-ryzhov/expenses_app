@@ -27,7 +27,7 @@ class ExpensesChartView(context: Context, attributeSet: AttributeSet) :
             setMaximumScaleX(3f)
             setMaximumScaleY(3f)
         }
-        setNoDataText("Loading data...")
+        setNoDataText(context.getString(R.string.loading_data))
         setColor(R.color.blue)
     }
 
@@ -36,7 +36,7 @@ class ExpensesChartView(context: Context, attributeSet: AttributeSet) :
         if (lineDataSet.yMax != 0f)
             data = LineData(lineDataSet)
         else
-            setNoDataText("There are no expenses yet.")
+            setNoDataText(context.getString(R.string.there_are_no_expenses_yet))
         notifyDataSetChanged()
         invalidate()
     }
@@ -61,7 +61,7 @@ class ExpensesChartView(context: Context, attributeSet: AttributeSet) :
             data = lineData
         else {
             data = null
-            setNoDataText("There are no expenses yet.")
+            setNoDataText(context.getString(R.string.there_are_no_expenses_yet))
         }
         notifyDataSetChanged()
         invalidate()

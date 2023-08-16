@@ -71,7 +71,7 @@ class AddCategoryFragment : Fragment() {
             colorAlreadyExistsLiveData.observe(viewLifecycleOwner) {
                 Toast.makeText(
                     requireContext(),
-                    "There is already a category with this color!",
+                    requireContext().getString(R.string.there_is_already_a_category_with_this_color),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -82,7 +82,7 @@ class AddCategoryFragment : Fragment() {
                 }
             }
             categoryAddedSuccessfullyLiveData.observe(viewLifecycleOwner) {
-                Toast.makeText(requireContext(), "Category added successfully.", Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), requireContext().getString(R.string.category_added_successfully), Toast.LENGTH_LONG)
                     .show()
                 requireActivity().onBackPressed()
             }

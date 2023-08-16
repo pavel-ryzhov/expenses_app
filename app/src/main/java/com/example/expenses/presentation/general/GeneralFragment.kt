@@ -48,7 +48,7 @@ class GeneralFragment : Fragment() {
                 findNavController().navigateWithDefaultAnimation(R.id.action_generalFragment_to_settingsFragment)
             }
             expensesChartView.description = Description().apply {
-                text = "This month statistics"
+                text = requireContext().getString(R.string.this_month_statistics)
                 textColor = ContextCompat.getColor(requireContext(), R.color.blue)
             }
             expensesChartView.animateXY(300, 500)

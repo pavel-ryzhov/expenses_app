@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import androidx.lifecycle.Observer
+import com.example.expenses.R
 import com.example.expenses.data.repository.settings.SettingsRepository
 import com.example.expenses.utils.NotificationManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +41,7 @@ class ChangeMainCurrencyForegroundService : Service() {
             notificationManager.notifyWithLoading(
                 NOTIFICATION_ID,
                 NOTIFICATION_CHANNEL_ID,
-                "Changing currencies..."
+                getString(R.string.changing_currencies)
             )
         )
     }

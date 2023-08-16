@@ -40,7 +40,7 @@
         android:id="@+id/textViewNoExpenses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No expenses yet."
+        android:text="@string/no_expenses_yet"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@id/linearLayoutNavigationButtons"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Total:"
+                android:text="@string/total_with_colon"
                 android:textSize="20sp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="back"
+            android:text="@string/back"
             android:textColor="@color/milky_white"
             android:textSize="14sp" />
 
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="2dp"
             android:layout_weight="1"
-            android:text="monthly"
+            android:text="@string/monthly"
             android:textColor="@color/milky_white"
             android:textSize="14sp" />
 
@@ -169,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:text="total"
+            android:text="@string/total"
             android:textColor="@color/milky_white"
             android:textSize="14sp" />
     </LinearLayout>

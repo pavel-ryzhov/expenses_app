@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="Back"
+            android:text="@string/back"
             android:textColor="@color/milky_white" />
 
         <com.google.android.material.button.MaterialButton
@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:text="Close"
+            android:text="@string/close"
             android:textColor="@color/milky_white" />
 
     </LinearLayout>

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Description"
+        android:hint="@string/description"
         android:textColorHint="@color/blue"
         app:boxStrokeColor="@color/blue"
         app:layout_constraintEnd_toStartOf="@id/filterView"
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="back"
+            android:text="@string/back"
             android:textColor="@color/milky_white"
             android:textSize="16sp" />
 

@@ -137,12 +137,12 @@ class ChooseSecondaryCurrenciesFragment : Fragment() {
             }
             noSelectedSecondaryCurrenciesLiveData.observe(viewLifecycleOwner) {
                 it?.let {
-                    Toast.makeText(requireContext(), "Select at least one currency!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.select_at_least_one_category), Toast.LENGTH_SHORT).show()
                 }
             }
             nothingChangedLiveData.observe(viewLifecycleOwner) {
                 it?.let {
-                    Toast.makeText(requireContext(), "Nothing changed!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.nothing_changed), Toast.LENGTH_SHORT).show()
                 }
             }
         }

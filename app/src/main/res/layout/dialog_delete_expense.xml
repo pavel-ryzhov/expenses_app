@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <com.google.android.material.textview.MaterialTextView
-        android:text="Are you sure you want to delete the expense?"
+        android:text="@string/are_you_sure_you_want_to_delete_the_expense"
         android:layout_marginHorizontal="8dp"
         android:id="@+id/textViewLabel"
         app:layout_constraintBottom_toTopOf="@id/linearLayoutNavigationButtons"
@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@color/milky_white" />
 
         <com.google.android.material.button.MaterialButton
@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textColor="@color/milky_white" />
 
     </LinearLayout>

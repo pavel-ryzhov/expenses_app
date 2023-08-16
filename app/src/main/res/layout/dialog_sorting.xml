@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Choose sorting:"
+        android:text="@string/choose_sorting_with_colon"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Sorting"
+        android:hint="@string/sorting"
         android:textColorHint="@color/blue"
         app:boxStrokeColor="@color/blue"
         app:layout_constraintTop_toBottomOf="@id/textViewLabel">
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="ok"
+        android:text="@string/ok"
         android:textColor="@color/milky_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

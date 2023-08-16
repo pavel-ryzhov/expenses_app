@@ -85,18 +85,18 @@ class ManageCategoriesFragment : Fragment() {
             }
             checkCategoryHasSubCategoriesAndExpensesLiveData.observe(viewLifecycleOwner) {
                 val text = when {
-                    it.second && it.third -> "This category has subcategories and expenses."
-                    it.second -> "This category has subcategories."
-                    it.third -> "This category has expenses."
+                    it.second && it.third -> requireContext().getString(R.string.this_category_has_subcategories_and_expenses)
+                    it.second -> requireContext().getString(R.string.this_category_has_subcategories)
+                    it.third -> requireContext().getString(R.string.this_category_has_expenses)
                     else -> ""
-                } + " Are you sure you want to delete \"${it.first.name}\"?"
+                } + " " + requireContext().getString(R.string.are_you_sure_you_want_to_delete_category).format(it.first.name)
                 ConfirmActionDialog(text, onConfirmed = {
                     manageCategoriesRecyclerAdapter.removeCategory(it.first)
                     viewModel.deleteCategory(it.first)
                 }).show(requireActivity().supportFragmentManager, null)
             }
             categoryDeletedLiveData.observe(viewLifecycleOwner) {
-                Toast.makeText(requireContext(), "Category deleted successfully.", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), requireContext().getString(R.string.category_deleted_successfully), Toast.LENGTH_LONG).show()
             }
         }
     }

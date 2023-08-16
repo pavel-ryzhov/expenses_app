@@ -9,7 +9,7 @@
         android:id="@+id/textViewNoExpenses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No expenses yet."
+        android:text="@string/no_expenses_yet"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@id/linearLayoutNavigationButtons"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Total amount:"
+                android:text="@string/total_amount_with_colon"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/number_of_expenses_underlined"
+                android:text="@string/number_of_expenses_underlined_with_colon"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel" />
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Expenses by categories:"
+                android:text="@string/expenses_by_categories_with_colon"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="back"
+            android:text="@string/back"
             android:textColor="@color/milky_white"
             android:textSize="14sp" />
 
@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="2dp"
             android:layout_weight="1"
-            android:text="daily"
+            android:text="@string/daily"
             android:textColor="@color/milky_white"
             android:textSize="14sp" />
 
@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:text="monthly"
+            android:text="@string/monthly"
             android:textColor="@color/milky_white"
             android:textSize="14sp" />
     </LinearLayout>

@@ -114,24 +114,24 @@ class AddExpenseFragment : Fragment(), BackPressBlockable {
             expenseAddedSuccessfullyLiveData.observe(viewLifecycleOwner) {
                 hideLoadingLayout()
                 requireActivity().onBackPressed()
-                Toast.makeText(requireContext(), "Expense added successfully.", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), requireContext().getString(R.string.expense_added_successfully), Toast.LENGTH_SHORT)
                     .show()
             }
             amountFieldIsEmptyLiveData.observe(viewLifecycleOwner) {
                 binding.textInputLayoutAmount.apply {
-                    error = "Enter amount!"
+                    error = requireContext().getString(R.string.enter_amount)
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
                 }
             }
             categoryFieldIsEmptyLiveData.observe(viewLifecycleOwner) {
                 binding.textInputLayoutCategory.apply {
-                    error = "Choose category!"
+                    error = requireContext().getString(R.string.choose_category)
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
                 }
             }
             amountIsZeroLiveData.observe(viewLifecycleOwner) {
                 binding.textInputLayoutAmount.apply {
-                    error = "Amount cannot be zero!"
+                    error = requireContext().getString(R.string.amount_cannot_be_zero)
                     startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.error))
                 }
             }

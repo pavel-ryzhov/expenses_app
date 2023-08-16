@@ -130,7 +130,7 @@ class ChooseMainCurrencyDialog : DialogFragment() {
 
     private fun onMainCurrencySelected(symbol: Symbol) {
         ConfirmActionDialog(
-            "This operation may take some time because it requires recalculation of all expenses. Are you sure you want to change main currency to %s?".format(symbol.code),
+            requireContext().getString(R.string.this_operation_may_take_some_time).format(symbol.code),
             onConfirmed = {
                 val intent = Intent(requireContext(), ChangeMainCurrencyForegroundService::class.java).apply {
                     putExtra(ChangeMainCurrencyForegroundService.CURRENCY_TO_TAG, symbol.code)

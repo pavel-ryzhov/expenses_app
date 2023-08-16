@@ -1,6 +1,8 @@
 package com.example.expenses.data.repository.settings
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.example.expenses.R
 import com.example.expenses.data.data_sources.local.dao.ExchangeRatesDao
 import com.example.expenses.data.data_sources.local.dao.ExpensesDao
 import com.example.expenses.data.preferences.AppPreferences
@@ -10,12 +12,15 @@ import com.example.expenses.entities.exchange_rates.ExchangeRate
 import com.example.expenses.entities.expense.Amount
 import com.example.expenses.entities.expense.Expense
 import com.example.expenses.extensions.toMap
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SettingsRepositoryImpl @Inject constructor(
+    @ApplicationContext
+    private val context: Context,
     private val expensesDao: ExpensesDao,
     private val exchangeRatesDao: ExchangeRatesDao,
     private val appPreferences: AppPreferences,
@@ -37,7 +42,7 @@ class SettingsRepositoryImpl @Inject constructor(
             if (secondaryCurrencies.size == 1) {
                 appPreferences.saveSecondaryCurrencies(listOf(appPreferences.getMainCurrency()))
             } else {
-                stateChangedLiveData.postValue("Processing expenses...")
+                stateChangedLiveData.postValue(context.getString(R.string.processing_expenses))
                 expensesDao.getAllExpenses().forEach {
                     expensesDao.updateExpenseAmount(
                         it.id,
@@ -53,7 +58,7 @@ class SettingsRepositoryImpl @Inject constructor(
                 }
             }
         } else {
-            stateChangedLiveData.postValue("Fetching exchange rates...")
+            stateChangedLiveData.postValue(context.getString(R.string.fetching_exchange_rates))
             val expensesByUseLatestRates = getExpensesSortedByUseLatestRates()
             val nonLatestRates = mutableMapOf<Triple<Int, Int, Int>, Float>()
             val newLatestRates: List<ExchangeRate>
@@ -72,7 +77,7 @@ class SettingsRepositoryImpl @Inject constructor(
                 networkErrorLiveData.postValue(Unit)
                 return
             }
-            stateChangedLiveData.postValue("Recalculating expenses...")
+            stateChangedLiveData.postValue(context.getString(R.string.recalculating_expenses))
             convertExpenses(
                 expensesByUseLatestRates.first,
                 currencyTo,
@@ -81,7 +86,7 @@ class SettingsRepositoryImpl @Inject constructor(
             for (entry in expensesByUseLatestRates.second) {
                 convertExpenses(entry.value, currencyTo, nonLatestRates[entry.key]!!)
             }
-            stateChangedLiveData.postValue("Writing new exchange rates...")
+            stateChangedLiveData.postValue(context.getString(R.string.writing_new_exchange_rates))
             exchangeRatesDao.deleteAll()
             exchangeRatesDao.insertAllExchangeRates(newLatestRates)
         }
@@ -94,7 +99,7 @@ class SettingsRepositoryImpl @Inject constructor(
         val oldSecondaryCurrencies = appPreferences.getSecondaryCurrencies()
         val newCurrencies = currenciesTo.filter { it !in oldSecondaryCurrencies }
         if (newCurrencies.isNotEmpty()) {
-            stateChangedLiveData.postValue("Fetching exchange rates...")
+            stateChangedLiveData.postValue(context.getString(R.string.fetching_exchange_rates))
             val expensesByUseLatestRates = getExpensesSortedByUseLatestRates()
             val nonLatestRates = mutableMapOf<Triple<Int, Int, Int>, MutableMap<String, Float>>()
             try {
@@ -111,7 +116,7 @@ class SettingsRepositoryImpl @Inject constructor(
                 networkErrorLiveData.postValue(Unit)
                 return
             }
-            stateChangedLiveData.postValue("Recalculating expenses...")
+            stateChangedLiveData.postValue(context.getString(R.string.recalculating_expenses))
             convertExpensesSecondaryCurrencies(
                 expensesByUseLatestRates.first,
                 currenciesTo,
@@ -127,7 +132,7 @@ class SettingsRepositoryImpl @Inject constructor(
         } else {
             val difference = oldSecondaryCurrencies.filter { it !in currenciesTo }.toSet()
             if (difference.isNotEmpty()) {
-                stateChangedLiveData.postValue("Recalculating expenses...")
+                stateChangedLiveData.postValue(context.getString(R.string.recalculating_expenses))
                 expensesDao.getAllExpenses().forEach {
                     expensesDao.updateExpenseAmount(it.id, Amount(it.amount.asMap().minus(difference)))
                 }

@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="Main currency:"
+            android:text="@string/main_currency_with_colon"
             android:textSize="20sp" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Rounding:"
+        android:text="@string/rounding_with_colon"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewManageCategories" />
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="back"
+            android:text="@string/back"
             android:textColor="@color/milky_white"
             android:textSize="16sp" />
 

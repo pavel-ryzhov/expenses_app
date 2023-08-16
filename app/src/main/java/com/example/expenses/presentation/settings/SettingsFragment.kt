@@ -96,7 +96,7 @@ class SettingsFragment : Fragment(), BackPressBlockable {
                     viewModel.fetchData()
                     Toast.makeText(
                         requireContext(),
-                        "Main currency changed successfully.",
+                        requireContext().getString(R.string.main_currency_changed_successfully),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -118,7 +118,7 @@ class SettingsFragment : Fragment(), BackPressBlockable {
                     unblockUI()
                     Toast.makeText(
                         requireContext(),
-                        "Secondary currencies changed successfully.",
+                        requireContext().getString(R.string.secondary_currencies_changed_successfully),
                         Toast.LENGTH_LONG
                     ).show()
                 }

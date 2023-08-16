@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Choose secondary currencies:"
+        android:text="@string/choose_secondary_currencies_with_colon"
         android:textColor="@color/blue"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="back"
+            android:text="@string/back"
             android:textColor="@color/milky_white"
             android:textSize="16sp" />
 
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:text="done"
+            android:text="@string/done"
             android:textColor="@color/milky_white"
             android:textSize="16sp" />
     </LinearLayout>

@@ -21,7 +21,7 @@
         android:layout_marginHorizontal="16dp"
         android:gravity="center_horizontal"
         android:padding="8dp"
-        android:text="Choose category:"
+        android:text="@string/choose_category_with_colon"
         android:textColor="@color/blue"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
         android:textColor="@color/milky_white"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintBottom_toTopOf="@id/linearLayoutNavigationButtons"
-        android:text="Choose this category"
+        android:text="@string/choose_this_category"
         android:id="@+id/buttonChooseThisCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -61,7 +61,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="Back"
+            android:text="@string/back"
             android:textColor="@color/milky_white" />
 
         <com.google.android.material.button.MaterialButton
@@ -70,7 +70,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
-            android:text="Close"
+            android:text="@string/close"
             android:textColor="@color/milky_white" />
 
     </LinearLayout>

@@ -33,7 +33,7 @@ class DailyStatisticsFragment : Fragment() {
     private lateinit var binding: FragmentDailyStatisticsBinding
     private val viewModel: DailyStatisticsViewModel by viewModels()
     @SuppressLint("SimpleDateFormat")
-    private val dateRecyclerAdapter = DateRecyclerAdapter(SimpleDateFormat("MMMM d"), Calendar.DAY_OF_MONTH)
+    private val dateRecyclerAdapter = DateRecyclerAdapter(SimpleDateFormat("MMMM d", Locale.ENGLISH), Calendar.DAY_OF_MONTH)
     private lateinit var legendRecyclerAdapter: LegendRecyclerAdapter
     private lateinit var expensesRecyclerAdapter: ExpensesRecyclerAdapter
     private var dateRecyclerViewPosition = -1

@@ -145,9 +145,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeTextType="uniform"
+            android:lines="1"
             android:text="@string/back"
             android:textColor="@color/milky_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:targetApi="o" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonDaily"
@@ -155,9 +159,13 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="2dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeTextType="uniform"
+            android:lines="1"
             android:text="@string/daily"
             android:textColor="@color/milky_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:targetApi="o" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonMonthly"
@@ -165,9 +173,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeTextType="uniform"
+            android:lines="1"
             android:text="@string/monthly"
             android:textColor="@color/milky_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:targetApi="o" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

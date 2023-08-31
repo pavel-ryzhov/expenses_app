@@ -2,18 +2,17 @@ package com.example.expenses.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expenses.databinding.DateRecyclerViewItemBinding
 import com.example.expenses.extensions.getCenterXChildPosition
 import com.example.expenses.extensions.toActivity
 import com.example.expenses.presentation.dialogs.DatePickerDialog
-import java.text.SimpleDateFormat
+import java.text.DateFormat
 import java.util.*
 
 class DateRecyclerAdapter(
-    private val dateFormat: SimpleDateFormat,
+    private val dateFormat: DateFormat,
     private val itemType: Int,
     private val itemCount: Int = 20,
     private val additionalItemCount: Int = 5,

@@ -31,7 +31,7 @@ class MonthlyStatisticsFragment : Fragment() {
     private lateinit var legendRecyclerAdapter: LegendRecyclerAdapter
     @SuppressLint("SimpleDateFormat")
     private val dateRecyclerAdapter =
-        DateRecyclerAdapter(SimpleDateFormat("MMMM yyyy"), Calendar.MONTH)
+        DateRecyclerAdapter(SimpleDateFormat("MMMM yyyy", Locale.ENGLISH), Calendar.MONTH)
     private var dateRecyclerViewPosition = -1
 
     override fun onCreateView(

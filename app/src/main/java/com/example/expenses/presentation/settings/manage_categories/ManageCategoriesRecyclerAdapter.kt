@@ -110,7 +110,7 @@ class ManageCategoriesRecyclerAdapter(
                 }
             } ?: run {
                 (binding as ItemAddCategoryBinding).textViewAddCategory.setOnClickListener {
-                    onItemClick(categories.first().parent!!)
+                    onItemClick(if (categories.isNotEmpty()) categories.first().parent!! else Category.EMPTY_ROOT)
                 }
             }
         }

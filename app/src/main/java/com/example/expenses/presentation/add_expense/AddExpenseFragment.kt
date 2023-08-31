@@ -52,7 +52,7 @@ class AddExpenseFragment : Fragment(), BackPressBlockable {
     @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dateRecyclerAdapter = DateRecyclerAdapter(
-            SimpleDateFormat("MMMM d"),
+            SimpleDateFormat("MMMM d", Locale.ENGLISH),
             Calendar.DAY_OF_MONTH
         )
         autoCompleteTextViewCurrenciesAdapter = object :

@@ -104,8 +104,8 @@
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textViewTotalLabel"
                 app:layout_constraintTop_toBottomOf="@id/recyclerViewLegend"
@@ -149,9 +149,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeTextType="uniform"
+            android:lines="1"
             android:text="@string/back"
             android:textColor="@color/milky_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:targetApi="o" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonDaily"
@@ -159,9 +163,13 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="2dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeTextType="uniform"
+            android:lines="1"
             android:text="@string/daily"
             android:textColor="@color/milky_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:targetApi="o" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonTotal"
@@ -169,9 +177,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeTextType="uniform"
+            android:lines="1"
             android:text="@string/total"
             android:textColor="@color/milky_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:targetApi="o" />
     </LinearLayout>
 
 

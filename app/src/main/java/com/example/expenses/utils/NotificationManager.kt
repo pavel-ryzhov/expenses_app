@@ -22,7 +22,7 @@ class NotificationManager @Inject constructor(
         val builder =
             NotificationCompat.Builder(context, channelId)
                 .setContentTitle(text)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
                 .setProgress(100, 50, true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(channelId)
@@ -43,7 +43,7 @@ class NotificationManager @Inject constructor(
         val builder =
             NotificationCompat.Builder(context, channelId)
                 .setContentTitle(text)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(channelId)
             val nc =

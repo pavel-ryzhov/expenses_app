@@ -16,6 +16,7 @@ data class Category(
     fun getFriendlyName() = CategoryDBEntity.getFriendlyName(name)
 
     companion object {
+        val EMPTY_ROOT = Category("Root", "Root")
         fun getDefaultRootCategory() = Category("Root", "Root", subCategories = mutableListOf(
             Category("Entertainment", "Root#Entertainment"),
             Category("Food", "Root#Food"),

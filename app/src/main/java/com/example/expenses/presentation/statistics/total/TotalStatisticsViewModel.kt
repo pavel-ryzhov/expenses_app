@@ -58,6 +58,7 @@ class TotalStatisticsViewModel @Inject constructor(
                         appPreferences.getDoubleRounding()
                     )
                 )
+                setValueTextSize(12f)
                 val color1 = ContextCompat.getColor(getApplication(), R.color.blue)
                 val color2 = ContextCompat.getColor(getApplication(), R.color.milky_white)
                 setValueTextColors(colors.map { chooseLessSimilarColor(it, color1, color2) })

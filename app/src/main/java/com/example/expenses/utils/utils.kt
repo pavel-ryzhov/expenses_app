@@ -21,7 +21,7 @@ fun formatTime(hour: Int, minute: Int): String {
 
 @SuppressLint("SimpleDateFormat")
 fun formatDate(month: Int, day: Int): String {
-    return SimpleDateFormat("MMMM d").format(GregorianCalendar().apply {
+    return SimpleDateFormat("MMMM d", Locale.ENGLISH).format(GregorianCalendar().apply {
         set(Calendar.MONTH, month)
         set(Calendar.DAY_OF_MONTH, day)
     }.time)

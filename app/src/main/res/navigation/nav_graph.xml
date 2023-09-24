@@ -5,7 +5,7 @@
     app:startDestination="@id/chooseMainCurrencyFragment">
     <fragment
         android:id="@+id/chooseMainCurrencyFragment"
-        android:name="com.example.expenses.presentation.choose_main_currency.ChooseMainCurrencyFragment"
+        android:name="com.expenses.manager.presentation.choose_main_currency.ChooseMainCurrencyFragment"
         android:label="ChooseMainCurrencyFragment">
         <action
             android:id="@+id/action_chooseMainCurrencyFragment_to_chooseSecondaryCurrenciesFragment"
@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/generalFragment"
-        android:name="com.example.expenses.presentation.general.GeneralFragment"
+        android:name="com.expenses.manager.presentation.general.GeneralFragment"
         android:label="GeneralFragment">
         <action
             android:id="@+id/action_generalFragment_to_addExpenseFragment"
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseSecondaryCurrenciesFragment"
-        android:name="com.example.expenses.presentation.choose_secondary_currencies.ChooseSecondaryCurrenciesFragment"
+        android:name="com.expenses.manager.presentation.choose_secondary_currencies.ChooseSecondaryCurrenciesFragment"
         android:label="ChooseSecondaryCurrenciesFragment">
         <action
             android:id="@+id/action_chooseSecondaryCurrenciesFragment_to_generalFragment"
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
-        android:name="com.example.expenses.presentation.add_expense.AddExpenseFragment"
+        android:name="com.expenses.manager.presentation.add_expense.AddExpenseFragment"
         android:label="AddExpenseFragment" >
         <action
             android:id="@+id/action_addExpenseFragment_to_manageCategoriesFragment"
@@ -50,11 +50,11 @@
     </fragment>
     <fragment
         android:id="@+id/currencyCalculatorFragment"
-        android:name="com.example.expenses.presentation.currency_calculator.CurrencyCalculatorFragment"
+        android:name="com.expenses.manager.presentation.currency_calculator.CurrencyCalculatorFragment"
         android:label="CurrencyCalculatorFragment" />
     <fragment
         android:id="@+id/monthlyStatisticsFragment"
-        android:name="com.example.expenses.presentation.statistics.monthly.MonthlyStatisticsFragment"
+        android:name="com.expenses.manager.presentation.statistics.monthly.MonthlyStatisticsFragment"
         android:label="MonthlyStatisticsFragment">
         <action
             android:id="@+id/action_monthlyStatisticsFragment_to_dailyStatisticsFragment"
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/dailyStatisticsFragment"
-        android:name="com.example.expenses.presentation.statistics.daily.DailyStatisticsFragment"
+        android:name="com.expenses.manager.presentation.statistics.daily.DailyStatisticsFragment"
         android:label="DailyStatisticsFragment">
         <action
             android:id="@+id/action_dailyStatisticsFragment_to_monthlyStatisticsFragment"
@@ -96,7 +96,7 @@
     </fragment>
     <fragment
         android:id="@+id/totalStatisticsFragment"
-        android:name="com.example.expenses.presentation.statistics.total.TotalStatisticsFragment"
+        android:name="com.expenses.manager.presentation.statistics.total.TotalStatisticsFragment"
         android:label="TotalStatisticsFragment" >
         <action
             android:id="@+id/action_totalStatisticsFragment_to_monthlyStatisticsFragment"
@@ -120,7 +120,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.expenses.presentation.settings.SettingsFragment"
+        android:name="com.expenses.manager.presentation.settings.SettingsFragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/action_settingsFragment_to_chooseSecondaryCurrenciesFragment"
@@ -131,7 +131,7 @@
     </fragment>
     <fragment
         android:id="@+id/manageCategoriesFragment"
-        android:name="com.example.expenses.presentation.settings.manage_categories.ManageCategoriesFragment"
+        android:name="com.expenses.manager.presentation.settings.manage_categories.ManageCategoriesFragment"
         android:label="ManageCategoriesFragment" >
         <action
             android:id="@+id/action_manageCategoriesFragment_to_addCategoryFragment"
@@ -139,10 +139,10 @@
     </fragment>
     <fragment
         android:id="@+id/addCategoryFragment"
-        android:name="com.example.expenses.presentation.settings.manage_categories.add_category.AddCategoryFragment"
+        android:name="com.expenses.manager.presentation.settings.manage_categories.add_category.AddCategoryFragment"
         android:label="AddCategoryFragment" />
     <fragment
         android:id="@+id/allExpensesFragment"
-        android:name="com.example.expenses.presentation.statistics.total.all_expenses.AllExpensesFragment"
+        android:name="com.expenses.manager.presentation.statistics.total.all_expenses.AllExpensesFragment"
         android:label="AllExpensesFragment" />
 </navigation>

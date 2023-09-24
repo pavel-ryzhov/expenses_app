@@ -30,7 +30,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.example.expenses.presentation.views.FilterView
+    <com.expenses.manager.presentation.views.FilterView
         android:id="@+id/filterView"
         android:layout_width="0dp"
         android:layout_height="0dp"

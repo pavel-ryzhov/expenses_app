@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UnusedAttribute" />
 
-    <com.example.expenses.presentation.views.ArrowView
+    <com.expenses.manager.presentation.views.ArrowView
         android:id="@+id/arrowLeft"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/recyclerViewDate" />
 
-    <com.example.expenses.presentation.views.ArrowView
+    <com.expenses.manager.presentation.views.ArrowView
         android:id="@+id/arrowRight"
         android:layout_width="48dp"
         android:layout_height="48dp"

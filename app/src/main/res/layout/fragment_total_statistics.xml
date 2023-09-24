@@ -43,7 +43,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.expenses.presentation.views.ConvertibleAmountView
+            <com.expenses.manager.presentation.views.ConvertibleAmountView
                 android:id="@+id/textViewTotal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 app:layout_constraintTop_toBottomOf="@id/textViewNumberOfExpensesLabel" />
 
 
-            <com.example.expenses.presentation.views.PieChartView
+            <com.expenses.manager.presentation.views.PieChartView
                 android:id="@+id/pieChart"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

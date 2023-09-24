@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="15:55" />
 
-    <com.example.expenses.presentation.views.ConvertibleAmountView
+    <com.expenses.manager.presentation.views.ConvertibleAmountView
         android:id="@+id/textViewAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

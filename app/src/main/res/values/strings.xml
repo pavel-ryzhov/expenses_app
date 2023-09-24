@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">expenses</string>
+    <string name="app_name">Expenses Manager</string>
     <string name="choose_main_currency_with_colon">Choose main currency:</string>
     <string name="search">Search</string>
     <string name="manage_categories_underlined"><u>Manage categories</u></string>

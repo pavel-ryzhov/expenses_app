@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.expenses"
+        applicationId "com.expenses.manager"
         minSdk 21
         targetSdk 32
         versionCode 1

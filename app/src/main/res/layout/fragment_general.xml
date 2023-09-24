@@ -23,7 +23,7 @@
             android:text="@string/today_with_colon"
             android:textSize="20sp" />
 
-        <com.example.expenses.presentation.views.ConvertibleAmountView
+        <com.expenses.manager.presentation.views.ConvertibleAmountView
             android:id="@+id/textViewToday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
     </LinearLayout>
 
 
-    <com.example.expenses.presentation.views.ExpensesChartView
+    <com.expenses.manager.presentation.views.ExpensesChartView
         android:id="@+id/expensesChartView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -60,7 +60,7 @@
             android:text="@string/this_month_with_colon"
             android:textSize="20sp" />
 
-        <com.example.expenses.presentation.views.ConvertibleAmountView
+        <com.expenses.manager.presentation.views.ConvertibleAmountView
             android:id="@+id/textViewThisMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

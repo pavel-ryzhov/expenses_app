@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.expenses.manager.presentation.views.ConvertibleAmountView
+    <com.expenses.mngr.presentation.views.ConvertibleAmountView
         android:id="@+id/textViewAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

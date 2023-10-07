@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UnusedAttribute" />
 
-    <com.expenses.manager.presentation.views.ArrowView
+    <com.expenses.mngr.presentation.views.ArrowView
         android:id="@+id/arrowLeft"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/recyclerViewDate" />
 
-    <com.expenses.manager.presentation.views.ArrowView
+    <com.expenses.mngr.presentation.views.ArrowView
         android:id="@+id/arrowRight"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true">
 
-            <com.expenses.manager.presentation.views.ExpensesChartView
+            <com.expenses.mngr.presentation.views.ExpensesChartView
                 android:id="@+id/expensesChartView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -98,7 +98,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recyclerViewExpenses" />
 
-            <com.expenses.manager.presentation.views.ConvertibleAmountView
+            <com.expenses.mngr.presentation.views.ConvertibleAmountView
                 android:id="@+id/textViewTotal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

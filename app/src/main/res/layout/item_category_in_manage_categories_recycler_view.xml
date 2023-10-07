@@ -21,7 +21,7 @@
         tools:background="@color/transparent_dark_grey"
         tools:text="eededed" />
 
-    <com.expenses.manager.presentation.views.DropdownButtonView
+    <com.expenses.mngr.presentation.views.DropdownButtonView
         android:id="@+id/dropdownButtonView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="@id/textViewCategory"
         tools:visibility="visible" />
 
-    <com.expenses.manager.presentation.views.CrossView
+    <com.expenses.mngr.presentation.views.CrossView
         android:id="@+id/crossView"
         android:layout_width="0dp"
         android:layout_height="0dp"

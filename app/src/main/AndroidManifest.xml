@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.expenses.manager">
+    package="com.expenses.mngr">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
-        android:name="com.expenses.manager.App"
+        android:name="com.expenses.mngr.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Expenses"
         tools:targetApi="31">
         <activity
-            android:name="com.expenses.manager.presentation.main.MainActivity"
+            android:name="com.expenses.mngr.presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.expenses.manager.presentation.settings.ChangeMainCurrencyForegroundService"/>
+        <service android:name="com.expenses.mngr.presentation.settings.ChangeMainCurrencyForegroundService"/>
     </application>
 
 </manifest>

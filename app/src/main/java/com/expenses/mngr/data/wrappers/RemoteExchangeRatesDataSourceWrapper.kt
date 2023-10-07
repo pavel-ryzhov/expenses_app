@@ -1,6 +1,8 @@
 package com.expenses.mngr.data.wrappers
 
 import android.annotation.SuppressLint
+import android.util.Log
+import com.expenses.mngr.BuildConfig
 import com.expenses.mngr.data.data_sources.remote.RemoteExchangeRatesDataSource
 import com.expenses.mngr.entities.exchange_rates.ExchangeRate
 import org.json.JSONObject
@@ -14,8 +16,8 @@ class RemoteExchangeRatesDataSourceWrapper @Inject constructor(
 
     suspend fun getLatestExchangeRates(codes: MutableList<String>, mainCurrency: String) =
         stringJSONToExchangeRatesList(
-            remoteExchangeRatesDataSource.getLatestExchangeRates(mainCurrency.lowercase()).execute()
-                .body().toString(), codes
+            remoteExchangeRatesDataSource.getLatestExchangeRates(BuildConfig.API_ACCESS_KEY, mainCurrency.uppercase()).execute()
+                .body().toString(), mainCurrency, codes
         )
 
     @SuppressLint("SimpleDateFormat")
@@ -23,21 +25,23 @@ class RemoteExchangeRatesDataSourceWrapper @Inject constructor(
         stringJSONToExchangeRatesList(
             remoteExchangeRatesDataSource.getExchangeRates(SimpleDateFormat("yyyy-MM-dd").format(
                 GregorianCalendar(year, month, day).time
-            ), mainCurrency.lowercase()).execute()
-                .body().toString(), codes
+            ), BuildConfig.API_ACCESS_KEY, mainCurrency.uppercase()).execute()
+                .body().toString(), mainCurrency, codes
         )
 
     companion object {
         fun stringJSONToExchangeRatesList(
             string: String,
+            mainCurrency: String,
             codes: List<String>
         ): MutableList<ExchangeRate> {
-            val json = JSONObject(string).getJSONObject("rates")
+            val json = JSONObject(string).getJSONObject("quotes")
+            Log.d("ssss", json.toString())
             val result = mutableListOf<ExchangeRate>()
             codes.forEach {
                 result.add(
                     ExchangeRate(
-                        it, json.optDouble(it, 0.0).toFloat()
+                        it, json.optDouble((mainCurrency + it).uppercase(), if (it == mainCurrency) 1.0 else 0.0).toFloat()
                     )
                 )
             }

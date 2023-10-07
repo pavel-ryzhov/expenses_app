@@ -2,18 +2,19 @@ package com.expenses.mngr.data.data_sources.remote
 
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RemoteExchangeRatesDataSource {
-    @GET("latest")
+    @GET("live")
     fun getLatestExchangeRates(
-        @Query("base") mainCurrency: String
+        @Query("access_key") accessKey: String,
+        @Query("source") mainCurrency: String
     ): Call<String>
 
-    @GET("{date}")
+    @GET("historical")
     fun getExchangeRates(
-        @Path("date") date: String,
-        @Query("base") mainCurrency: String
+        @Query("date") date: String,
+        @Query("access_key") accessKey: String,
+        @Query("source") mainCurrency: String
     ): Call<String>
 }

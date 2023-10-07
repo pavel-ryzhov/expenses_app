@@ -29,6 +29,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "API_URL", keystoreProperties["API_URL"]
+        buildConfigField "String", "API_ACCESS_KEY", keystoreProperties["API_ACCESS_KEY"]
     }
 
     buildTypes {

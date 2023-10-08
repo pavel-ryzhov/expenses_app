@@ -1,7 +1,6 @@
 package com.expenses.mngr.data.wrappers
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.expenses.mngr.BuildConfig
 import com.expenses.mngr.data.data_sources.remote.RemoteExchangeRatesDataSource
 import com.expenses.mngr.entities.exchange_rates.ExchangeRate
@@ -36,7 +35,6 @@ class RemoteExchangeRatesDataSourceWrapper @Inject constructor(
             codes: List<String>
         ): MutableList<ExchangeRate> {
             val json = JSONObject(string).getJSONObject("quotes")
-            Log.d("ssss", json.toString())
             val result = mutableListOf<ExchangeRate>()
             codes.forEach {
                 result.add(

@@ -22,4 +22,7 @@ interface AppPreferences {
 
     fun saveDoubleRounding(int: Int)
     fun getDoubleRounding(): Int
+
+    fun saveExchangeRatesFetchedToday()
+    fun getExchangeRatesFetchedToday(): Boolean
 }

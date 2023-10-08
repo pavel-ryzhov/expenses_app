@@ -3,6 +3,7 @@ package com.expenses.mngr.domain.exchange_rates
 import androidx.lifecycle.MutableLiveData
 import com.expenses.mngr.data.data_sources.local.dao.ExchangeRatesDao
 import com.expenses.mngr.data.data_sources.local.dao.SymbolsDao
+import com.expenses.mngr.data.preferences.AppPreferences
 import com.expenses.mngr.data.wrappers.RemoteExchangeRatesDataSourceWrapper
 import com.expenses.mngr.entities.exchange_rates.ExchangeRate
 import java.net.UnknownHostException
@@ -13,37 +14,46 @@ import javax.inject.Singleton
 class ExchangeRatesRepositoryImpl @Inject constructor(
     private val exchangeRatesDao: ExchangeRatesDao,
     private val exchangeRatesDataSource: RemoteExchangeRatesDataSourceWrapper,
-    private val symbolsDao: SymbolsDao
+    private val symbolsDao: SymbolsDao,
+    private val appPreferences: AppPreferences
 ) : ExchangeRatesRepository {
 
     private val networkErrorLiveData = MutableLiveData<Unit?>()
 
-    override suspend fun fetchLatestExchangeRates(mainCurrency: String, throwExceptionOnNetworkError: Boolean) {
+    override suspend fun fetchLatestExchangeRates(
+        mainCurrency: String,
+        throwExceptionOnNetworkError: Boolean
+    ) {
         try {
-            exchangeRatesDao.insertAllExchangeRates(
-                exchangeRatesDataSource.getLatestExchangeRates(
-                    symbolsDao.getAllSymbols().map { it.code }.toMutableList(), mainCurrency
+            if (!appPreferences.getExchangeRatesFetchedToday()) {
+                exchangeRatesDao.insertAllExchangeRates(
+                    exchangeRatesDataSource.getLatestExchangeRates(
+                        symbolsDao.getAllSymbols().map { it.code }.toMutableList(), mainCurrency
+                    )
                 )
-            )
+                appPreferences.saveExchangeRatesFetchedToday()
+            }
         } catch (e: UnknownHostException) {
             if (throwExceptionOnNetworkError)
                 throw UnknownHostException()
             else
                 networkErrorLiveData.postValue(Unit)
-        }  catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             fetchLatestExchangeRates(mainCurrency, throwExceptionOnNetworkError)
         }
     }
 
-    override fun getAllCachedLatestExchangeRatesLiveData() = exchangeRatesDao.getAllExchangeRatesLiveData()
+    override fun getAllCachedLatestExchangeRatesLiveData() =
+        exchangeRatesDao.getAllExchangeRatesLiveData()
 
     override suspend fun getAllCachedLatestExchangeRates() = exchangeRatesDao.getAllExchangeRates()
 
     override fun getCachedLatestExchangeRateLiveData(code: String) =
         exchangeRatesDao.getExchangeRateLiveData(code)
 
-    override suspend fun getCachedLatestExchangeRate(code: String) = exchangeRatesDao.getExchangeRate(code)
+    override suspend fun getCachedLatestExchangeRate(code: String) =
+        exchangeRatesDao.getExchangeRate(code)
 
     override fun getCachedLatestExchangeRatesLiveData(codes: List<String>) =
         exchangeRatesDao.getExchangeRatesLiveData(codes)
@@ -51,10 +61,14 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
     override suspend fun getCachedLatestExchangeRates(codes: List<String>) =
         exchangeRatesDao.getExchangeRates(codes)
 
-    override suspend fun getLatestExchangeRates(mainCurrency: String, throwExceptionOnNetworkError: Boolean): MutableList<ExchangeRate>? {
+    override suspend fun getLatestExchangeRates(
+        mainCurrency: String,
+        throwExceptionOnNetworkError: Boolean
+    ): MutableList<ExchangeRate>? {
         return try {
-            exchangeRatesDataSource.getLatestExchangeRates(symbolsDao.getAllSymbols().map { it.code }
-                .toMutableList(), mainCurrency)
+            exchangeRatesDataSource.getLatestExchangeRates(
+                symbolsDao.getAllSymbols().map { it.code }
+                    .toMutableList(), mainCurrency)
         } catch (e: UnknownHostException) {
             if (throwExceptionOnNetworkError)
                 throw UnknownHostException()
@@ -62,7 +76,7 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
                 networkErrorLiveData.postValue(Unit)
                 null
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             getLatestExchangeRates(mainCurrency, throwExceptionOnNetworkError)
         }
@@ -93,7 +107,7 @@ class ExchangeRatesRepositoryImpl @Inject constructor(
                 networkErrorLiveData.postValue(Unit)
                 null
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             getExchangeRates(mainCurrency, year, month, day, throwExceptionOnNetworkError)
         }

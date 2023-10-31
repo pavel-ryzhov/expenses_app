@@ -22,9 +22,9 @@ class GeneralViewModel @Inject constructor(
     private val expensesStatisticsService: ExpensesStatisticsService,
 ) : ViewModel() {
 
-    val totalTodayLiveData = MutableLiveData<Amount>()
-    val totalThisMonthLiveData = MutableLiveData<Amount>()
-    val monthStatisticsLiveData = MutableLiveData<LineDataSet>()
+    val totalTodayLiveData = MutableLiveData<Amount?>()
+    val totalThisMonthLiveData = MutableLiveData<Amount?>()
+    val monthStatisticsLiveData = MutableLiveData<LineDataSet?>()
     val networkErrorLiveData = exchangeRatesRepository.getNetworkErrorLiveData()
 
     private var firstLaunch = true
@@ -85,6 +85,9 @@ class GeneralViewModel @Inject constructor(
     fun getAppPreferences() = appPreferences
 
     fun notifyFragmentStopped(){
+        totalTodayLiveData.postValue(null)
+        totalThisMonthLiveData.postValue(null)
+        monthStatisticsLiveData.postValue(null)
         networkErrorLiveData.postValue(null)
     }
 }

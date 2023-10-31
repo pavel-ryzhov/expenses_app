@@ -1,5 +1,6 @@
 package com.expenses.mngr.entities.expense
 
+import android.util.Log
 import org.json.JSONObject
 
 class Amount(private val amounts: Map<String, Double>) : Iterable<Map.Entry<String, Double>> {

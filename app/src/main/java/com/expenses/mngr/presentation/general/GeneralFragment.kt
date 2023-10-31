@@ -65,18 +65,24 @@ class GeneralFragment : Fragment() {
     private fun subscribeOnLiveData() {
         viewModel.apply {
             totalTodayLiveData.observe(viewLifecycleOwner) {
-                binding.textViewToday.setAmount(it)
+                it?.let {
+                    binding.textViewToday.setAmount(it)
+                }
             }
             totalThisMonthLiveData.observe(viewLifecycleOwner) {
-                binding.textViewThisMonth.setAmount(it)
+                it?.let {
+                    binding.textViewThisMonth.setAmount(it)
+                }
             }
             monthStatisticsLiveData.observe(viewLifecycleOwner) {
-                binding.expensesChartView.setLineDataSet(it.apply {
-                    color = ContextCompat.getColor(requireContext(), R.color.blue)
-                    valueTextColor = ContextCompat.getColor(requireContext(), R.color.blue)
-                    setCircleColor(ContextCompat.getColor(requireContext(), R.color.blue))
-                    circleHoleColor = ContextCompat.getColor(requireContext(), R.color.milky_white)
-                })
+                it?.let {
+                    binding.expensesChartView.setLineDataSet(it.apply {
+                        color = ContextCompat.getColor(requireContext(), R.color.blue)
+                        valueTextColor = ContextCompat.getColor(requireContext(), R.color.blue)
+                        setCircleColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                        circleHoleColor = ContextCompat.getColor(requireContext(), R.color.milky_white)
+                    })
+                }
             }
             networkErrorLiveData.observe(viewLifecycleOwner) {
                 if (it != null)
